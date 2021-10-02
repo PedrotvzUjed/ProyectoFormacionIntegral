@@ -17,5 +17,5 @@ urlpatterns = [
     path('<int:pk>/', eventosDetail.as_view(), name='retrieve-evento'),
     path('update/<int:pk>/', eventosUpdate.as_view(), name='actualizar-evento'),
     #path('put/<int:pk>/', eventosUpdate.as_view(), name='actualizar-evento'),
-     path('delete/<int:pk>/', eventosDelete.as_view(), name='eliminar-evento')
+    path('delete/<int:pk>/', eventosDelete.as_view(), name='eliminar-evento')
 ]

@@ -1,0 +1,6 @@
+media/
+vuefront/
+frontend/
+env/
+_pycache_/
+*.pyc
