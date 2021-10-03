@@ -1,12 +1,76 @@
 <template>
-  <div>
-
-  </div>
+  <v-data-table
+    v-model="selected"
+    :headers="headers"
+    :items="eventos"
+    :single-select="singleSelect"
+    :single-expand="singleExpand"
+    :expanded.sync="expanded"
+    :search="search"
+    item-key="id"
+    show-select
+    show-expand
+    class="elevation-1"
+  >
+  <template v-slot:top>
+    <v-toolbar flat>
+      <v-toolbar-title>Eventos</v-toolbar-title>
+      <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+    </v-toolbar>
+  </template>
+  <template v-slot:expanded-item="{ headers, item }">
+    <td :colspan="headers.length">
+      {{ item.descripcionEvento }}
+    </td>
+  </template>
+  </v-data-table>
 </template>
 
 <script>
+import EventosDataService from "../../services/EventosDataService";
+
 export default {
-    name: "formacionIntegral"
+    name: "formacionIntegral",
+    data() {
+      return {
+        eventos: [],
+        singleSelect: true,
+        selected: [],
+        singleExpand: true,
+        expanded: [],
+        search: '',
+        headers: [
+          { text: 'Id', align: 'start', sortable: true, value: 'id'},
+          { text: 'Titulo de evento', value: 'tituloEvento' },
+          { text: 'Unidad responsable', value: 'unidadResponsable' },
+          { text: 'Fecha de evento', sortable: true, value: 'fechaEvento' },
+          { text: 'Cupo', value: 'cupo' },
+          { text: 'Creditos', value: 'creditos' },
+        ],
+      };
+    },
+    methods: {
+      retrieveEventos() {
+        EventosDataService.getAll()
+          .then(response => {
+            this.eventos = response.data;
+            console.log(this.eventos);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      },
+    },
+    mounted() {
+      this.retrieveEventos();
+    }
 }
 </script>
 
