@@ -225,7 +225,7 @@
 </template>
 
 <script>
-import EventosDataService from "../services/EventosDataService";
+import EventosDataService from "../../services/EventosDataService";
 import swal from 'sweetalert'
 export default {
   name: "evento",

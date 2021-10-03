@@ -6,19 +6,41 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: "/",
-    alias: "/eventos",
+    alias: "/inicio",
+    name: "inicio",
+    component: () => import("../components/Inicio")
+  },
+  /* Eventos */
+  {
+    path: "/eventos",
     name: "eventos",
-    component: () => import("../components/EventosList")
+    component: () => import("../components/Eventos/EventosList")
   },
   {
     path: "/eventos/:id",
     name: "evento-details",
-    component: () => import("../components/Eventos")
+    component: () => import("../components/Eventos/Eventos")
   },
   {
     path: "/add",
     name: "add",
-    component: () => import("../components/AddEventos")
+    component: () => import("../components/Eventos/AddEventos")
+  },
+  /* Formacion Integral */
+  {
+    path: "/formacionI",
+    name: "formacionIntegral",
+    component: () => import("../components/FormacionIntegral/FormacionIntegral")
+  },
+  {
+    path: "/fi-registro",
+    name: "registro",
+    component: () => import("../components/FormacionIntegral/Registro")
+  },
+  {
+    path: "/fi-asistencia",
+    name: "asistencia",
+    component: () => import("../components/FormacionIntegral/Asistencia")
   }
 ]
 

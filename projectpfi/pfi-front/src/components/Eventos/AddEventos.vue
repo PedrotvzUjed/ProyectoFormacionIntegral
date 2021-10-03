@@ -221,7 +221,9 @@
        <div class="form-group">
         <label for="categorias">Categoria del evento</label>
         <select v-model="eventos.categorias"  class="form-control" 
-        id="categorias" :required="!selected" name="categorias">
+        id="categorias" name="categorias">
+        <!-- <select v-model="eventos.categorias"  class="form-control" 
+        id="categorias" :required="!selected" name="categorias"> -->
         <option disabled value="">Seleccione la categoria del evento</option>
         <option>Música</option>
         <option>Teatro</option>
@@ -259,7 +261,7 @@
 
 <script>
 import swal from 'sweetalert'		
-import EventosDataService from "../services/EventosDataService";
+import EventosDataService from "../../services/EventosDataService";
 
 export default {
   name: "add-evento",

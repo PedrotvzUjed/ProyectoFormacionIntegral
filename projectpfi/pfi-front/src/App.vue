@@ -13,39 +13,20 @@
 
       <v-divider></v-divider>
 
-      <v-list>
-        <v-list-item to="/eventos">
+      <v-list v-for="item in items"
+          :key="item.title"
+          link>
+        <v-list-item :to="item.route">
           <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
+            <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>Inicio</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-  
-      <v-list>
-        <v-list-item to="/eventos">
-          <v-list-item-icon>
-            <v-icon>mdi-calendar-text</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Eventos</v-list-item-title>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
 
-      <v-list>
-        <v-list-item to="/add">
-          <v-list-item-icon>
-            <v-icon>mdi-calendar-plus</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Capturar eventos</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
     </v-navigation-drawer>
 
     <v-app-bar color="#a4010b" app>
@@ -63,8 +44,6 @@
 
       <!-- Provides the application the proper gutter -->
       <v-container fluid>
-
-        <!-- If using vue-router -->
         <router-view></router-view>
       </v-container>
     </v-main>
@@ -85,7 +64,13 @@ export default {
   },
 
   data: () => ({
-    drawer: true
+    drawer: true,
+    items: [
+      { title: 'Inicio', icon: 'mdi-home', route: '/' },
+      { title: 'Eventos', icon: 'mdi-calendar-text', route: '/eventos' },
+      { title: 'Capturar Eventos', icon: 'mdi-calendar-plus', route: '/add' },
+      { title: 'Formación Integral', icon: 'mdi-home-city', route: '/formacionI' }
+    ],
   }),
 };
 </script>

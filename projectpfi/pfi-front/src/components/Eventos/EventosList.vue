@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import EventosDataService from "../services/EventosDataService";
+import EventosDataService from "../../services/EventosDataService";
 
 export default {
   name: "eventos-list",
