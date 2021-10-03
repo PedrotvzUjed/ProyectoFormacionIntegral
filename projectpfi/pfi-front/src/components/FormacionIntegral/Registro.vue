@@ -1,7 +1,12 @@
 <template>
-  <div>
+  <v-container>
+    <v-row>
+      
+    </v-row>
+    <v-row>
 
-  </div>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

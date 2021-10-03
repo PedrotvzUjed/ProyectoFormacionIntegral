@@ -33,12 +33,12 @@ const routes = [
     component: () => import("../components/FormacionIntegral/FormacionIntegral")
   },
   {
-    path: "/fi-registro",
+    path: "/fi-registro/:id",
     name: "registro",
     component: () => import("../components/FormacionIntegral/Registro")
   },
   {
-    path: "/fi-asistencia",
+    path: "/fi-asistencia/:id",
     name: "asistencia",
     component: () => import("../components/FormacionIntegral/Asistencia")
   }
