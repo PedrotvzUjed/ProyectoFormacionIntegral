@@ -10,4 +10,7 @@ class formacionSerializer(serializers.ModelSerializer):
                   'nombre',  
                   'matricula',
                   'asistencia',
-                  'evento_id')
+                  'evento_id',
+                  'alumno_id',
+                  'created',
+                  'modified')
