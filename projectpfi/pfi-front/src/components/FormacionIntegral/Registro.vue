@@ -1,13 +1,30 @@
 <template>
   <v-container>
     <v-row>
+      <v-col>
+        <v-btn
+          depressed
+          elevation="2"
+          plain
+          block
+        >Registro</v-btn>
+      </v-col>
+      <v-col>
+        <v-btn
+          depressed
+          elevation="2"
+          plain
+          block
+          @click="sendEvent()"
+        >Asistencia</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-data-table
         v-model="selected"
         :headers="headers"
         :items="alumnos"
         :single-select="singleSelect"
-        :single-expand="singleExpand"
-        :expanded.sync="expanded"
         :search="search"
         item-key="matricula"
         show-select
@@ -26,15 +43,7 @@
               ></v-text-field>
           </v-toolbar>
         </template>
-        <template v-slot:expanded-item="{ headers, item }">
-          <td :colspan="headers.length">
-            {{ item.descripcionEvento }}
-          </td>
-        </template>
       </v-data-table>
-    </v-row>
-    <v-row>
-
     </v-row>
   </v-container>
 </template>
@@ -55,7 +64,7 @@ export default {
           { text: 'Nombres', value: 'nombres' },
           { text: 'Apellidos', value: 'apellidos' },
           { text: 'Carrera', sortable: true, value: 'carrera' },
-          { text: 'semestre', value: 'semestre' }
+          { text: 'Semestre', value: 'semestre' }
         ],
       };
     },
@@ -69,6 +78,10 @@ export default {
           .catch(e => {
             console.log(e);
           });
+      },
+      sendEvent() {
+        console.log(this.$route.params.id)
+        this.$router.push("/fi-asistencia/"+this.$route.params.id);
       }
     },
     mounted() {
