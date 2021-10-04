@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #url(r'^', include('eventos.urls')),
     path('eventos/', include('eventos.urls')), #new
-    path('alumnos/', include('Alumnos.urls'))
+    path('alumnos/', include('Alumnos.urls')),
+    path('formacionIn/', include('FormacionIntegral.urls'))
 ]

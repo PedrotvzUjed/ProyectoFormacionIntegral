@@ -11,27 +11,27 @@ from rest_framework.decorators import api_view
 
 from rest_framework import generics
 
-class registroCreate(generics.CreateAPIView):
+class registroInCreate(generics.CreateAPIView):
     # API endpoint that allows creation of a new customer
     queryset = FormacionIntegral.objects.all(),
     serializer_class = formacionSerializer
 
-class registroList(generics.ListAPIView):
+class registroInList(generics.ListAPIView):
     # API endpoint that allows creation of a new customer
     queryset = FormacionIntegral.objects.all(),
     serializer_class = formacionSerializer
 
-class registroDetail(generics.RetrieveAPIView):
+class registroInDetail(generics.RetrieveAPIView):
     # API endpoint that allows creation of a new customer
     queryset = FormacionIntegral.objects.all(),
     serializer_class = formacionSerializer
 
-class registroUpdate(generics.RetrieveUpdateAPIView):
+class registroInUpdate(generics.RetrieveUpdateAPIView):
     # API endpoint that allows creation of a new customer
     queryset = FormacionIntegral.objects.all(),
     serializer_class = formacionSerializer
 
-class registroDelete(generics.RetrieveDestroyAPIView):
+class registroInDelete(generics.RetrieveDestroyAPIView):
     # API endpoint that allows creation of a new customer
     queryset = FormacionIntegral.objects.all(),
     serializer_class = formacionSerializer
