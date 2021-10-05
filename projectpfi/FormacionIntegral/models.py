@@ -5,9 +5,9 @@ from Alumnos.models import Alumnos
 # Create your models here.
 class FormacionIntegral(models.Model):
     nombre = models.CharField('nombre', max_length=50)
-    matricula = models.IntegerField('matricula')
+    matricula = models.CharField('matricula', max_length=10)
     asistencia = models.IntegerField('asistencia', null=True)
-    evento_id = models.ForeignKey(eventos, null=True, verbose_name='evento', on_delete=models.CASCADE)
-    alumno_id = models.ForeignKey(Alumnos, null=True, verbose_name='alumno', on_delete=models.CASCADE)
+    evento = models.ForeignKey(eventos, null=True, verbose_name='evento_id', on_delete=models.CASCADE)
+    alumno = models.ForeignKey(Alumnos, null=True, verbose_name='alumno_id', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

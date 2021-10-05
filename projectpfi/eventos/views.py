@@ -10,6 +10,7 @@ from .serializers import eventosSerializer
 from rest_framework.decorators import api_view
 
 from rest_framework import generics
+import django_filters.rest_framework
 
 class eventosCreate(generics.CreateAPIView):
     # API endpoint that allows creation of a new customer
@@ -21,6 +22,8 @@ class eventosList(generics.ListAPIView):
     # API endpoint that allows customer to be viewed.
     queryset = eventos.objects.all()
     serializer_class = eventosSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_fields = ['id', 'creditos']
 
 ...
 class eventosDetail(generics.RetrieveAPIView):

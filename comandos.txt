@@ -13,6 +13,7 @@ pip install djangorestframework==3.12.4
 pip install django-cors-headers==3.7.0
 pip install psycopg2==2.9.1
 pip install Pillow
+pip install django-filter
 
 python manage.py makemigrations
 python manage.py migrate

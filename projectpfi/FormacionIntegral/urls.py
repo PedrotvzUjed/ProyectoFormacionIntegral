@@ -2,12 +2,13 @@ from django.conf.urls import url
 from FormacionIntegral import views 
  
 from django.urls import include, path
-from .views import registroInCreate, registroInList, registroInDetail, registroInUpdate, registroInDelete
+from .views import FormacionInCreate, FormacionInList, FormacionInDetail, FormacionInUpdate, FormacionInDelete
 
 urlpatterns = [
-    path('create/', registroInCreate.as_view(), name='crear-Registro'),
-    path('', registroInList.as_view()),
-    path('<int:pk>/', registroInDetail.as_view(), name='retrieve-Registro'),
-    path('update/<int:pk>/', registroInUpdate.as_view(), name='actualizar-Registro'),
-    path('delete/<int:pk>/', registroInDelete.as_view(), name='eliminar-Registro')
+    path('create/', FormacionInCreate.as_view(), name='crear-Registro'),
+    path('', FormacionInList.as_view()),
+    path('<int:pk>/', FormacionInDetail.as_view(), name='retrieve-Registro'),
+    path('update/<int:pk>/', FormacionInUpdate.as_view(), name='actualizar-Registro'),
+    #path('put/<int:pk>/', FormacionInUpdate.as_view(), name='actualizar-Registro'),
+    path('delete/<int:pk>/', FormacionInDelete.as_view(), name='eliminar-Registro')
 ]

@@ -1,8 +1,8 @@
 import http from "../http-common";
 
 class FormacionInDataService {
-  getAll() {
-    return http.get("/formacionIn");
+  getAll(evento_id) {
+    return http.get(`/formacionIn/?evento_id=${evento_id}`);
   }
 
   get(id) {
