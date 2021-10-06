@@ -21,19 +21,53 @@
     </v-row>
     <v-row>
       <v-data-table
-        v-model="selected"
+        
         :headers="headers"
         :items="alumnos"
-        :single-select="singleSelect"
         :search="search"
-        item-key="matricula"
-        show-select
+        item-key="id"
         class="elevation-1"
       >
         <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title>Alumnos Registrados al evento</v-toolbar-title>
           </v-toolbar>
+        </template>
+        <template v-slot:item.eliminar="{ item }">
+          <v-btn
+            class="ma-2"
+            color="red"
+            dark
+            @click="deleteAlumno(item.id)"
+          >
+            <v-icon
+              dark
+            >
+              mdi-delete
+            </v-icon>
+          </v-btn>
+        </template>
+        <template v-slot:item.apAsistencia="{ item }">
+         <v-btn
+            class="ma-2"
+            color=""
+            @click="aplicarAsistencia(item, 1)"
+          >
+            <v-icon>
+              mdi-checkbox-marked-circle
+            </v-icon>
+          </v-btn>
+          <v-btn
+            class="ma-2"
+            color=""
+            @click="aplicarAsistencia(item, 0)"
+          >
+            <v-icon
+              dark
+            >
+              mdi-cancel
+            </v-icon>
+          </v-btn>
         </template>
       </v-data-table>
     </v-row>
@@ -42,19 +76,20 @@
 
 <script>
 import FormacionInDataService from "../../services/FormacionInDataService";
+import swal from 'sweetalert'
 
 export default {
     name: "asistencia",
     data() {
       return {
         alumnos: [],
-        singleSelect: true,
-        selected: [],
         search: '',
         headers: [
           { text: 'Nombre', align: 'start', sortable: true, value: 'nombre'},
-          { text: 'Natricula', value: 'matricula' },
-          { text: 'asistencia', value: 'asistencia' }
+          { text: 'Matricula', value: 'matricula' },
+          { text: 'Asistencia', align: 'center', value: 'asistencia' },
+          { text: 'Aplicar Asistencia', align: 'center', value: 'apAsistencia'},
+          { text: 'Eliminar', align: 'center', value: 'eliminar'}
         ],
       };
     },
@@ -73,6 +108,35 @@ export default {
             console.log(e);
           });
       },
+      aplicarAsistencia(item, asistencia){
+        item.asistencia = asistencia;
+
+        FormacionInDataService.update(item.id, item)
+        .then(response => {
+          console.log(response.data);
+            if(asistencia == 1){
+              swal("Asistio al evento","","success")
+            }else{
+              swal("No asistio al evento","","error")
+            }
+        })
+        .catch(e => {
+          console.log(e);
+           swal("No se pudo actualizar la asistencia","","error")
+        });
+      },
+      deleteAlumno(id){
+        FormacionInDataService.delete(id)
+        .then(response => {
+          console.log(response.data);
+          swal("El alumno se elimino correctamente!","","success")
+        })
+        .catch(e => {
+          console.log(e);
+          swal("Ocurrio un error al eliminar al Alumno","","error")
+        });
+        this.retrieveAlumnos(this.$route.params.id);
+      }
     },
     mounted() {
       this.retrieveAlumnos(this.$route.params.id);
