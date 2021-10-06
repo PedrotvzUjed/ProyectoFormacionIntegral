@@ -45,18 +45,28 @@
         </template>
       </v-data-table>
     </v-row>
+    <v-row>
+      <v-btn
+          depressed
+          elevation="2"
+          plain
+          block
+          @click="registrarAlumnos()"
+        >Registrar Alumnos</v-btn>
+    </v-row>
   </v-container>
 </template>
 
 <script>
 import AlumnosDataService from "../../services/AlumnosDataService";
+import FormacionInDataService from "../../services/FormacionInDataService";
 
 export default {
     name: "registro",
     data() {
       return {
         alumnos: [],
-        singleSelect: true,
+        singleSelect: false,
         selected: [],
         search: '',
         headers: [
@@ -66,6 +76,15 @@ export default {
           { text: 'Carrera', sortable: true, value: 'carrera' },
           { text: 'Semestre', value: 'semestre' }
         ],
+        registro: {
+          id: null,
+          nombre: "",
+          matricula: "",
+          asistencia: null,
+          evento: null,
+          alumno: null,
+        },
+        submitted: false
       };
     },
     methods: {
@@ -82,6 +101,29 @@ export default {
       sendEvent() {
         console.log(this.$route.params.id)
         this.$router.push("/fi-asistencia/"+this.$route.params.id);
+      },
+      registrarAlumnos(){
+        console.log(this.selected)
+
+        for (let alumno of this.selected) {
+          var data = {
+            nombre: alumno.nombres + ' ' + alumno.apellidos,
+            matricula: alumno.matricula,
+            asistencia: null,
+            evento: this.$route.params.id,
+            alumno: alumno.id,
+          }
+          
+          FormacionInDataService.create(data)
+            .then(response => {
+              this.eventos.id = response.data.id;
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
+        this.sendEvent();
       }
     },
     mounted() {
