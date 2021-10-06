@@ -48,18 +48,39 @@
           </v-btn>
         </template>
         <template v-slot:item.apAsistencia="{ item }">
-         <v-btn
+         <v-btn v-if="item.asistencia != 1"
             class="ma-2"
-            color=""
             @click="aplicarAsistencia(item, 1)"
           >
             <v-icon>
               mdi-checkbox-marked-circle
             </v-icon>
           </v-btn>
-          <v-btn
+          <v-btn v-if="item.asistencia == 1"
+            class="ma-2"
+            color="success"
+            dark
+            @click="aplicarAsistencia(item, 1)"
+          >
+            <v-icon>
+              mdi-checkbox-marked-circle
+            </v-icon>
+          </v-btn>
+          <v-btn v-if="item.asistencia != 0"
             class="ma-2"
             color=""
+            @click="aplicarAsistencia(item, 0)"
+          >
+            <v-icon
+              dark
+            >
+              mdi-cancel
+            </v-icon>
+          </v-btn>
+          <v-btn v-if="item.asistencia == 0"
+            class="ma-2"
+            color="red"
+            dark
             @click="aplicarAsistencia(item, 0)"
           >
             <v-icon
@@ -87,7 +108,7 @@ export default {
         headers: [
           { text: 'Nombre', align: 'start', sortable: true, value: 'nombre'},
           { text: 'Matricula', value: 'matricula' },
-          { text: 'Asistencia', align: 'center', value: 'asistencia' },
+          /* { text: 'Asistencia', align: 'center', value: 'asistencia' }, */
           { text: 'Aplicar Asistencia', align: 'center', value: 'apAsistencia'},
           { text: 'Eliminar', align: 'center', value: 'eliminar'}
         ],
