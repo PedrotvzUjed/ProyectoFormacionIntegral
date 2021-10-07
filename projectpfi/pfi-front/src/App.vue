@@ -69,7 +69,8 @@ export default {
       { title: 'Inicio', icon: 'mdi-home', route: '/' },
       { title: 'Eventos', icon: 'mdi-calendar-text', route: '/eventos' },
       { title: 'Capturar Eventos', icon: 'mdi-calendar-plus', route: '/add' },
-      { title: 'Formación Integral', icon: 'mdi-home-city', route: '/formacionI' }
+      { title: 'Formación Integral', icon: 'mdi-home-city', route: '/formacionI' },
+      { title: 'Alumnos', icon: 'mdi-account-box-multiple', route: '/fi-alumnos'}
     ],
   }),
 };
