@@ -23,8 +23,13 @@ const routes = [
   },
   {
     path: "/add",
-    name: "add",
+    name: "add-evento",
     component: () => import("../components/Eventos/AddEventos")
+  },
+  {
+    path: "/calendario",
+    name: "calendario",
+    component: () => import("../components/Eventos/CalendarioEventos")
   },
   /* Formacion Integral */
   {

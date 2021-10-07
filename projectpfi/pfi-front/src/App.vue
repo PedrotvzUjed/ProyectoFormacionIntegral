@@ -70,7 +70,8 @@ export default {
       { title: 'Eventos', icon: 'mdi-calendar-text', route: '/eventos' },
       { title: 'Capturar Eventos', icon: 'mdi-calendar-plus', route: '/add' },
       { title: 'Formación Integral', icon: 'mdi-home-city', route: '/formacionI' },
-      { title: 'Alumnos', icon: 'mdi-account-box-multiple', route: '/fi-alumnos'}
+      { title: 'Alumnos', icon: 'mdi-account-box-multiple', route: '/fi-alumnos'},
+      { title: 'Calendario de Eventos', icon: 'mdi-calendar', route: '/calendario'}
     ],
   }),
 };
