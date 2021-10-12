@@ -1,4 +1,6 @@
 import http from "../http-common";
+import axios from "axios";
+const API = "http://127.0.0.1:8000";
 
 class EventosDataService {
   getAll() {
@@ -10,7 +12,7 @@ class EventosDataService {
   }
 
   create(data) {
-    return http.post("/eventos/create/", data);
+    return axios.post(API+"/eventos/create/", data);
   }
 
   update(id, data) {
@@ -26,6 +28,14 @@ class EventosDataService {
   }
   findByTitle(tituloEvento) {
     return http.get(`/eventos?tituloEvento=${tituloEvento}`);
+  }
+
+  /* Calendario */
+  createCalendario(data) {
+    return axios.post(API+"/eventos/create/calendario/", data);
+  }
+  getAllCalendario() {
+    return axios.get(API+"/eventos/calendario");
   }
 }
 

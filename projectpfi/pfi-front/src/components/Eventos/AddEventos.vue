@@ -282,13 +282,22 @@ export default {
         descripcion:"",
         creditos:"",
         categorias:""
-
       },
-      submitted: false
+      
+      submitted: false,
+      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
     };
   },
   methods: {
     saveEvento() {
+      this.createEvento();
+    },
+    
+    newEvento() {
+      this.submitted = false;
+      this.eventos = {};
+    },
+    createEvento(){
       var data = {
         tituloEvento: this.eventos.tituloEvento,
         unidadResponsable: this.eventos.unidadResponsable,
@@ -310,18 +319,37 @@ export default {
           this.eventos.id = response.data.id;
           console.log(response.data);
           this.submitted = true;
-           swal("El evento se ha registrado correctamente!!","","success")
+            swal("El evento se ha registrado correctamente!!","","success")
+            this.createCalendario(this.eventos);
         })
         .catch(e => {
           console.log(e);
-           swal("No se pudo registrar el evento. Verifique que lleno correctamente todos los campos.","","error")
+            swal("No se pudo registrar el evento. Verifique que lleno correctamente todos los campos.","","error")
         });
     },
-    
-    newEvento() {
-      this.submitted = false;
-      this.eventos = {};
-    }
+    createCalendario(dataEvento){
+      var campos = {
+        name : dataEvento.tituloEvento,
+        color : this.colors[this.rnd(0, this.colors.length - 1)],
+        start : dataEvento.fechaEvento + ' ' + dataEvento.inicioEvento,
+        end : dataEvento.fechaEvento + ' ' + dataEvento.finEvento,
+        details : dataEvento.descripcionEvento,
+        evento : dataEvento.id
+      }
+      EventosDataService.createCalendario(campos)
+        .then(response => {
+          console.log(response.data);
+          this.submitted = true;
+            swal("El evento se registro y agrego al calendario!!","","success")
+        })
+        .catch(e => {
+          console.log(e);
+            swal("No se pudo agregar al calendario","","error")
+        });
+    },
+    rnd (a, b) {
+      return Math.floor((b - a + 1) * Math.random()) + a
+    },
   }
 };
 </script>

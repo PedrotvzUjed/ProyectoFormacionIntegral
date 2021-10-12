@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <v-data-table
       v-model="selected"
       :headers="headers"
@@ -40,7 +40,7 @@
       >Registro y Asistencia</v-btn>
     </v-row>
     
-  </div>
+  </v-container>
 </template>
 
 <script>
