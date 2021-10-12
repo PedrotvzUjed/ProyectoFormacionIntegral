@@ -1,5 +1,5 @@
 from rest_framework import serializers 
-from .models import eventos
+from .models import eventos, eventosCalendario 
  
  
 class eventosSerializer(serializers.ModelSerializer):
@@ -21,5 +21,19 @@ class eventosSerializer(serializers.ModelSerializer):
                   'descripcion',
                   'creditos',
                   'categorias')
+        
+        #fields = '__all__'
+
+class calendarioSerializer(serializers.ModelSerializer):
+ 
+    class Meta:
+        model = eventosCalendario
+        fields = ('id',
+                  'name',  
+                  'color',
+                  'start',
+                  'end',
+                  'details',
+                  'evento')
         
         #fields = '__all__'

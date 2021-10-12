@@ -5,8 +5,8 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
  
-from .models import eventos
-from .serializers import eventosSerializer
+from .models import eventos, eventosCalendario 
+from .serializers import eventosSerializer, calendarioSerializer
 from rest_framework.decorators import api_view
 
 from rest_framework import generics
@@ -43,3 +43,14 @@ class eventosDelete(generics.RetrieveDestroyAPIView):
     serializer_class = eventosSerializer
 
 #RetrieveUpdateDestroyAPIView
+
+#Clases de calendario
+class calendarioCreate(generics.CreateAPIView):
+    # API endpoint that allows creation of a new customer
+    queryset = eventosCalendario.objects.all(),
+    serializer_class = calendarioSerializer
+
+class calendarioList(generics.ListAPIView):
+    # API endpoint that allows customer to be viewed.
+    queryset = eventosCalendario.objects.all()
+    serializer_class = calendarioSerializer

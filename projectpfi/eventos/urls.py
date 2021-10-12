@@ -2,7 +2,7 @@ from django.conf.urls import url
 from eventos import views 
  
 from django.urls import include, path
-from .views import eventosCreate, eventosList, eventosDetail, eventosUpdate, eventosDelete
+from .views import eventosCreate, eventosList, eventosDetail, eventosUpdate, eventosDelete, calendarioCreate, calendarioList
 
 
 #urlpatterns = [ 
@@ -13,7 +13,9 @@ from .views import eventosCreate, eventosList, eventosDetail, eventosUpdate, eve
 
 urlpatterns = [
     path('create/', eventosCreate.as_view(), name='crear-evento'),
+    path('create/calendario/', calendarioCreate.as_view(), name='crear-calendario'),
     path('', eventosList.as_view()),
+    path('calendario', calendarioList.as_view()),
     path('<int:pk>/', eventosDetail.as_view(), name='retrieve-evento'),
     path('update/<int:pk>/', eventosUpdate.as_view(), name='actualizar-evento'),
     #path('put/<int:pk>/', eventosUpdate.as_view(), name='actualizar-evento'),
