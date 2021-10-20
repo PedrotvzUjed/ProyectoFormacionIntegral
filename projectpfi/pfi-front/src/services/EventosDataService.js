@@ -32,10 +32,10 @@ class EventosDataService {
 
   /* Calendario */
   createCalendario(data) {
-    return axios.post(API+"/eventos/create/calendario/", data);
+    return http.post("/eventos/create/calendario/", data);
   }
   getAllCalendario() {
-    return axios.get(API+"/eventos/calendario");
+    return http.get("/eventos/calendario");
   }
 }
 

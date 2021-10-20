@@ -51,7 +51,7 @@
           elevation="2"
           plain
           block
-          @click="registrarAlumnos()"
+          @click="validarAlumnos()"
         >Registrar Alumnos</v-btn>
     </v-row>
   </v-container>
@@ -102,31 +102,47 @@ export default {
         console.log(this.$route.params.id)
         this.$router.push("/fi-asistencia/"+this.$route.params.id);
       },
-      registrarAlumnos(){
+      validarAlumnos(){
         console.log(this.selected)
 
         for (let alumno of this.selected) {
-          var data = {
-            nombre: alumno.nombres + ' ' + alumno.apellidos,
-            matricula: alumno.matricula,
-            asistencia: null,
-            evento: this.$route.params.id,
-            alumno: alumno.id,
-          }
-          
-          FormacionInDataService.create(data)
+          FormacionInDataService.getUserExist(this.$route.params.id, alumno.matricula)
             .then(response => {
-              this.eventos.id = response.data.id;
-              console.log(response.data);
+              if(response.data.length == 1){
+                console.log("alumno existente: " + alumno.nombres + ' ' + alumno.apellidos);
+              } else {
+                console.log("alumno registrado: " + alumno.nombres + ' ' + alumno.apellidos);
+                this.registrarAlumnos(alumno);
+              }
             })
-            .catch(e => {
-              console.log(e);
+            .catch(e =>{
+              console.log(e)
             });
         }
-        this.sendEvent();
+      },
+      registrarAlumnos(alumno){
+        var data = {
+          nombre: alumno.nombres + ' ' + alumno.apellidos,
+          matricula: alumno.matricula,
+          asistencia: null,
+          evento: this.$route.params.id,
+          alumno: alumno.id,
+        }
+        
+        FormacionInDataService.create(data)
+          .then(response => {
+            this.eventos.id = response.data.id;
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
       }
     },
     mounted() {
+      
+    },
+    created() {
       this.retrieveAlumnos();
     }
 }

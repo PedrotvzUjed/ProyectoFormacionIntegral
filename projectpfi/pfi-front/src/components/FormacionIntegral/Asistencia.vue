@@ -21,12 +21,12 @@
     </v-row>
     <v-row>
       <v-data-table
-        
         :headers="headers"
         :items="alumnos"
         :search="search"
         item-key="id"
         class="elevation-1"
+        @change="retrieveAlumnos"
       >
         <template v-slot:top>
           <v-toolbar flat>
@@ -151,17 +151,20 @@ export default {
         .then(response => {
           console.log(response.data);
           swal("El alumno se elimino correctamente!","","success")
+          this.retrieveAlumnos(this.$route.params.id);
         })
         .catch(e => {
           console.log(e);
           swal("Ocurrio un error al eliminar al Alumno","","error")
         });
-        this.retrieveAlumnos(this.$route.params.id);
       }
     },
     mounted() {
+      
+    },
+    created (){
       this.retrieveAlumnos(this.$route.params.id);
-    }
+    },
 }
 </script>
 

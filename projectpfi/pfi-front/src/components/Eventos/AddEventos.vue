@@ -320,7 +320,7 @@ export default {
           console.log(response.data);
           this.submitted = true;
             swal("El evento se ha registrado correctamente!!","","success")
-            this.createCalendario(this.eventos);
+            this.createCalendario(response.data);
         })
         .catch(e => {
           console.log(e);
