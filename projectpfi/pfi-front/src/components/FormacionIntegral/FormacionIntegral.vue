@@ -1,50 +1,51 @@
 <template>
   <v-container>
-    <v-data-table
-      v-model="selected"
-      :headers="headers"
-      :items="eventos"
-      :single-select="singleSelect"
-      :single-expand="singleExpand"
-      :expanded.sync="expanded"
-      :search="search"
-      item-key="id"
-      show-select
-      show-expand
-      class="elevation-1"
-    >
-      <template v-slot:top>
-        <v-toolbar flat>
-          <v-toolbar-title>Eventos</v-toolbar-title>
-          <v-spacer></v-spacer>
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Buscar"
-              single-line
-              hide-details
-            ></v-text-field>
-        </v-toolbar>
-      </template>
-      <template v-slot:expanded-item="{ headers, item }">
-        <td :colspan="headers.length">
-          {{ item.descripcionEvento }}
-        </td>
-      </template>
-    </v-data-table>
     <v-row>
-      <v-btn
-        depressed
-        elevation="2"
-        @click="sendEvent(selected)"
-      >Registro y Asistencia</v-btn>
+      <v-col>
+        <v-data-table
+          v-model="selected"
+          :headers="headers"
+          :items="eventos"
+          :single-select="singleSelect"
+          :search="search"
+          item-key="id"
+          show-select
+          class="elevation-1"
+        >
+          <template v-slot:top>
+            <v-toolbar flat>
+              <v-toolbar-title>Eventos</v-toolbar-title>
+              <v-spacer></v-spacer>
+                <v-text-field
+                  v-model="search"
+                  append-icon="mdi-magnify"
+                  label="Buscar"
+                  single-line
+                  hide-details
+                ></v-text-field>
+            </v-toolbar>
+          </template>
+        </v-data-table>
+        <!-- <v-row>
+          <v-btn
+            depressed
+            elevation="2"
+            @click="sendEvent(selected)"
+          >Registro y Asistencia</v-btn>
+        </v-row> -->
+      </v-col>
+      <v-col>
+        <info-Evento :evento = "selected[0]"></info-Evento>
+      </v-col>
     </v-row>
+    
     
   </v-container>
 </template>
 
 <script>
 import EventosDataService from "../../services/EventosDataService";
+import infoEvento from "../Eventos/InfoEvento";
 
 export default {
     name: "formacionIntegral",
@@ -52,7 +53,22 @@ export default {
       return {
         eventos: [],
         singleSelect: true,
-        selected: [],
+        selected: [
+          {
+            tituloEvento: '',
+            unidadResponsable: '',
+            descripcionEvento: '',
+            eventoDedicadoA:'',
+            fechaEvento:'',
+            inicioEvento:'',
+            finEvento:'',
+            sede:'',
+            cupo:'',
+            descripcion:'',
+            creditos:'',
+            categorias:'',
+          }
+        ],
         singleExpand: true,
         expanded: [],
         search: '',
@@ -66,6 +82,9 @@ export default {
         ],
       };
     },
+    components: {
+      infoEvento
+    },
     methods: {
       retrieveEventos() {
         EventosDataService.getAll()
@@ -77,16 +96,17 @@ export default {
             console.log(e);
           });
       },
-      sendEvent(evento) {
+/*       sendEvent(evento) {
         console.log(evento)
-        this.$router.push("/fi-registro/"+evento[0].id);
-      }
+        this.$router.push("/fi-registro/"+evento.id);
+      } */
     },
     mounted() {
       
     },
     created(){
       this.retrieveEventos();
+      console.log(this.ejemplo)
     }
 }
 </script>
