@@ -90,6 +90,9 @@
             </v-icon>
           </v-btn>
         </template>
+        <template v-slot:no-data>
+          No se encuentran alumnos registrados actualmente!
+        </template>
       </v-data-table>
     </v-row>
   </v-container>
@@ -160,7 +163,7 @@ export default {
       }
     },
     mounted() {
-      
+      this.retrieveAlumnos(this.$route.params.id);
     },
     created (){
       this.retrieveAlumnos(this.$route.params.id);

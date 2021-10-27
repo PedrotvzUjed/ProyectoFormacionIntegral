@@ -25,6 +25,9 @@
                 ></v-text-field>
             </v-toolbar>
           </template>
+          <template v-slot:no-data>
+            Espere un momento!
+          </template>
         </v-data-table>
         <!-- <v-row>
           <v-btn
