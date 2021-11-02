@@ -102,17 +102,7 @@
                 :color="selectedEvent.color"
                 dark
               >
-                <v-btn icon>
-                  <v-icon>mdi-pencil</v-icon>
-                </v-btn>
                 <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-btn icon>
-                  <v-icon>mdi-heart</v-icon>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
               </v-toolbar>
               <v-card-text>
                 <span v-html="selectedEvent.details"></span>
@@ -121,45 +111,104 @@
                 <v-btn
                   text
                   color="secondary"
-                  @click="selectedOpen = false"
+                  @click="sendEvent(selectedEvent.evento), selectedOpen = false"
                 >
-                  Cancel
+                  Más Información
                 </v-btn>
               </v-card-actions>
             </v-card>
           </v-menu>
         </v-sheet>
       </v-col>
+      <v-col>
+        <v-data-table
+          :headers="headers"
+          :items="eventsToday"
+          item-key="id"
+          class="elevation-1"
+        >
+          <template v-slot:top>
+            <v-toolbar flat>
+              <v-toolbar-title>Eventos del dia de hoy!!</v-toolbar-title>
+            </v-toolbar>
+          </template>
+          <template v-slot:item.detalles="{ item }">
+            <v-btn
+              class="ma-2"
+              @click="sendEvent(item)"
+            >
+              <v-icon>
+                mdi-details
+              </v-icon>
+            </v-btn>
+          </template>
+          <template v-slot:no-data>
+            No hay eventos el dia de hoy!
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
+    <v-row>
+      <info-Evento :evento = "selected"></info-Evento>
     </v-row>
   </v-container>
 </template>
 
 <script>
-/* import axios from 'axios'; */
 import EventosDataService from "../../services/EventosDataService";
+import infoEvento from "../Eventos/InfoEvento";
 
 export default {
     name: "calendario",
-    data: () => ({
-      focus: '',
-      type: 'month',
-      typeToLabel: {
-        'month': 'Mes',
-        'week': 'Semana',
-        'day': 'Dia',
-        '4day': '4 Dias',
-      },
-      selectedEvent: {},
-      selectedElement: null,
-      selectedOpen: false,
-      events: [],
-      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-    }),
+    data() {
+      return {
+        focus: '',
+        type: 'month',
+        typeToLabel: {
+          'month': 'Mes',
+          'week': 'Semana',
+          'day': 'Dia',
+          '4day': '4 Dias',
+        },
+        selectedEvent: {},
+        selectedElement: null,
+        selectedOpen: false,
+        events: [],
+        eventsToday: [],
+        headers: [
+          { text: 'Titulo de evento', value: 'tituloEvento' },
+          { text: 'Unidad responsable', value: 'unidadResponsable' },
+          { text: 'Cupo', value: 'cupo' },
+          { text: 'Detalles', value: 'detalles'}
+        ],
+        selected: 
+            {
+              tituloEvento: '',
+              unidadResponsable: '',
+              descripcionEvento: '',
+              eventoDedicadoA:'',
+              fechaEvento:'',
+              inicioEvento:'',
+              finEvento:'',
+              sede:'',
+              cupo:'',
+              descripcion:'',
+              creditos:'',
+              categorias:'',
+            },
+        colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
+      }  
+    },
+    components: {
+      infoEvento
+    },
     mounted () {
-      this.$refs.calendar.checkChange()
+      this.$refs.calendar.checkChange();
+      console.log(this.selected);
     },
     created (){
-      this.getEventos();
+      this.getEvents();
+      this.getEventsToday();
     },
     methods: {
       viewDay ({ date }) {
@@ -193,7 +242,7 @@ export default {
         }
         nativeEvent.stopPropagation()
       },
-      getEventos() {
+      getEvents() {
         EventosDataService.getAllCalendario()
           .then(response => {
             this.events = response.data;
@@ -203,6 +252,35 @@ export default {
             console.log(e);
           });
       },
+      getEventsToday(){
+        EventosDataService.getTodayEvents(this.getDate())
+          .then(response => {
+            this.eventsToday = response.data;
+          })
+          .catch(e =>{
+            console.log(e);
+          })
+      },
+      getDate(){
+        var dd = new Date();
+        var y = dd.getFullYear();
+        var m = dd.getMonth() + 1;
+        var d = dd.getDate();
+        m = m < 10 ? "0" + m: m;
+        d = d < 10 ? "0" + d: d;
+        var today = y + "-" + m + "-" + d;
+        return today;
+      },
+      sendEvent(id){
+        EventosDataService.get(id)
+          .then(response => {
+            this.selected = response.data;
+            console.log(this.selected);
+          })
+          .catch(e =>{
+            console.log(e);
+          });
+      }
     },
 }
 </script>

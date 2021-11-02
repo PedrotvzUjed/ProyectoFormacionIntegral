@@ -23,7 +23,7 @@ class eventosList(generics.ListAPIView):
     queryset = eventos.objects.all()
     serializer_class = eventosSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ['id', 'creditos']
+    filter_fields = ['id', 'creditos', 'fechaEvento']
 
 ...
 class eventosDetail(generics.RetrieveAPIView):
@@ -54,3 +54,5 @@ class calendarioList(generics.ListAPIView):
     # API endpoint that allows customer to be viewed.
     queryset = eventosCalendario.objects.all()
     serializer_class = calendarioSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_fields = ['id', 'start', 'evento']
