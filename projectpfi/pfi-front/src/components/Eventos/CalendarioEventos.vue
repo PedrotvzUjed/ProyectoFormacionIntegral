@@ -3,9 +3,7 @@
     <v-row class="fill-height">
       <v-col>
         <v-sheet height="64">
-          <v-toolbar
-            flat
-          >
+          <v-toolbar flat>
             <v-btn
               outlined
               class="mr-4"
@@ -14,24 +12,12 @@
             >
               Hoy
             </v-btn>
-            <v-btn
-              fab
-              text
-              small
-              color="grey darken-2"
-              @click="prev"
-            >
+            <v-btn fab text small color="grey darken-2" @click="prev">
               <v-icon small>
                 mdi-chevron-left
               </v-icon>
             </v-btn>
-            <v-btn
-              fab
-              text
-              small
-              color="grey darken-2"
-              @click="next"
-            >
+            <v-btn fab text small color="grey darken-2" @click="next">
               <v-icon small>
                 mdi-chevron-right
               </v-icon>
@@ -40,17 +26,9 @@
               {{ $refs.calendar.title }}
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-menu
-              bottom
-              right
-            >
+            <v-menu bottom right>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  outlined
-                  color="grey darken-2"
-                  v-bind="attrs"
-                  v-on="on"
-                >
+                <v-btn outlined color="grey darken-2" v-bind="attrs" v-on="on">
                   <span>{{ typeToLabel[type] }}</span>
                   <v-icon right>
                     mdi-menu-down
@@ -93,15 +71,8 @@
             :activator="selectedElement"
             offset-x
           >
-            <v-card
-              color="grey lighten-4"
-              min-width="350px"
-              flat
-            >
-              <v-toolbar
-                :color="selectedEvent.color"
-                dark
-              >
+            <v-card color="grey lighten-4" min-width="350px" flat>
+              <v-toolbar :color="selectedEvent.color" dark>
                 <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
               </v-toolbar>
               <v-card-text>
@@ -111,7 +82,9 @@
                 <v-btn
                   text
                   color="secondary"
-                  @click="sendEvent(selectedEvent.evento), selectedOpen = false"
+                  @click="
+                    sendEvent(selectedEvent.evento), (selectedOpen = false)
+                  "
                 >
                   Más Información
                 </v-btn>
@@ -126,6 +99,7 @@
           :items="eventsToday"
           item-key="id"
           class="elevation-1"
+          hide-default-footer
         >
           <template v-slot:top>
             <v-toolbar flat>
@@ -133,10 +107,7 @@
             </v-toolbar>
           </template>
           <template v-slot:item.detalles="{ item }">
-            <v-btn
-              class="ma-2"
-              @click="sendEvent(item)"
-            >
+            <v-btn class="ma-2" @click="sendEvent(item.id)">
               <v-icon>
                 mdi-details
               </v-icon>
@@ -148,8 +119,8 @@
         </v-data-table>
       </v-col>
     </v-row>
-    <v-row>
-      <info-Evento :evento = "selected"></info-Evento>
+    <v-row id="details">
+      <info-Evento :evento="selected"></info-Evento>
     </v-row>
   </v-container>
 </template>
@@ -159,132 +130,146 @@ import EventosDataService from "../../services/EventosDataService";
 import infoEvento from "../Eventos/InfoEvento";
 
 export default {
-    name: "calendario",
-    data() {
-      return {
-        focus: '',
-        type: 'month',
-        typeToLabel: {
-          'month': 'Mes',
-          'week': 'Semana',
-          'day': 'Dia',
-          '4day': '4 Dias',
-        },
-        selectedEvent: {},
-        selectedElement: null,
-        selectedOpen: false,
-        events: [],
-        eventsToday: [],
-        headers: [
-          { text: 'Titulo de evento', value: 'tituloEvento' },
-          { text: 'Unidad responsable', value: 'unidadResponsable' },
-          { text: 'Cupo', value: 'cupo' },
-          { text: 'Detalles', value: 'detalles'}
-        ],
-        selected: 
-            {
-              tituloEvento: '',
-              unidadResponsable: '',
-              descripcionEvento: '',
-              eventoDedicadoA:'',
-              fechaEvento:'',
-              inicioEvento:'',
-              finEvento:'',
-              sede:'',
-              cupo:'',
-              descripcion:'',
-              creditos:'',
-              categorias:'',
-            },
-        colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-      }  
+  name: "calendario",
+  data() {
+    return {
+      focus: "",
+      type: "month",
+      typeToLabel: {
+        month: "Mes",
+        week: "Semana",
+        day: "Dia",
+        "4day": "4 Dias",
+      },
+      selectedEvent: {},
+      selectedElement: null,
+      selectedOpen: false,
+      events: [],
+      eventsToday: [],
+      headers: [
+        { text: "Titulo de evento", value: "tituloEvento" },
+        { text: "Unidad responsable", value: "unidadResponsable" },
+        { text: "Cupo", value: "cupo" },
+        { text: "Detalles", value: "detalles" },
+      ],
+      selected: {
+        tituloEvento: "",
+        unidadResponsable: "",
+        descripcionEvento: "",
+        eventoDedicadoA: "",
+        fechaEvento: "",
+        inicioEvento: "",
+        finEvento: "",
+        sede: "",
+        cupo: "",
+        descripcion: "",
+        creditos: "",
+        categorias: "",
+      },
+      colors: [
+        "blue",
+        "indigo",
+        "deep-purple",
+        "cyan",
+        "green",
+        "orange",
+        "grey darken-1",
+      ],
+    };
+  },
+  components: {
+    infoEvento,
+  },
+  mounted() {
+    this.$refs.calendar.checkChange();
+    console.log(this.selected);
+  },
+  created() {
+    this.getEvents();
+    this.getEventsToday();
+  },
+  methods: {
+    viewDay({ date }) {
+      this.focus = date;
+      this.type = "day";
     },
-    components: {
-      infoEvento
+    getEventColor(event) {
+      return event.color;
     },
-    mounted () {
-      this.$refs.calendar.checkChange();
-      console.log(this.selected);
+    setToday() {
+      this.focus = "";
     },
-    created (){
-      this.getEvents();
-      this.getEventsToday();
+    prev() {
+      this.$refs.calendar.prev();
     },
-    methods: {
-      viewDay ({ date }) {
-        this.focus = date
-        this.type = 'day'
-      },
-      getEventColor (event) {
-        return event.color
-      },
-      setToday () {
-        this.focus = ''
-      },
-      prev () {
-        this.$refs.calendar.prev()
-      },
-      next () {
-        this.$refs.calendar.next()
-      },
-      showEvent ({ nativeEvent, event }) {
-        const open = () => {
-          this.selectedEvent = event
-          this.selectedElement = nativeEvent.target
-          requestAnimationFrame(() => requestAnimationFrame(() => this.selectedOpen = true))
-        }
+    next() {
+      this.$refs.calendar.next();
+    },
+    showEvent({ nativeEvent, event }) {
+      const open = () => {
+        this.selectedEvent = event;
+        this.selectedElement = nativeEvent.target;
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => (this.selectedOpen = true))
+        );
+      };
 
-        if (this.selectedOpen) {
-          this.selectedOpen = false
-          requestAnimationFrame(() => requestAnimationFrame(() => open()))
-        } else {
-          open()
-        }
-        nativeEvent.stopPropagation()
-      },
-      getEvents() {
-        EventosDataService.getAllCalendario()
-          .then(response => {
-            this.events = response.data;
-            console.log(response.data);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      },
-      getEventsToday(){
-        EventosDataService.getTodayEvents(this.getDate())
-          .then(response => {
-            this.eventsToday = response.data;
-          })
-          .catch(e =>{
-            console.log(e);
-          })
-      },
-      getDate(){
-        var dd = new Date();
-        var y = dd.getFullYear();
-        var m = dd.getMonth() + 1;
-        var d = dd.getDate();
-        m = m < 10 ? "0" + m: m;
-        d = d < 10 ? "0" + d: d;
-        var today = y + "-" + m + "-" + d;
-        return today;
-      },
-      sendEvent(id){
-        EventosDataService.get(id)
-          .then(response => {
-            this.selected = response.data;
-            console.log(this.selected);
-          })
-          .catch(e =>{
-            console.log(e);
-          });
+      if (this.selectedOpen) {
+        this.selectedOpen = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => open()));
+      } else {
+        open();
+      }
+      nativeEvent.stopPropagation();
+    },
+    getEvents() {
+      EventosDataService.getAllCalendario()
+        .then((response) => {
+          this.events = response.data;
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getEventsToday() {
+      EventosDataService.getTodayEvents(this.getDate())
+        .then((response) => {
+          this.eventsToday = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getDate() {
+      var dd = new Date();
+      var y = dd.getFullYear();
+      var m = dd.getMonth() + 1;
+      var d = dd.getDate();
+      m = m < 10 ? "0" + m : m;
+      d = d < 10 ? "0" + d : d;
+      var today = y + "-" + m + "-" + d;
+      return today;
+    },
+    sendEvent(id) {
+      EventosDataService.get(id)
+        .then((response) => {
+          this.selected = response.data;
+          console.log(this.selected);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+        setTimeout(this.scrollView, 1000);
+    },
+    scrollView() {
+      const el = this.$el.querySelector("#details");
+      if (el) {
+        el.scrollIntoView();
       }
     },
-}
+  },
+};
 </script>
-    
-<style>
 
-</style>
+<style></style>
