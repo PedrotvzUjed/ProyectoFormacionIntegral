@@ -68,7 +68,7 @@ export default {
       },
       sendStudent(id) {
         console.log(id)
-        //Modulo de informacion de alumno + historial
+        this.$router.push("/fi-alumnos/"+id);
       },
       
     },
