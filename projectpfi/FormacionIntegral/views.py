@@ -23,7 +23,7 @@ class FormacionInList(generics.ListAPIView):
     queryset = FormacionIntegral.objects.all()
     serializer_class = FormacionInSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ['evento_id', 'matricula']
+    filter_fields = ['evento_id', 'matricula', 'alumno_id']
 
 ...
 class FormacionInDetail(generics.RetrieveAPIView):
