@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <v-container id="createDoc">
       <v-row id="datosAlumno">
-        <v-card>
+        <v-card >
             <v-card-title>Datos del Alumno</v-card-title>
             <v-row>
                 
@@ -42,16 +42,15 @@
             </v-row>
         </v-card>
       </v-row>
-      <v-row id="" style="margin-top: 20px">
-          <v-col>
-              <v-card-title>Historial de eventos</v-card-title>
-          </v-col>
-          <v-col>
-              <v-card-title>Total de creditos: {{totalCreditos}}</v-card-title>
-          </v-col>
-            
-        
+      <v-row style="margin-top: 20px">
+        <v-col>
+            <v-card-title>Historial de eventos</v-card-title>
+        </v-col>
+        <v-col>
+            <v-card-title>Total de creditos: {{totalCreditos}}</v-card-title>
+        </v-col>
       </v-row>
+        
       <v-row id="historialEventos" style="margin-top: 20px"
         v-for="(item, index) in eventsAlumno" :key="index">
           <v-card>
@@ -104,10 +103,54 @@
                     </v-list-item>
                 </v-col>
             </v-row>
-
-            
         </v-card>
       </v-row>
+      <v-speed-dial
+        v-model="fab"
+        top
+        right
+        :direction="direction"
+        :open-on-hover="hover"
+        :transition="transition"
+        >
+        <template v-slot:activator>
+            <v-btn
+            v-model="fab"
+            color="#a4010b"
+            dark
+            fab
+            >
+            <v-icon v-if="fab">
+                mdi-close
+            </v-icon>
+            <v-icon v-else>
+                mdi-file-export
+            </v-icon>
+            </v-btn>
+        </template>
+        <v-btn
+            fab
+            dark
+            color="green"
+        >
+            <v-icon>mdi-file-excel</v-icon>
+        </v-btn>
+        <v-btn
+            fab
+            dark
+            color="indigo"
+        >
+            <v-icon>mdi-file-word</v-icon>
+        </v-btn>
+        <v-btn
+            fab
+            dark
+            color="red"
+            @click="createPDF()"
+        >
+            <v-icon>mdi-file-pdf-box</v-icon>
+        </v-btn>
+    </v-speed-dial>
   </v-container>
 </template>
 
@@ -115,6 +158,9 @@
 import AlumnosDataService from "../../services/AlumnosDataService";
 import FormacionInDataService from "../../services/FormacionInDataService";
 import EventosDataService from "../../services/EventosDataService";
+/* import html2canvas from "html2canvas";*/
+import jsPDF from "jspdf"; 
+import 'jspdf-autotable'
 
 export default {
   name: "HistorialEventos",
@@ -123,13 +169,21 @@ export default {
       eventsAlumno: [],
       dataAlumno: [],
       eventsFormacion: [],
-      totalCreditos: 0
+      totalCreditos: 0,
+      alumnoPdf: [],
+      heading: "Eventos",
+      direction: 'bottom',
+      fab: false,
+      fling: false,
+      hover: true,
+      top: true,
+      right: true,
+      transition: 'slide-y-reverse-transition',
     };
   },
   created() {
       this.getAlumno();
-      this.getEventsAlumno();
-      
+      this.getEventsAlumno(); 
   },
   mounted() {
       
@@ -139,6 +193,7 @@ export default {
         AlumnosDataService.get(this.$route.params.id)
             .then(response => {
                 this.dataAlumno = response.data;
+                this.alumnoPdf.push(response.data);
             })
             .catch(e =>{
                 console.log(e);
@@ -158,14 +213,37 @@ export default {
         for (let evento of eventsFor) {
             EventosDataService.get(evento.evento)
                 .then(response => {
-                    this.eventsAlumno.push(response.data);
-                    console.log(response.data);
+                    this.eventsAlumno.push(this.datosEvento(evento, response.data));
                     this.validarCreditos(evento, response.data)
                 })
                 .catch(e => {
                     console.log(e);
                 })   
         }
+    },
+    datosEvento(evento, response){
+        var status;
+        if( evento.asistencia == 1){
+            status = "Asistió";
+        } else {
+            status = "No asistió";
+        }
+        var data = {
+            tituloEvento: response.tituloEvento,
+            unidadResponsable: response.unidadResponsable,
+            descripcionEvento: response.descripcionEvento,
+            eventoDedicadoA: response.eventoDedicadoA,
+            fechaEvento: response.fechaEvento,
+            inicioEvento: response.inicioEvento,
+            finEvento: response.finEvento,
+            sede: response.sede,
+            cupo: response.cupo,
+            descripcion: response.descripcion,
+            creditos: response.creditos,
+            categorias: response.categorias,
+            asistencia: status
+        };
+        return data;
     },
     validarCreditos(evento, response){
         var creditos = parseFloat(this.totalCreditos);
@@ -174,11 +252,63 @@ export default {
             var res = creditos + creditos2;
             this.totalCreditos =  res;
         }
+    },
+    createPDF(){
+        const doc = new jsPDF({
+            orientation: "portrait",
+            unit: "in",
+            format: "letter"
+        });
+        // text is placed using x, y coordinates
+        doc.setFontSize(16).text("Historial de eventos", 0.5, 1.0);
+        doc.setFontSize(16).text("Total de creditos: "+ this.totalCreditos, 5, 1.0);
+        // create a line under heading 
+        doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
+        doc.autoTable({
+            headStyles: { fillColor: [149, 47, 87] },
+            body: this.alumnoPdf,
+            columns: [
+                { header: 'Nombre', dataKey: 'nombres' },
+                { header: 'Apellido', dataKey: 'apellidos' },
+                { header: 'Matricula', dataKey: 'matricula' },
+                { header: 'Carrera', dataKey: 'carrera' },
+                { header: 'Semestre', dataKey: 'semestre' }
+            ],
+            margin: { left: 0.5, top: 1.3 }
+        });
+
+        doc.setLineWidth(0.01).line(0.5, 3.1, 8.0, 3.1);
+        doc.autoTable({
+            headStyles: { fillColor: [199, 0, 57] },
+            body: this.eventsAlumno,
+            columns: [
+                { header: 'Eventos', dataKey: 'tituloEvento' },
+                { header: 'Creditos', dataKey: 'creditos' },
+                { header: 'Asistencia', dataKey: 'asistencia'}
+            ],
+            margin: { left: 0.5, top: 40.5 }
+        });
+
+        doc
+            .setFont("times")
+            .setFontSize(11)
+            .text(
+            "Universidad Júarez del Estado de Durango",
+            0.5,
+            doc.internal.pageSize.height - 0.5
+            )
+            .save(`${this.alumnoPdf[0].matricula}_${this.heading}.pdf`);
     }
   }
 }
 </script>
 
 <style>
+    #createDoc .v-speed-dial {
+        position: absolute;
+    }
 
+    #createDoc .v-btn--floating {
+        position: relative;
+    }
 </style>
