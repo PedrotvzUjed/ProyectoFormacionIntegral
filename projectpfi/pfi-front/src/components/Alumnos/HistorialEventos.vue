@@ -1,5 +1,5 @@
 <template>
-  <v-container id="createDoc">
+  <v-container id="createFile">
       <v-row id="datosAlumno">
         <v-card >
             <v-card-title>Datos del Alumno</v-card-title>
@@ -84,7 +84,7 @@
                             <v-list-item-action-text></v-list-item-action-text>
 
                             <v-icon
-                                v-if="eventsFormacion[index].asistencia != 1"
+                                v-if="item.asistencia != 1"
                                 color="red"
                                 aria-label="No asistio"
                             >
@@ -112,7 +112,7 @@
         :direction="direction"
         :open-on-hover="hover"
         :transition="transition"
-        >
+      >
         <template v-slot:activator>
             <v-btn
             v-model="fab"
@@ -133,12 +133,23 @@
             dark
             color="green"
         >
-            <v-icon>mdi-file-excel</v-icon>
+            <download-excel
+                class=""
+                :data="eventsDataFiles"
+                :fields="json_fields"
+                type = "xls"
+                :name="`${this.fileName}_${this.heading}.xls`"
+                :header="alumnoExcel"
+                :footer ="`Creditos validados: ${this.totalCreditos}`"
+            >
+                <v-icon>mdi-file-excel</v-icon>
+            </download-excel>
         </v-btn>
         <v-btn
             fab
             dark
             color="indigo"
+            @click="createDoc(alumnoDataFiles[0].matricula)"
         >
             <v-icon>mdi-file-word</v-icon>
         </v-btn>
@@ -157,20 +168,23 @@
 <script>
 import AlumnosDataService from "../../services/AlumnosDataService";
 import FormacionInDataService from "../../services/FormacionInDataService";
-import EventosDataService from "../../services/EventosDataService";
+
 /* import html2canvas from "html2canvas";*/
 import jsPDF from "jspdf"; 
-import 'jspdf-autotable'
+import 'jspdf-autotable';
+import downloadExcel from "vue-json-excel";
 
 export default {
   name: "HistorialEventos",
   data() {
     return {
-      eventsAlumno: [],
       dataAlumno: [],
-      eventsFormacion: [],
+      eventsAlumno: [],
       totalCreditos: 0,
-      alumnoPdf: [],
+      alumnoDataFiles: [],
+      eventsDataFiles: [],
+      fileName: '',
+      alumnoExcel: '',
       heading: "Eventos",
       direction: 'bottom',
       fab: false,
@@ -179,6 +193,15 @@ export default {
       top: true,
       right: true,
       transition: 'slide-y-reverse-transition',
+      json_fields: {
+        "Evento": "tituloEvento",
+        "Unidad Responsable": "unidadResponsable",
+        "Despcripción": "descripcionEvento",
+        "Fecha del evento": "fechaEvento",
+        "Sede": "sede",
+        "Creditos de evento": "creditos",
+        "Asistencia" :"asistencia"
+      },
     };
   },
   created() {
@@ -188,12 +211,17 @@ export default {
   mounted() {
       
   },
+  components: {
+      downloadExcel 
+  },
   methods: {
     getAlumno() {
         AlumnosDataService.get(this.$route.params.id)
             .then(response => {
                 this.dataAlumno = response.data;
-                this.alumnoPdf.push(response.data);
+                this.alumnoDataFiles.push(response.data);
+                this.fileName = response.data.matricula;
+                this.alumnoExcel = "Alumno: "+ response.data.nombres + "  " + response.data.apellidos + "  " + "Matricula: " + response.data.matricula + "  "  + "Carrera: " + response.data.carrera + "  " + "Semestre: " + response.data.semestre;
             })
             .catch(e =>{
                 console.log(e);
@@ -202,28 +230,28 @@ export default {
     getEventsAlumno(){
         FormacionInDataService.getEventsAlumno(this.$route.params.id)
         .then(response => {
-            this.eventsFormacion = response.data;
-            this.getEventsInfo(response.data);
+            this.eventsAlumno = response.data;
+            console.log(this.eventsAlumno);
+            this.validarCreditos(response.data);
         })
         .catch(e => {
             console.log(e);
         })
     },
-    getEventsInfo(eventsFor){
-        for (let evento of eventsFor) {
-            EventosDataService.get(evento.evento)
-                .then(response => {
-                    this.eventsAlumno.push(this.datosEvento(evento, response.data));
-                    this.validarCreditos(evento, response.data)
-                })
-                .catch(e => {
-                    console.log(e);
-                })   
+    validarCreditos(response){
+        for (let evento of response) {
+            var creditos = parseFloat(this.totalCreditos);
+            var creditos2 = parseFloat(evento.creditos);
+            if(evento.asistencia == 1){
+                var res = creditos + creditos2;
+                this.totalCreditos =  res;
+            }
+            this.createData(evento);
         }
     },
-    datosEvento(evento, response){
+    createData(response){
         var status;
-        if( evento.asistencia == 1){
+        if( response.asistencia == 1){
             status = "Asistió";
         } else {
             status = "No asistió";
@@ -243,15 +271,7 @@ export default {
             categorias: response.categorias,
             asistencia: status
         };
-        return data;
-    },
-    validarCreditos(evento, response){
-        var creditos = parseFloat(this.totalCreditos);
-        var creditos2 = parseFloat(response.creditos);
-        if(evento.asistencia == 1){
-            var res = creditos + creditos2;
-            this.totalCreditos =  res;
-        }
+        this.eventsDataFiles.push(data);
     },
     createPDF(){
         const doc = new jsPDF({
@@ -266,7 +286,7 @@ export default {
         doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
         doc.autoTable({
             headStyles: { fillColor: [149, 47, 87] },
-            body: this.alumnoPdf,
+            body: this.alumnoDataFiles,
             columns: [
                 { header: 'Nombre', dataKey: 'nombres' },
                 { header: 'Apellido', dataKey: 'apellidos' },
@@ -280,7 +300,7 @@ export default {
         doc.setLineWidth(0.01).line(0.5, 3.1, 8.0, 3.1);
         doc.autoTable({
             headStyles: { fillColor: [199, 0, 57] },
-            body: this.eventsAlumno,
+            body: this.eventsDataFiles,
             columns: [
                 { header: 'Eventos', dataKey: 'tituloEvento' },
                 { header: 'Creditos', dataKey: 'creditos' },
@@ -297,18 +317,33 @@ export default {
             0.5,
             doc.internal.pageSize.height - 0.5
             )
-            .save(`${this.alumnoPdf[0].matricula}_${this.heading}.pdf`);
+            .save(`${this.fileName}_${this.heading}.pdf`);
+    },
+    createDoc(alumno){
+        FormacionInDataService.createDoc(alumno)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(e => {
+                console.log(e);
+            })
+    },
+    startDownload(){
+        alert('show loading');
+    },
+    finishDownload(){
+        alert('hide loading');
     }
   }
 }
 </script>
 
 <style>
-    #createDoc .v-speed-dial {
+    #createFile .v-speed-dial {
         position: absolute;
     }
 
-    #createDoc .v-btn--floating {
+    #createFile .v-btn--floating {
         position: relative;
     }
 </style>
