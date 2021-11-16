@@ -5,40 +5,40 @@
             <v-card-title>Datos del Alumno</v-card-title>
             <v-row>
                 
-                    <v-col>
-                        <v-img
-                            :lazy-src="dataAlumno.img"
-                            max-height="150"
-                            max-width="250"
-                            :src="dataAlumno.img"
-                        ></v-img>
-                    </v-col>
-                    <v-col>
+                <v-col>
+                    <v-img
+                        :lazy-src="dataAlumno.img"
+                        max-height="150"
+                        max-width="250"
+                        :src="dataAlumno.img"
+                    ></v-img>
+                </v-col>
+                <v-col>
+                    <v-card-text>
+                        <label><strong>Alumno: </strong></label>
+                        <v-spacer></v-spacer>
+                        <label>{{ dataAlumno.nombres }}  {{dataAlumno.apellidos}}</label>
+                        <v-spacer></v-spacer>
+                        <label><strong>Matricula: </strong></label>
+                        <v-spacer></v-spacer>
+                        <label>{{ dataAlumno.matricula }} </label>
+                    </v-card-text>
+                </v-col>
+                <v-col>
                         <v-card-text>
-                            <label><strong>Alumno: </strong></label>
-                            <v-spacer></v-spacer>
-                            <label>{{ dataAlumno.nombres }}  {{dataAlumno.apellidos}}</label>
-                            <v-spacer></v-spacer>
-                            <label><strong>Matricula: </strong></label>
-                            <v-spacer></v-spacer>
-                            <label>{{ dataAlumno.matricula }} </label>
-                        </v-card-text>
-                    </v-col>
-                    <v-col>
-                         <v-card-text>
-                            <label><strong>Carrera: </strong></label>
-                            <v-spacer></v-spacer>
-                            <label>{{ dataAlumno.carrera }}</label>
-                            <v-spacer></v-spacer>
-                            <label><strong>Semestre: </strong></label>
-                            <v-spacer></v-spacer>
-                            <label>{{ dataAlumno.semestre }}</label>
-                            <v-spacer></v-spacer>
-                            <label><strong>Correo electronico: </strong></label>
-                            <v-spacer></v-spacer>
-                            <label>{{ dataAlumno.correo }}</label>
-                        </v-card-text>
-                    </v-col>
+                        <label><strong>Carrera: </strong></label>
+                        <v-spacer></v-spacer>
+                        <label>{{ dataAlumno.carrera }}</label>
+                        <v-spacer></v-spacer>
+                        <label><strong>Semestre: </strong></label>
+                        <v-spacer></v-spacer>
+                        <label>{{ dataAlumno.semestre }}</label>
+                        <v-spacer></v-spacer>
+                        <label><strong>Correo electronico: </strong></label>
+                        <v-spacer></v-spacer>
+                        <label>{{ dataAlumno.correo }}</label>
+                    </v-card-text>
+                </v-col>
             </v-row>
         </v-card>
       </v-row>

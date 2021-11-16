@@ -3,7 +3,9 @@
     <v-navigation-drawer
       v-model="drawer"
       app
-      color=""
+      id ="sideBar"
+      color="#a4010b"
+      dark
     >
       <v-list-item class="px-2">
         <v-list-item-content>
@@ -16,7 +18,7 @@
       <v-list v-for="item in items"
           :key="item.title"
           link>
-        <v-list-item :to="item.route">
+        <v-list-item :to="item.route" color="white">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -29,7 +31,7 @@
 
     </v-navigation-drawer>
 
-    <v-app-bar color="#a4010b" app>
+    <v-app-bar color="#a4010b" dark app>
       <v-toolbar-title style="width: 400px" class="ml-0 pl-4">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <span class="hidden-sm-and-down" id="pageName">Formación Integral</span>
@@ -76,3 +78,7 @@ export default {
   }),
 };
 </script>
+
+<style>
+
+</style>

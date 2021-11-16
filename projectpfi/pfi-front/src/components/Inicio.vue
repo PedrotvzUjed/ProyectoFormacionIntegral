@@ -1,6 +1,6 @@
 <template>
   <v-container>
-      <v-card>
+      <v-card >
         <v-carousel
           height="350"
           hide-delimiter-background
@@ -14,7 +14,7 @@
           ></v-carousel-item>
         </v-carousel>
       </v-card>
-      <v-card>
+      <v-card elevation="12">
         <v-card-title>Funciones</v-card-title>
         <v-card-text>
           <ul>
@@ -27,7 +27,7 @@
           </ul>
         </v-card-text>
       </v-card>
-      <v-card>
+      <v-container id="botones">
         <v-row>
           <v-col>
             <v-btn
@@ -39,7 +39,7 @@
               @click="selected(1)"
             >
               Información General del PIFI
-              <v-icon>mdi-domain</v-icon>
+              <v-icon>mdi-information</v-icon>
             </v-btn>
           </v-col>
           <v-col>
@@ -67,7 +67,7 @@
               href="http://transparencia.ujed.mx"
             >
               Transparencia
-              <v-icon>mdi-domain</v-icon>
+              <v-icon>mdi-alpha-t-box</v-icon>
             </v-btn>
           </v-col>
           <v-col>
@@ -80,12 +80,12 @@
               @click="selected(4)"
             >
               Contacto
-              <v-icon>mdi-domain</v-icon>
+              <v-icon>mdi-account-box-outline</v-icon>
             </v-btn>
           </v-col>
         </v-row>
-      </v-card>
-      <v-card id="show">
+      </v-container>
+      <v-card id="show" elevation="12">
         <v-row v-if="select == 1">
           <v-card-title>INFORMACIÖN GENERAL DEL PIFI</v-card-title>
           <v-card-text>
@@ -161,14 +161,11 @@
           <v-card-title>Contacto</v-card-title>
           <v-card-text>
             <v-row>
-              <v-col>
-                <h5>Dirección:</h5>
-                <p>Coordinación de Programa Integral de Fortalecimiento Institucional .</p>
-                <p>Dirección de Planeación y Desarrollo Académico.</p>
-                <p>Segunda planta Edificio Central.</p>
-                <p>Constitución 404 sur, Zona Centro.</p>
-                <p>C.P. 34000. Durango, Dgo. México.</p>
-              </v-col>
+              <h5>Dirección:</h5>
+              <p>Coordinación de Programa Integral de Fortalecimiento Institucional. Dirección de Planeación y Desarrollo Académico. Segunda planta Edificio Central. </p>
+              <p>Constitución 404 sur, Zona Centro. C.P. 34000. Durango, Dgo. México.</p>
+            </v-row>
+            <v-row>
               <v-col>
                 <h5>Teléfono:</h5>
                 <p>+52 (618) 827-1248</p>
@@ -222,6 +219,25 @@
   }
 </script>
 
-<style>
-
+<style scoped>
+  .v-card__text {
+    padding: 40px;
+  }
+  .v-card__text > label{
+    margin-bottom: 25px;
+  }
+  .v-card__text > h5 {
+    color: #a4010b;
+  }
+  .v-card__title {
+    color: #a4010b;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .v-card{
+    margin-bottom: 20px;
+  }
+  #botones{
+    margin-bottom: 20px;
+  }
 </style>
