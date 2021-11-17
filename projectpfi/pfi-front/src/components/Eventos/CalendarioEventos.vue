@@ -3,7 +3,7 @@
     <v-row class="fill-height">
       <v-col>
         <v-sheet height="64">
-          <v-toolbar flat>
+          <v-toolbar flat color="grey lighten-4">
             <v-btn
               outlined
               class="mr-4"
@@ -52,11 +52,11 @@
             </v-menu>
           </v-toolbar>
         </v-sheet>
-        <v-sheet height="600">
+        <v-sheet height="450px">
           <v-calendar
             ref="calendar"
             v-model="focus"
-            color="primary"
+            color="error"
             :events="events"
             :event-color="getEventColor"
             :type="type"
@@ -64,6 +64,7 @@
             @click:more="viewDay"
             @click:date="viewDay"
             locale="Es"
+            class="overflow-auto"
           ></v-calendar>
           <v-menu
             v-model="selectedOpen"
@@ -98,7 +99,8 @@
           :headers="headers"
           :items="eventsToday"
           item-key="id"
-          class="elevation-1"
+          class="elevation-8 overflow-auto"
+          max-height="520px"
           hide-default-footer
         >
           <template v-slot:top>
@@ -272,4 +274,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+  #details {
+    margin-top: 20px;
+  }
+</style>

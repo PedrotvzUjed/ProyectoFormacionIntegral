@@ -12,9 +12,9 @@
       </v-col>
       <v-col>
         <v-btn
-          depressed
           elevation="2"
-          plain
+          outlined
+          color="red accent-4"
           block
         >Asistencia</v-btn>
       </v-col>
@@ -25,7 +25,7 @@
         :items="alumnos"
         :search="search"
         item-key="id"
-        class="elevation-1"
+        class="elevation-8"
         @change="retrieveAlumnos"
       >
         <template v-slot:top>

@@ -3,9 +3,9 @@
     <v-row>
       <v-col>
         <v-btn
-          depressed
           elevation="2"
-          plain
+          outlined
+          color="red accent-4"
           block
         >Registro</v-btn>
       </v-col>
@@ -29,7 +29,8 @@
           :search="search"
           item-key="matricula"
           show-select
-          class="elevation-1"
+          class="elevation-8 overflow-auto"
+          height="520px"
         >
           <template v-slot:top>
             <v-toolbar flat>
@@ -60,13 +61,14 @@
             <v-toolbar-title v-else>No hay más lugares disponibles</v-toolbar-title>
           </v-col>
         </v-row>
-        <v-row>
+        <v-row align="center">
           <v-data-table
             dense
             :headers="headersRegistrados"
             :items="selected"
             item-key="name"
-            class="elevation-1"
+            class="elevation-8 overflow-auto"
+            max-height="520px"
             v-if="selected.length != 0"
           >
             <template v-slot:top>
@@ -86,7 +88,8 @@
           </v-data-table>
           <v-data-table
             item-key="name"
-            class="elevation-1"
+            class="elevation-8 overflow-auto"
+            max-height="480px"
             loading
             loading-text="Seleccionar alumnos para registrar"
             v-else
@@ -218,7 +221,6 @@ export default {
       },
     },
     mounted() {
-      
     },
     created() {
       this.retrieveAlumnos();

@@ -1,11 +1,14 @@
 <template>
   <v-container id="createFile">
       <v-row id="datosAlumno">
-        <v-card >
+        <v-card class="elevation-8">
             <v-card-title>Datos del Alumno</v-card-title>
             <v-row>
-                
-                <v-col>
+                <v-col
+                align-self: center
+                xs="12"
+                sm="12"
+                md="4">
                     <v-img
                         :lazy-src="dataAlumno.img"
                         max-height="150"
@@ -13,7 +16,11 @@
                         :src="dataAlumno.img"
                     ></v-img>
                 </v-col>
-                <v-col>
+                <v-col 
+                align-self: center
+                xs="6"
+                sm="6"
+                md="4">
                     <v-card-text>
                         <label><strong>Alumno: </strong></label>
                         <v-spacer></v-spacer>
@@ -24,7 +31,12 @@
                         <label>{{ dataAlumno.matricula }} </label>
                     </v-card-text>
                 </v-col>
-                <v-col>
+                <v-col 
+                align-self: center
+                xs="6"
+                sm="6"
+                md="4"
+                >
                         <v-card-text>
                         <label><strong>Carrera: </strong></label>
                         <v-spacer></v-spacer>
@@ -51,10 +63,9 @@
         </v-col>
       </v-row>
         
-      <v-row id="historialEventos" style="margin-top: 20px"
+      <v-row id="historialEventos" style="margin-top: 30px"
         v-for="(item, index) in eventsAlumno" :key="index">
-          <v-card>
-            
+          <v-card class="elevation-8">
             <v-row>
                 <v-col>
                     <v-list-item three-line>
@@ -115,17 +126,16 @@
       >
         <template v-slot:activator>
             <v-btn
-            v-model="fab"
-            color="#a4010b"
-            dark
-            fab
-            >
-            <v-icon v-if="fab">
-                mdi-close
-            </v-icon>
-            <v-icon v-else>
-                mdi-file-export
-            </v-icon>
+                v-model="fab"
+                color="#a4010b"
+                dark
+                fab >
+                <v-icon v-if="fab">
+                    mdi-close
+                </v-icon>
+                <v-icon v-else>
+                    mdi-file-export
+                </v-icon>
             </v-btn>
         </template>
         <v-btn
@@ -328,12 +338,6 @@ export default {
                 console.log(e);
             })
     },
-    startDownload(){
-        alert('show loading');
-    },
-    finishDownload(){
-        alert('hide loading');
-    }
   }
 }
 </script>
@@ -345,5 +349,9 @@ export default {
 
     #createFile .v-btn--floating {
         position: relative;
+    }
+
+    .v-card {
+        
     }
 </style>
