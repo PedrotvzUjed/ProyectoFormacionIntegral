@@ -3,6 +3,20 @@ from .models import FormacionIntegral
  
  
 class FormacionInSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FormacionIntegral
+        fields = ('id',
+                  'nombre',  
+                  'matricula',
+                  'asistencia',
+                  'evento',
+                  'alumno',
+                  'created',
+                  'modified')
+        
+        #fields = '__all__'
+
+class FormacionInEventoSerializer(serializers.ModelSerializer):
     unidadResponsable = serializers.CharField(source = 'evento.unidadResponsable')
     tituloEvento = serializers.CharField(source = 'evento.tituloEvento')
     descripcionEvento = serializers.CharField(source = 'evento.descripcionEvento')
