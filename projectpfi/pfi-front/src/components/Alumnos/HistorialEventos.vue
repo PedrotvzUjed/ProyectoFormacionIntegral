@@ -155,14 +155,14 @@
                 <v-icon>mdi-file-excel</v-icon>
             </download-excel>
         </v-btn>
-        <v-btn
+        <!-- <v-btn
             fab
             dark
             color="indigo"
             @click="createDoc(alumnoDataFiles[0].matricula)"
         >
             <v-icon>mdi-file-word</v-icon>
-        </v-btn>
+        </v-btn> -->
         <v-btn
             fab
             dark

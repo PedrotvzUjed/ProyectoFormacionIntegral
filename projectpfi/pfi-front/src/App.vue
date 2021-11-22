@@ -7,9 +7,9 @@
       color="#a4010b"
       dark
     >
-      <v-list-item class="px-2">
+      <v-list-item style="background-color: white;" class="px-2">
         <v-list-item-content>
-            <v-list-item-title>Menu</v-list-item-title>
+            <v-btn block color="error" outlined >Iniciar sesión</v-btn>
           </v-list-item-content>
       </v-list-item>
 
@@ -37,8 +37,8 @@
         <span class="hidden-sm-and-down" id="pageName">Formación Integral</span>
       </v-toolbar-title>
       <div class="flex-grow-1"></div>
-      <v-btn rounded style="margin-right:20px">Cerrar sesión</v-btn>
-      <v-btn rounded style="margin-right:20px">Iniciar sesión</v-btn>
+      <!-- <v-btn rounded style="margin-right:20px">Cerrar sesión</v-btn>
+      <v-btn rounded style="margin-right:20px">Iniciar sesión</v-btn> -->
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
