@@ -1,6 +1,6 @@
 <template>
   <v-card v-if="evento.tituloEvento != ''"
-    class=""
+    elevation="8"
   >
     <v-img
       height="150"
@@ -73,7 +73,7 @@
     </v-card-actions>
   </v-card>
 
-  <v-card v-else>
+  <v-card class="align-center" elevation="8" v-else>
     <v-card-text>
       <v-row>
         <h4>Favor de seleccionar un evento para mas detalles</h4>

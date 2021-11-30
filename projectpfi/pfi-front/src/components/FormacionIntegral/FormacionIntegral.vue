@@ -10,7 +10,8 @@
           :search="search"
           item-key="id"
           show-select
-          class="elevation-1"
+          class="elevation-8 overflow-auto"
+          height="520px"
         >
           <template v-slot:top>
             <v-toolbar flat>

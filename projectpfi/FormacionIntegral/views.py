@@ -6,7 +6,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
  
 from .models import FormacionIntegral
-from .serializers import FormacionInSerializer
+from .serializers import FormacionInSerializer, FormacionInEventoSerializer
 from rest_framework.decorators import api_view
 
 from rest_framework import generics
@@ -23,7 +23,14 @@ class FormacionInList(generics.ListAPIView):
     queryset = FormacionIntegral.objects.all()
     serializer_class = FormacionInSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ['evento_id', 'matricula']
+    filter_fields = ['evento_id', 'matricula', 'alumno_id']
+
+class FormacionInEventosList(generics.ListAPIView):
+    # API endpoint that allows customer to be viewed.
+    queryset = FormacionIntegral.objects.all()
+    serializer_class = FormacionInEventoSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_fields = ['evento_id', 'matricula', 'alumno_id']
 
 ...
 class FormacionInDetail(generics.RetrieveAPIView):

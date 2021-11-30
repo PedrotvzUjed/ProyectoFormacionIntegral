@@ -1,6 +1,7 @@
 from django.conf.urls import url 
 from Alumnos import views 
- 
+from django.conf.urls.static import static
+from django.conf import settings
 from django.urls import include, path
 from .views import AlumnosCreate, AlumnosList, AlumnosDetail, AlumnosUpdate, AlumnosDelete
 

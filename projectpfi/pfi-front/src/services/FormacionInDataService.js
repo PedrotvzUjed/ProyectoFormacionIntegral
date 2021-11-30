@@ -10,7 +10,11 @@ class FormacionInDataService {
   }
 
   getUserExist(evento_id, matricula) {
-    return http.get(`/formacionIn/?evento_id=${evento_id}&matricula=${matricula}`)
+    return http.get(`/formacionIn/?evento_id=${evento_id}&matricula=${matricula}`);
+  }
+  
+  getEventsAlumno(alumno_id){
+    return http.get(`/formacionIn/listEventsData/?alumno_id=${alumno_id}`);
   }
 
   get(id) {

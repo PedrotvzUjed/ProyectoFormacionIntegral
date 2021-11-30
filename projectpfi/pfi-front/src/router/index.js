@@ -56,6 +56,11 @@ const routes = [
     path: "/alumnos-vista-eventos",
     name: "alumnos-vista-eventos",
     component: () => import("../components/AlumnosVista/EventosAlumno")
+  },
+  {
+    path: "/fi-alumnos/:id",
+    name: "detallesAlumno",
+    component: () => import("../components/Alumnos/HistorialEventos")
   }
 ]
 

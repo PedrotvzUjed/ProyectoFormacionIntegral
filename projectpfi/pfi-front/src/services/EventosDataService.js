@@ -30,6 +30,9 @@ class EventosDataService {
     return http.get(`/eventos?tituloEvento=${tituloEvento}`);
   }
 
+  getTodayEvents(today){
+    return http.get(`/eventos?fechaEvento=${today}`);
+  }
   /* Calendario */
   createCalendario(data) {
     return http.post("/eventos/create/calendario/", data);
@@ -37,6 +40,7 @@ class EventosDataService {
   getAllCalendario() {
     return http.get("/eventos/calendario");
   }
+  
 }
 
 export default new EventosDataService();
