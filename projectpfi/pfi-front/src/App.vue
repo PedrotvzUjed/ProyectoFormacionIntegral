@@ -35,8 +35,7 @@
         <span class="hidden-sm-and-down" id="pageName">Formación Integral</span>
       </v-toolbar-title>
       <div class="flex-grow-1"></div>
-      <v-btn rounded style="margin-right:20px">Cerrar sesión</v-btn>
-      <v-btn rounded style="margin-right:20px">Iniciar sesión</v-btn>
+
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
@@ -71,7 +70,8 @@ export default {
       { title: 'Capturar Eventos', icon: 'mdi-calendar-plus', route: '/add' },
       { title: 'Formación Integral', icon: 'mdi-home-city', route: '/formacionI' },
       { title: 'Alumnos', icon: 'mdi-account-box-multiple', route: '/fi-alumnos'},
-      { title: 'Calendario de Eventos', icon: 'mdi-calendar', route: '/calendario'}
+      { title: 'Calendario de Eventos', icon: 'mdi-calendar', route: '/calendario'},
+      { title: 'Vista de Alumnos', icon: 'mdi-account-eye', route: '/alumnos-vista-eventos'}
     ],
   }),
 };

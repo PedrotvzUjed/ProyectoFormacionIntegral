@@ -5,6 +5,10 @@ class FormacionInDataService {
     return http.get(`/formacionIn/?evento_id=${evento_id}`);
   }
 
+  getRaw() {
+    return http.get(`/formacionIn`);
+  }
+
   getUserExist(evento_id, matricula) {
     return http.get(`/formacionIn/?evento_id=${evento_id}&matricula=${matricula}`)
   }
