@@ -25,7 +25,7 @@ class eventosSerializer(serializers.ModelSerializer):
         #fields = '__all__'
 
 class calendarioSerializer(serializers.ModelSerializer):
-    tituloEvento = serializers.CharField(source = 'evento.tituloEvento')
+
     class Meta:
         model = eventosCalendario
         fields = ('id',
@@ -34,7 +34,6 @@ class calendarioSerializer(serializers.ModelSerializer):
                   'start',
                   'end',
                   'details',
-                  'evento',
-                  'tituloEvento')
+                  'evento')
         
         #fields = '__all__'

@@ -65,7 +65,8 @@
       <v-btn
         block
         depressed
-        color="error"
+        color="#a4010b"
+        class="white--text"
         @click="sendEvent(evento)"
       >
         Registro y Asistencia
@@ -92,7 +93,7 @@
         block
         depressed
         disabled
-        color="error"
+        color="#a4010b"
       >
         Registro y Asistencia
       </v-btn>

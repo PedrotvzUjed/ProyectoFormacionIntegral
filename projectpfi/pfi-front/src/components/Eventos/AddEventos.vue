@@ -269,7 +269,6 @@ export default {
   data() {
     return {
       eventos: {
-        id: null,
         tituloEvento: "",
         unidadResponsable: "",
         descripcionEvento: "",
@@ -316,7 +315,6 @@ export default {
 
       EventosDataService.create(data)
         .then(response => {
-          this.eventos.id = response.data.id;
           console.log(response.data);
           this.submitted = true;
             swal("El evento se ha registrado correctamente!!","","success")

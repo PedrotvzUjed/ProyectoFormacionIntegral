@@ -3,10 +3,11 @@
     <v-row>
       <v-col>
         <v-btn
+          depressed
           elevation="2"
-          outlined
-          color="red accent-4"
           block
+          color = "#a4010b"
+          class="white--text"
         >Registro</v-btn>
       </v-col>
       <v-col>
@@ -76,7 +77,8 @@
                 <v-btn
                   block
                   depressed
-                  color="error"
+                  color="#a4010b"
+                  class="white--text"
                   @click="validarAlumnos()"
                 >Registrar Alumnos
               </v-btn>
