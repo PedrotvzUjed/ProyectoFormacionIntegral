@@ -424,7 +424,7 @@ export default {
             0.5,
             doc.internal.pageSize.height - 0.5
             )
-            .save(`evento.pdf`);
+            .save(`lista_evento_${this.selected[0].id}.pdf`);
     },
   },
   mounted() {
