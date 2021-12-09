@@ -186,6 +186,15 @@
           <v-spacer></v-spacer>
           <v-btn
             depressed
+            dark
+            color="red"
+            @click="exportarAlumnos(selected[0].id)"
+        >
+          Lista
+            <v-icon>mdi-file-pdf-box</v-icon>
+        </v-btn>
+          <v-btn
+            depressed
             color="blue-grey darken-1"
             class="white--text"
             @click="edit(selected[0].id)"
@@ -245,13 +254,17 @@
 
 <script>
 import EventosDataService from "../../services/EventosDataService";
+import FormacionInDataService from "../../services/FormacionInDataService";
 import swal from 'sweetalert'	
+import jsPDF from "jspdf"; 
+import 'jspdf-autotable';
 
 export default {
   name: "eventos-list",
   data() {
     return {
       eventos: [],
+      alumnos: [],
       currentEvento: null,
       currentIndex: -1,
       tituloEvento: "",
@@ -328,43 +341,91 @@ export default {
       console.log(evento)
       this.$router.push("/fi-registro/"+evento.id);
     },
+
     edit(id){
       this.$router.push("/eventos/" + id);
     },
 
-    refreshList() {
-      this.retrieveEventos();
-      this.currentEvento = null;
-      this.currentIndex = -1;
-    },
-
-    setActiveEvento(evento, index) {
-      this.currentEvento = evento;
-      this.currentIndex = evento ? index : -1;
-    },
-
-    removeAllEventos() {
-      EventosDataService.deleteAll()
+    exportarAlumnos(id){
+      FormacionInDataService.getAll(id)
         .then(response => {
           console.log(response.data);
-          this.refreshList();
+          this.createData(response.data);
+          this.createPDF();
         })
         .catch(e => {
           console.log(e);
-        });
-    },
-    
-    searchtituloEvento() {
-      EventosDataService.findByTitle(this.tituloEvento)
-        .then(response => {
-          this.eventos = response.data;
-          this.setActiveEvento(null);
-          console.log(response.data);
         })
-        .catch(e => {
-          console.log(e);
+    },
+
+    createData(response){
+      this.alumnos = [];
+      for (let evento of response) {
+          var status;
+          if( evento.asistencia == 1){
+              status = "Asistió";
+          } else if(evento.asistencia == 0) {
+              status = "No asistió";
+          } else {
+              status = "Aun no se aplicó asistencia"
+          }
+          var data = {
+              nombre: evento.nombre,
+              matricula: evento.matricula,
+              asistencia: status
+          };
+          this.alumnos.push(data);
+      }
+        
+    },
+
+    createPDF(){
+        const doc = new jsPDF({
+            orientation: "portrait",
+            unit: "in",
+            format: "letter"
         });
-    }
+        // text is placed using x, y coordinates
+        doc.setFontSize(16).text("Evento y lista de alumnos" , 0.5, 1.0);
+        doc.setFontSize(16).text("Creditos del Evento: "+ this.selected[0].creditos, 5, 1.0);
+        // create a line under heading 
+        doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
+        doc.autoTable({
+            headStyles: { fillColor: [199, 0, 57] },
+            body: this.selected,
+            columns: [
+                { header: 'Evento', dataKey: 'tituloEvento' },
+                { header: 'Cupo', dataKey: 'cupo'},
+                { header: 'Fecha de evento', dataKey: 'fechaEvento'},
+                { header: 'Sede', dataKey: 'sede'},
+                { header: 'Unidad Responsable', dataKey: 'unidadResponsable'},
+            ],
+            margin: { left: 0.5, top: 1.3 }
+        });
+
+        doc.setLineWidth(0.01).line(0.5, 3.1, 8.0, 3.1);
+        
+        doc.autoTable({
+            headStyles: { fillColor: [149, 47, 87] },
+            body: this.alumnos,
+            columns: [
+                { header: 'Alumno', dataKey: 'nombre' },
+                { header: 'Matricula', dataKey: 'matricula' },
+                { header: 'Asistencia', dataKey: 'asistencia' }
+            ],
+            margin: { left: 0.5, top: 4.0 }
+        });
+
+        doc
+            .setFont("times")
+            .setFontSize(11)
+            .text(
+            "Universidad Júarez del Estado de Durango",
+            0.5,
+            doc.internal.pageSize.height - 0.5
+            )
+            .save(`evento.pdf`);
+    },
   },
   mounted() {
     this.retrieveEventos();

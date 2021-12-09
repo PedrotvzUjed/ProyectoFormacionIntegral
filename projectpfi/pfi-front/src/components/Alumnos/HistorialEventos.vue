@@ -95,7 +95,7 @@
                             <v-list-item-action-text></v-list-item-action-text>
 
                             <v-icon
-                                v-if="item.asistencia != 1"
+                                v-if="item.asistencia == 0"
                                 color="red"
                                 aria-label="No asistio"
                             >
@@ -103,11 +103,19 @@
                             </v-icon>
 
                             <v-icon
-                                v-else
+                                v-else-if="item.asistencia == 1"
                                 color="teal"
                                 aria-label="asistio"
                             >
                                 mdi-check-decagram
+                            </v-icon>
+
+                            <v-icon
+                                v-else
+                                color="gray"
+                                aria-label="Sin asitencia"
+                            >
+                                mdi-alert-decagram
                             </v-icon>
                             
                         </v-list-item-action>
@@ -155,14 +163,6 @@
                 <v-icon>mdi-file-excel</v-icon>
             </download-excel>
         </v-btn>
-        <!-- <v-btn
-            fab
-            dark
-            color="indigo"
-            @click="createDoc(alumnoDataFiles[0].matricula)"
-        >
-            <v-icon>mdi-file-word</v-icon>
-        </v-btn> -->
         <v-btn
             fab
             dark
@@ -249,6 +249,7 @@ export default {
         })
     },
     validarCreditos(response){
+        this.eventsDataFiles = [];
         for (let evento of response) {
             var creditos = parseFloat(this.totalCreditos);
             var creditos2 = parseFloat(evento.creditos);
@@ -263,8 +264,10 @@ export default {
         var status;
         if( response.asistencia == 1){
             status = "Asistió";
-        } else {
+        } else if(response.asistencia == 0) {
             status = "No asistió";
+        } else {
+            status = "Aun no se aplicó asistencia"
         }
         var data = {
             tituloEvento: response.tituloEvento,
@@ -328,15 +331,6 @@ export default {
             doc.internal.pageSize.height - 0.5
             )
             .save(`${this.fileName}_${this.heading}.pdf`);
-    },
-    createDoc(alumno){
-        FormacionInDataService.createDoc(alumno)
-            .then(response => {
-                console.log(response);
-            })
-            .catch(e => {
-                console.log(e);
-            })
     },
   }
 }
