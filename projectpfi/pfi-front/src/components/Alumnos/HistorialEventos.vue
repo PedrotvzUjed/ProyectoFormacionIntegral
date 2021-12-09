@@ -267,7 +267,7 @@ export default {
         } else if(response.asistencia == 0) {
             status = "No asistió";
         } else {
-            status = "Aun no se aplicó asistencia"
+            status = "Aún no se aplicó asistencia"
         }
         var data = {
             tituloEvento: response.tituloEvento,
