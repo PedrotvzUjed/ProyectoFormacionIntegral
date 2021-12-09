@@ -32,6 +32,14 @@
         <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title>Alumnos Registrados al evento</v-toolbar-title>
+            <v-spacer></v-spacer>
+                <v-text-field
+                  v-model="search"
+                  append-icon="mdi-magnify"
+                  label="Buscar Alumnos"
+                  single-line
+                  hide-details
+                ></v-text-field>
           </v-toolbar>
         </template>
         <template v-slot:item.eliminar="{ item }">
