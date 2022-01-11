@@ -21,6 +21,21 @@
       </v-col>
     </v-row>
     <v-row>
+      <v-col>
+
+      </v-col>
+      <v-col>
+        <v-btn
+          depressed
+          elevation="2"
+          block
+          color = "success"
+          class="white--text"
+          @click="aplicarAsistenciaGrupal()"
+        >Aplicar Asistencia a todos</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-data-table
         :headers="headers"
         :items="alumnos"
@@ -158,6 +173,13 @@ export default {
            swal("No se pudo actualizar la asistencia","","error")
         });
       },
+
+      aplicarAsistenciaGrupal(){
+        for (let alumno of this.alumnos) {
+          this.aplicarAsistencia(alumno, 1);
+        }
+      },
+
       deleteAlumno(id){
         FormacionInDataService.delete(id)
         .then(response => {
