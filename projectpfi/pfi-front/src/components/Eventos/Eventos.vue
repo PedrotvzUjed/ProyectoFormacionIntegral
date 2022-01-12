@@ -110,9 +110,9 @@
               <v-col>
                 <div class="form-group">
                   <label for="sede">Sede del evento:</label>
-                  <input type="text" class="form-control" id="sede"
+<!--                   <input type="text" class="form-control" id="sede"
                     v-model="currentEvento.sede"
-                  />
+                  /> -->
                   <select v-model="currentEvento.sede"  class="form-control" 
                   id="sede" required name="sede">
                   <option disabled value="">Seleccione la sede del evento</option>
@@ -219,20 +219,29 @@
               <v-col>
                 <div class="form-group">
                   <label for="categorias">Categoria del evento:</label>
-                  <input type="text" class="form-control" id="categorias"
+                  <!-- <input type="text" class="form-control" id="categorias"
                     v-model="currentEvento.categorias"
-                  />
+                  /> -->
+                  <select v-model="currentEvento.categorias"  class="form-control" 
+                  id="categorias" required name="categorias">
+                  <option disabled value="">Seleccione la categoria del evento</option>
+                  <option>Artísticas y Cultural</option>
+                  <option>Deportivas</option>
+                  <option>Intelectuales</option>
+                  <option>Vinculación</option>
+                  <option>Externos</option>
+                  </select>
                 </div>
               </v-col>
             </v-row>
           </form>
           <v-row style="padding: 20px 0px 20px 0px">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button class="btn btn-outline-danger mr-2" 
+              <!-- <button class="btn btn-outline-danger mr-2" 
                 @click="deleteEvento"
               >
                 Eliminar
-              </button>
+              </button> -->
 
               <button type="submit" class="btn btn-outline-success" 
                 @click="updateEvento"

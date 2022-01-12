@@ -249,28 +249,11 @@
                 <!-- <select v-model="eventos.categorias"  class="form-control" 
                 id="categorias" :required="!selected" name="categorias"> -->
                 <option disabled value="">Seleccione la categoria del evento</option>
-                <option>Música</option>
-                <option>Teatro</option>
-                <option>Fotografía</option>
-                <option>Canto, Danza</option>
-                <option>Cine, TV, Radio</option>
-                <option>Cívicas</option>
-                <option>Visitas guiadas, otras</option>
-                <option>Deportes de conjunto</option>
-                <option>Deportes individuales</option>
-                <option>Participación recreativa</option>
-                <option>Aeróbicos, Gimnasio</option>
-                <option>Ajedrez</option>
-                <option>Congresos disciplinares, foros</option>
-                <option>Conferencias, cursos, seminarios</option>
-                <option>Materias electivas</option>
-                <option>Idioma (certificación A1, B1 y B2)</option>
-                <option>Verano de investigación</option>
-                <option>Brigadas-campañas</option>
-                <option>Tutorías</option>
-                <option>Valores</option>
-                <option>Serv. Socical Universitario</option>
-                <option>Estancias</option>
+                <option>Artísticas y Cultural</option>
+                <option>Deportivas</option>
+                <option>Intelectuales</option>
+                <option>Vinculación</option>
+                <option>Externos</option>
                 </select>
               </div>
             </v-col>
