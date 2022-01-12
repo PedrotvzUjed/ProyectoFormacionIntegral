@@ -23,7 +23,7 @@ class eventosList(generics.ListAPIView):
     queryset = eventos.objects.all()
     serializer_class = eventosSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ['id', 'creditos', 'fechaEvento']
+    filter_fields = ['id', 'creditos', 'fechaEvento', 'categorias']
 
 ...
 class eventosDetail(generics.RetrieveAPIView):

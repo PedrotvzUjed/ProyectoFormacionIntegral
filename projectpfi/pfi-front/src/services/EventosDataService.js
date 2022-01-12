@@ -19,6 +19,10 @@ class EventosDataService {
     return http.put(`/eventos/update/${id}/`, data);
   }
 
+  filtroCategoria(categoria){
+    return http.get(`/eventos?categorias=${categoria}`);
+  }
+
   delete(id) {
     return http.delete(`/eventos/delete/${id}`);
   }
