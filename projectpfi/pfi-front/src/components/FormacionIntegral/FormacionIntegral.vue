@@ -1,6 +1,43 @@
 <template>
   <v-container>
     <v-row>
+      <v-bottom-navigation
+        color="error"
+        grow
+      >
+        <v-btn @click="retrieveEventos()">
+          <span>Todos</span>
+          <v-icon active>mdi-home</v-icon>
+        </v-btn>
+
+        <v-btn @click="FiltroCategorias('Artísticas y Cultural')">
+          <span>Artísticas y Cultural</span>
+          <v-icon>mdi-bank</v-icon>
+        </v-btn>
+
+        <v-btn @click="FiltroCategorias('Deportivas')">
+          <span>Deportivas</span>
+          <v-icon>mdi-run-fast</v-icon>
+        </v-btn>
+
+        <v-btn @click="FiltroCategorias('Intelectuales')">
+          <span>Intelectuales</span>
+          <v-icon>mdi-head-lightbulb</v-icon>
+        </v-btn>
+
+        <v-btn @click="FiltroCategorias('Vinculación')">
+          <span>Vinculación</span>
+          <v-icon>mdi-badge-account-horizontal</v-icon>
+        </v-btn>
+
+        <v-btn>
+          <span>Externos</span>
+          <v-icon>mdi-page-layout-sidebar-right</v-icon>
+        </v-btn>
+      </v-bottom-navigation>
+    </v-row>
+
+    <v-row>
       <v-col>
         <v-data-table
           v-model="selected"
@@ -77,7 +114,6 @@ export default {
         expanded: [],
         search: '',
         headers: [
-          { text: 'Id', align: 'start', sortable: true, value: 'id'},
           { text: 'Titulo de evento', value: 'tituloEvento' },
           { text: 'Unidad responsable', value: 'unidadResponsable' },
           { text: 'Fecha de evento', sortable: true, value: 'fechaEvento' },
@@ -99,6 +135,16 @@ export default {
           .catch(e => {
             console.log(e);
           });
+      },
+
+      FiltroCategorias(categoria){
+        EventosDataService.filtroCategoria(categoria)
+          .then(response => {
+            this.eventos = response.data;
+          })
+          .catch(e => {
+            console.log(e);
+          })
       },
 /*       sendEvent(evento) {
         console.log(evento)
