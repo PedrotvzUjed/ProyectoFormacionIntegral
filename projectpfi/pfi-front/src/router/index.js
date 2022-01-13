@@ -58,6 +58,11 @@ const routes = [
     component: () => import("../components/AlumnosVista/EventosAlumno")
   },
   {
+    path: "/subirEvidencia-alumno/:id",
+    name: "subirEvidencia-alumno",
+    component: () => import("../components/AlumnosVista/EvidenciasAlumno")
+  },
+  {
     path: "/fi-alumnos/:id",
     name: "detallesAlumno",
     component: () => import("../components/Alumnos/HistorialEventos")

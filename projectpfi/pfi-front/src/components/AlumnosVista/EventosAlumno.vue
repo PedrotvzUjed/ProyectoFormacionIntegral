@@ -67,7 +67,7 @@ import 'jspdf-autotable';
 import infoEvento from "../Eventos/EventoInfoAlumno";
 
 export default {
-  name: "formacionIntegral",
+  name: "EventosAlumno",
   data() {
     return {
       formaciones: [],
@@ -98,7 +98,7 @@ export default {
       headers: [
         //{ text: "Id", align: "start", sortable: true, value: "id" },
         { text: "Titulo de evento", value: "tituloEvento" },
-        { text: "Unidad responsable", value: "unidadResponsable" },
+        { text: "Categoría", value: "categorias" },
         { text: "Fecha de evento", sortable: true, value: "fechaEvento" },
         { text: "Creditos", value: "creditos" },
       ],
@@ -114,7 +114,7 @@ export default {
           
 
           let formacionesbymatricula = response.data.filter(function (i) {
-            return i.matricula === "1234567897";
+            return i.matricula === "1703150058";
           });
 
           let formacionesbyasistencia = formacionesbymatricula.filter(function(i){
