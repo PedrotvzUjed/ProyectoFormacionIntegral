@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.db.models.deletion import CASCADE
+from Alumnos.models import Alumnos
 # Create your models here.
 class eventos(models.Model):
 
@@ -29,3 +30,8 @@ class eventosCalendario(models.Model):
     end = models.CharField('end', max_length=50)
     details = models.CharField('details', max_length=60)
     evento = models.ForeignKey(eventos, on_delete=models.CASCADE)
+
+class eventosSubirevidenciasAlumno(models.Model):
+    img = models.ImageField(upload_to='EvidenciasAlumnos/images')
+    evento = models.ForeignKey(eventos, on_delete=models.CASCADE)
+    alumno = models.ForeignKey(Alumnos, on_delete=CASCADE)

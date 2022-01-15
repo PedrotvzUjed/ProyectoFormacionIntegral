@@ -1,55 +1,129 @@
 <template>
   <v-container>
-      <v-row>
-        <v-card height="200px">
-            <v-card-title>Subir evidencia</v-card-title>
-            <v-row>
-                <v-col>
-                    <v-file-input
-                        :rules="rules"
-                        small-chips
-                        accept="image/png, image/jpeg, image/bmp"
-                        placeholder="Seleccionar imagen "
-                        prepend-icon="mdi-file"
-                        label="Evidencia"
-                    ></v-file-input>
-                    <v-card-actions>
-                        <v-btn
-                            block
-                            depressed
-                            color="#a4010b"
-                            class="white--text"
-                        >
-                            Subir evidencia
-                        </v-btn>
-                    </v-card-actions>
-                </v-col>
-                <v-col>
-                    <v-row>
-                        <v-img
-                            lazy-src="https://picsum.photos/id/11/10/6"
-                            max-height="150"
-                            max-width="250"
-                            src="https://picsum.photos/id/11/500/300"
-                        ></v-img>
-                    </v-row>
-                </v-col>
-            </v-row>
-        </v-card>
+      <v-row >
+        <form action="POST">
+            <v-card height="200px" v-if="evidencia.length == 0">
+                <v-card-title>Subir evidencia</v-card-title>
+                <v-row>
+                    <v-col>
+                        <v-file-input
+                            :rules="rules"
+                            small-chips
+                            accept="image/png, image/jpeg, image/bmp"
+                            placeholder="Seleccionar imagen "
+                            prepend-icon="mdi-file"
+                            label="Evidencia"
+                            v-model="uploadFile.img"
+                        ></v-file-input>
+                        <v-card-actions>
+                            <v-btn
+                                block
+                                depressed
+                                color="#a4010b"
+                                class="white--text"
+                                @click="upload()"
+                            >
+                                Subir evidencia
+                            </v-btn>
+                        </v-card-actions>
+                    </v-col>
+                    <v-col>
+                        <v-row>
+                            <!-- <v-img
+                                :lazy-src="evidencia[0].img"
+                                max-height="150"
+                                max-width="250"
+                                :src="evidencia[0].img"
+                            ></v-img> -->
+                        </v-row>
+                    </v-col>
+                </v-row>
+            </v-card>
+            <v-card height="200px" v-else-if="evidencia[0] != []">
+                <v-card-title>Actualizar evidencia</v-card-title>
+                <v-row>
+                    <v-col>
+                        <v-file-input
+                            :rules="rules"
+                            small-chips
+                            accept="image/png, image/jpeg, image/bmp"
+                            placeholder="Seleccionar imagen "
+                            prepend-icon="mdi-file"
+                            label="Evidencia"
+                            
+                        ></v-file-input>
+                        <v-card-actions>
+                            <v-btn
+                                block
+                                depressed
+                                color="#a4010b"
+                                class="white--text"
+                            >
+                                Actualizar evidencia
+                            </v-btn>
+                        </v-card-actions>
+                    </v-col>
+                    <v-col>
+                        <v-row>
+                            <v-img
+                                :lazy-src="evidencia[0].img"
+                                max-height="150"
+                                max-width="250"
+                                :src="evidencia[0].img"
+                            ></v-img>
+                        </v-row>
+                    </v-col>
+                </v-row>
+            </v-card>
+        </form>        
       </v-row>
   </v-container>
 </template>
 
 <script>
+import EventosDataService from "../../services/EventosDataService";
+
 export default {
     name: "EvidenciasAlumno",
     data (){
         return {
             rules: [
             value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',],
-
+            evidencia: [],
+            uploadFile: {
+                img: null,
+                evento: null,
+                alumno: null,
+            }
         }
-    }
+    },
+    methods: {
+        retrievEvidencia(evento, alumno){
+            EventosDataService.getEvidencias(evento, alumno)
+                .then(response => {
+                    console.log(response.data);
+                    this.evidencia = response.data;
+                })
+                .catch(e => {
+                    console.log(e);
+                })
+        },
+        upload(){
+            this.uploadFile.evento = this.$route.params.id;
+            this.uploadFile.alumno = 2;
+            /* console.log(this.uploadFile) */
+            EventosDataService.createEvidencia(this.uploadFile)
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(e => {
+                    console.log(e);
+                })
+        }
+    },
+    created() {
+        this.retrievEvidencia(this.$route.params.id, 1);
+    },
 }
 </script>
 

@@ -5,8 +5,8 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
  
-from .models import eventos, eventosCalendario 
-from .serializers import eventosSerializer, calendarioSerializer
+from .models import eventos, eventosCalendario, eventosSubirevidenciasAlumno
+from .serializers import eventosSerializer, calendarioSerializer, evidenciaSerializer
 from rest_framework.decorators import api_view
 
 from rest_framework import generics
@@ -56,3 +56,16 @@ class calendarioList(generics.ListAPIView):
     serializer_class = calendarioSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filter_fields = ['id', 'start', 'evento']
+
+#Subir evidencias de alumnos
+class evidenciasCreate(generics.CreateAPIView):
+    # API endpoint that allows creation of a new customer
+    queryset = eventosSubirevidenciasAlumno.objects.all(),
+    serializer_class = evidenciaSerializer
+
+class evidenciasList(generics.ListAPIView):
+    # API endpoint that allows customer to be viewed.
+    queryset = eventosSubirevidenciasAlumno.objects.all()
+    serializer_class = evidenciaSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_fields = ['id', 'evento', 'alumno']

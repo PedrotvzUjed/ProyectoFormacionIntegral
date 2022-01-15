@@ -44,7 +44,13 @@ class EventosDataService {
   getAllCalendario() {
     return http.get("/eventos/calendario");
   }
-  
+  /* Evidencias */
+  createEvidencia(data) {
+    return http.post("/eventos/create/evidencia", data);
+  }
+  getEvidencias(evento, alumno) {
+    return http.get(`/eventos/evidencia?evento=${evento}&alumno=${alumno}`);
+  }
 }
 
 export default new EventosDataService();

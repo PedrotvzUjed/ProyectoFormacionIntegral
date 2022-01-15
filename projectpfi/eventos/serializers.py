@@ -1,5 +1,6 @@
+from django.db import models
 from rest_framework import serializers 
-from .models import eventos, eventosCalendario 
+from .models import eventos, eventosCalendario, eventosSubirevidenciasAlumno
  
  
 class eventosSerializer(serializers.ModelSerializer):
@@ -37,3 +38,13 @@ class calendarioSerializer(serializers.ModelSerializer):
                   'evento')
         
         #fields = '__all__'
+
+class evidenciaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = eventosSubirevidenciasAlumno
+        fields = ('id',
+                  'img',
+                  'evento',
+                  'alumno'
+        )
