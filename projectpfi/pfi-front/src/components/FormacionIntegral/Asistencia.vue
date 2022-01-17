@@ -124,6 +124,7 @@
 
 <script>
 import FormacionInDataService from "../../services/FormacionInDataService";
+import EventosDataService from "../../services/EventosDataService";
 import swal from 'sweetalert'
 
 export default {
@@ -139,6 +140,7 @@ export default {
           { text: 'Aplicar Asistencia', align: 'center', value: 'apAsistencia'},
           { text: 'Eliminar', align: 'center', value: 'eliminar'}
         ],
+        evento: []
       };
     },
     methods: {
@@ -146,6 +148,7 @@ export default {
         console.log(this.$route.params.id)
         this.$router.push("/fi-registro/"+this.$route.params.id);
       },
+
       retrieveAlumnos(evento_id) {
         FormacionInDataService.getAll(evento_id)
           .then(response => {
@@ -156,6 +159,7 @@ export default {
             console.log(e);
           });
       },
+
       aplicarAsistencia(item, asistencia){
         item.asistencia = asistencia;
 
@@ -180,6 +184,16 @@ export default {
         }
       },
 
+      getEvent(){
+        EventosDataService.get(this.$route.params.id)
+          .then(response => {
+            this.evento = response.data;
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      },
+
       deleteAlumno(id){
         FormacionInDataService.delete(id)
         .then(response => {
@@ -196,8 +210,10 @@ export default {
     mounted() {
       this.retrieveAlumnos(this.$route.params.id);
     },
+    
     created (){
       this.retrieveAlumnos(this.$route.params.id);
+      this.getEvent();
     },
 }
 </script>

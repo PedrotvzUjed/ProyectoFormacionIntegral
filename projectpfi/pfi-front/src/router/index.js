@@ -47,6 +47,13 @@ const routes = [
     name: "asistencia",
     component: () => import("../components/FormacionIntegral/Asistencia")
   },
+
+  {
+    path: "/fi-validacion/:id",
+    name: "validacion",
+    component: () => import("../components/FormacionIntegral/Validacion")
+  },
+
   {
     path: "/fi-alumnos",
     name: "fi-alumnos",

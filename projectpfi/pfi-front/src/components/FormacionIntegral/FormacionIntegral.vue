@@ -30,7 +30,7 @@
           <v-icon>mdi-badge-account-horizontal</v-icon>
         </v-btn>
 
-        <v-btn>
+        <v-btn @click="FiltroCategorias('Externos')">
           <span>Externos</span>
           <v-icon>mdi-page-layout-sidebar-right</v-icon>
         </v-btn>

@@ -12,12 +12,21 @@
       </v-col>
       <v-col>
         <v-btn
+          v-if="categoria != 'Externos'"
           depressed
           elevation="2"
           plain
           block
-          @click="sendEvent()"
+          @click="sendEvent('asistencia')"
         >Asistencia</v-btn>
+        <v-btn
+          v-else
+          depressed
+          elevation="2"
+          plain
+          block
+          @click="sendEvent('validacion')"
+        >Validación de creditos</v-btn>
       </v-col>
     </v-row>
     <v-row>
@@ -124,6 +133,7 @@ export default {
         alumnosRegistrados: 0,
         disponible: 0,
         count: 0,
+        categoria: '',
         headers: [
           { text: 'Matricula', align: 'start', sortable: true, value: 'matricula'},
           { text: 'Nombres', value: 'nombres' },
@@ -156,8 +166,14 @@ export default {
             console.log(e);
           });
       },
-      sendEvent() {
-        this.$router.push("/fi-asistencia/"+this.$route.params.id);
+      sendEvent(ruta) {
+        if(ruta == 'asistencia') {
+          this.$router.push("/fi-asistencia/"+this.$route.params.id);
+        }
+        else {
+          this.$router.push("/fi-validacion/"+this.$route.params.id);
+        }
+        
       },
       validarAlumnos(){
         this.obtenerDisponible();
@@ -221,6 +237,17 @@ export default {
       obtenerDisponible(){
         this.disponible = this.evento.cupo - this.alumnosRegistrados - this.selected.length;
       },
+      
+      getEvent(){
+        EventosDataService.get(this.$route.params.id)
+          .then(response => {
+            this.categoria = response.data.categorias;
+            console.log(response.data.categorias);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      },
     },
     mounted() {
     },
@@ -228,6 +255,7 @@ export default {
       this.retrieveAlumnos();
       this.infoEvento();
       this.numAlumnos();
+      this.getEvent();
     }
 }
 </script>
