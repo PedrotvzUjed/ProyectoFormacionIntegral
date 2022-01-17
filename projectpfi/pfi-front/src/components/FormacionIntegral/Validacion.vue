@@ -235,7 +235,7 @@ export default {
             if(asistencia == 1){
               swal("Creditos de evento validos","","success")
             }else{
-              swal("Vreditos de evento no validos","","error")
+              swal("Creditos de evento no validos","","error")
             }
         })
         .catch(e => {
