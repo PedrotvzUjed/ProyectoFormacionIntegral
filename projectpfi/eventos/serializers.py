@@ -39,6 +39,16 @@ class calendarioSerializer(serializers.ModelSerializer):
         
         #fields = '__all__'
 
+class evidenciaSerializerCreate(serializers.ModelSerializer):
+
+    class Meta:
+        model = eventosSubirevidenciasAlumno
+        fields = (
+                  'img',
+                  'evento',
+                  'alumno'
+        )
+
 class evidenciaSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -46,5 +56,4 @@ class evidenciaSerializer(serializers.ModelSerializer):
         fields = ('id',
                   'img',
                   'evento',
-                  'alumno'
-        )
+                  'alumno')
