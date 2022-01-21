@@ -45,9 +45,25 @@ class EventosDataService {
     return http.get("/eventos/calendario");
   }
   /* Evidencias */
-  createEvidencia(data) {
-    return http.post("/eventos/create/evidencia", data);
+  createEvidencia(formData) {
+    return axios.post(API+'/eventos/create/evidencia',
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
   }
+  updateEvidencia(formData, evidencia) {
+    return axios.put(API+`/eventos/update/evidencia/${evidencia}/`,
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+  }
+
   getEvidencias(evento, alumno) {
     return http.get(`/eventos/evidencia?evento=${evento}&alumno=${alumno}`);
   }

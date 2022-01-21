@@ -1,8 +1,8 @@
 <template>
   <v-container fluid>
-      <v-row >
-        <form action="POST">
-            <v-card height="250px" v-if="evidencia.length == 0">
+      <v-row v-if="evidencia.length == 0">
+        <form @submit.prevent="create">
+            <v-card height="250px">
                 <v-card-title>Subir evidencia</v-card-title>
                 <v-row>
                     <v-col>
@@ -11,17 +11,18 @@
                             small-chips
                             accept="image/png, image/jpeg, image/bmp"
                             placeholder="Seleccionar imagen "
-                            prepend-icon="mdi-file"
-                            label="Evidencia"
-                            v-model="uploadFile.img"
+                            prepend-icon="mdi-file"      
+                            @change="getImage($event)"
+                            required
                         ></v-file-input>
                         <v-card-actions>
                             <v-btn
                                 block
                                 depressed
+                                type="submit"
                                 color="#a4010b"
                                 class="white--text"
-                                @click="upload()"
+                                :disabled="active"
                             >
                                 Subir evidencia
                             </v-btn>
@@ -41,7 +42,11 @@
                     </v-col>
                 </v-row>
             </v-card>
-            <v-card height="250px" v-else-if="evidencia[0] != []">
+        </form>        
+      </v-row>
+      <v-row v-else-if="evidencia[0] != []">
+          <form @submit.prevent="update">
+              <v-card height="250px">
                 <v-card-title>Actualizar evidencia</v-card-title>
                 <v-row>
                     <v-col>
@@ -50,15 +55,18 @@
                             small-chips
                             accept="image/png, image/jpeg, image/bmp"
                             placeholder="Seleccionar imagen "
-                            prepend-icon="mdi-file"
-                            label="Evidencia"
+                            prepend-icon="mdi-file"      
+                            @change="getImage($event)"
+                            required
                         ></v-file-input>
                         <v-card-actions>
                             <v-btn
                                 block
                                 depressed
+                                type="submit"
                                 color="#a4010b"
                                 class="white--text"
+                                :disabled="active" 
                             >
                                 Actualizar evidencia
                             </v-btn>
@@ -78,7 +86,7 @@
                     </v-col>
                 </v-row>
             </v-card>
-        </form>        
+          </form>
       </v-row>
   </v-container>
 </template>
@@ -91,13 +99,14 @@ export default {
     data (){
         return {
             rules: [
-            value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',],
+            value => !value || value.size < 12000000 || 'La imagen debe pesar maximo 12 MB!',],
             evidencia: [],
-            uploadFile: {
-                img: null,
-                evento: null,
-                alumno: null,
-            }
+            data: {
+                img: '',
+                evento: '',
+                alumno: ''
+            },
+            active: true       
         }
     },
     methods: {
@@ -111,17 +120,56 @@ export default {
                     console.log(e);
                 })
         },
-        upload(){
-            this.uploadFile.evento = this.$route.params.id;
-            this.uploadFile.alumno = 2;
-            /* console.log(this.uploadFile) */
-            EventosDataService.createEvidencia(this.uploadFile)
-                .then(response => {
-                    console.log(response.data);
-                })
-                .catch(e => {
-                    console.log(e);
-                })
+        getImage(event) {
+            this.data.img = event;
+            this.data.evento = this.$route.params.id;
+            this.data.alumno = 2;
+            if(event != null) {
+                this.active = false
+            } else {
+                this.active = true
+            } 
+        },
+        create: function() {
+            let formData = new FormData();
+                /*
+                    Add the form data we need to submit
+                */
+                formData.append('img', this.data.img);
+                formData.append('evento', this.data.evento);
+                formData.append('alumno', this.data.alumno);
+                /*
+                  Make the request to the POST /single-file URL
+                */
+                EventosDataService.createEvidencia(formData)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+                
+        },
+        update: function() {
+            let formData = new FormData();
+
+                /*
+                    Add the form data we need to submit
+                */
+                formData.append('img', this.data.img);
+                formData.append('evento', this.data.evento);
+                formData.append('alumno', this.data.alumno);
+                /*
+                  Make the request to the POST /single-file URL
+                */
+                
+                EventosDataService.updateEvidencia(formData, this.evidencia[0].id)
+                    .then( response => {
+                        console.log(response.data);
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    })
         }
     },
     created() {
