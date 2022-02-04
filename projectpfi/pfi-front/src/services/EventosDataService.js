@@ -27,23 +27,23 @@ class EventosDataService {
     return http.delete(`/eventos/delete/${id}`);
   }
 
-  deleteAll() {
-    return http.delete(`/eventos`);
-  }
   findByTitle(tituloEvento) {
     return http.get(`/eventos?tituloEvento=${tituloEvento}`);
+  }
+
+  /* Calendario */
+  createCalendario(data) {
+    return http.post("/eventos/create/calendario/", data);
+  }
+
+  getAllCalendario() {
+    return http.get("/eventos/calendario");
   }
 
   getTodayEvents(today){
     return http.get(`/eventos?fechaEvento=${today}`);
   }
-  /* Calendario */
-  createCalendario(data) {
-    return http.post("/eventos/create/calendario/", data);
-  }
-  getAllCalendario() {
-    return http.get("/eventos/calendario");
-  }
+  
   /* Evidencias */
   createEvidencia(formData) {
     return axios.post(API+'/eventos/create/evidencia',

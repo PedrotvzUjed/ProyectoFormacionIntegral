@@ -17,7 +17,7 @@
           elevation="2"
           plain
           block
-          @click="sendEvent('asistencia')"
+          @click="sendEvent()"
         >Asistencia</v-btn>
         <v-btn
           v-else
@@ -25,7 +25,7 @@
           elevation="2"
           plain
           block
-          @click="sendEvent('validacion')"
+          @click="sendEvent()"
         >Validación de creditos</v-btn>
       </v-col>
     </v-row>
@@ -166,8 +166,9 @@ export default {
             console.log(e);
           });
       },
-      sendEvent(ruta) {
-        if(ruta == 'asistencia') {
+
+      sendEvent() {
+        if(this.categoria != 'Externos') {
           this.$router.push("/fi-asistencia/"+this.$route.params.id);
         }
         else {
@@ -197,6 +198,7 @@ export default {
         }     
         setTimeout(this.sendEvent, 1000);   
       },
+      
       registrarAlumnos(alumno){
         var data = {
           nombre: alumno.nombres + ' ' + alumno.apellidos,
@@ -215,6 +217,7 @@ export default {
             console.log(e);
           });
       },
+      
       infoEvento(){
         EventosDataService.get(this.$route.params.id)
             .then(response => {

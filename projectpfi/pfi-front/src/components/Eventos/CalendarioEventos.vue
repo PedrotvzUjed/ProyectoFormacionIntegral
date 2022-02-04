@@ -224,6 +224,7 @@ export default {
       }
       nativeEvent.stopPropagation();
     },
+
     getEvents() {
       EventosDataService.getAllCalendario()
         .then((response) => {
@@ -234,6 +235,7 @@ export default {
           console.log(e);
         });
     },
+
     getEventsToday() {
       EventosDataService.getTodayEvents(this.getDate())
         .then((response) => {
@@ -243,6 +245,7 @@ export default {
           console.log(e);
         });
     },
+
     getDate() {
       var dd = new Date();
       var y = dd.getFullYear();
@@ -253,6 +256,7 @@ export default {
       var today = y + "-" + m + "-" + d;
       return today;
     },
+    
     sendEvent(id) {
       EventosDataService.get(id)
         .then((response) => {
@@ -264,6 +268,7 @@ export default {
         });
         setTimeout(this.scrollView, 1000);
     },
+
     scrollView() {
       const el = this.$el.querySelector("#details");
       if (el) {

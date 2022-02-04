@@ -15,7 +15,7 @@
               <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
-                label="Search"
+                label="Buscar alumnos"
                 single-line
                 hide-details
               ></v-text-field>
@@ -66,6 +66,7 @@ export default {
             console.log(e);
           });
       },
+      
       sendStudent(id) {
         console.log(id)
         this.$router.push("/fi-alumnos/"+id);

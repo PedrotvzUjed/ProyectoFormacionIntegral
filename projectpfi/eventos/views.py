@@ -1,8 +1,4 @@
 from django.shortcuts import render,  get_object_or_404
-
-# Create your views here.
-from django.http.response import JsonResponse
-from rest_framework.parsers import JSONParser 
 from rest_framework import status
  
 from .models import eventos, eventosCalendario, eventosSubirevidenciasAlumno
@@ -15,6 +11,7 @@ from rest_framework import generics
 from rest_framework import exceptions
 import django_filters.rest_framework
 
+#Eventos
 class eventosCreate(generics.CreateAPIView):
     # API endpoint that allows creation of a new customer
     queryset = eventos.objects.all(),
@@ -45,8 +42,6 @@ class eventosDelete(generics.RetrieveDestroyAPIView):
     queryset = eventos.objects.all()
     serializer_class = eventosSerializer
 
-#RetrieveUpdateDestroyAPIView
-
 #Clases de calendario
 class calendarioCreate(generics.CreateAPIView):
     # API endpoint that allows creation of a new customer
@@ -60,7 +55,7 @@ class calendarioList(generics.ListAPIView):
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filter_fields = ['id', 'start', 'evento']
 
-#Subir evidencias de alumnos
+#evidencias de alumnos
 class evidencias(APIView):        
     def post(self, request):
         if 'img' not in request.data:
@@ -72,10 +67,10 @@ class evidencias(APIView):
         if serializer.is_valid():
             validated_data = serializer.validated_data
             # Convertir y guardar el modelo
-            editorial = eventosSubirevidenciasAlumno(**validated_data)
-            editorial.save()
+            evidencia = eventosSubirevidenciasAlumno(**validated_data)
+            evidencia.save()
 
-            serializer_response = evidenciaSerializerCreate(editorial)    
+            serializer_response = evidenciaSerializerCreate(evidencia)    
            
             return Response(serializer_response.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

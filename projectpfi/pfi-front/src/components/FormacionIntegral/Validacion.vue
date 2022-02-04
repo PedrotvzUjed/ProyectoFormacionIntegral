@@ -153,7 +153,7 @@
               class="ma-2"
               color="success"
               dark
-              @click="aplicarAsistencia(datosValidacion, 1)"
+              @click="validarCreditos(datosValidacion, 1)"
               @click.stop="dialog = false"
             >
               <v-icon>
@@ -164,7 +164,7 @@
               class="ma-2"
               color="red"
               dark
-              @click="aplicarAsistencia(datosValidacion, 0)"
+              @click="validarCreditos(datosValidacion, 0)"
               @click.stop="dialog = false"
             >
               <v-icon
@@ -226,7 +226,7 @@ export default {
           });
       },
 
-      aplicarAsistencia(item, asistencia){
+      validarCreditos(item, asistencia){
         item.asistencia = asistencia;
 
         FormacionInDataService.update(item.id, item)

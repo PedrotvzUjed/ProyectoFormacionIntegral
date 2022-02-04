@@ -37,7 +37,7 @@
                 sm="6"
                 md="4"
                 >
-                        <v-card-text>
+                    <v-card-text>
                         <label><strong>Carrera: </strong></label>
                         <v-spacer></v-spacer>
                         <label>{{ dataAlumno.carrera }}</label>
@@ -237,6 +237,7 @@ export default {
                 console.log(e);
             })
     },
+
     getEventsAlumno(){
         FormacionInDataService.getEventsAlumno(this.$route.params.id)
         .then(response => {
@@ -248,6 +249,7 @@ export default {
             console.log(e);
         })
     },
+
     validarCreditos(response){
         this.eventsDataFiles = [];
         for (let evento of response) {
@@ -260,6 +262,7 @@ export default {
             this.createData(evento);
         }
     },
+    
     createData(response){
         var status;
         if( response.asistencia == 1){

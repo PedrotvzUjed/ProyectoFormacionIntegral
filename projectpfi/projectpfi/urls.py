@@ -25,4 +25,5 @@ urlpatterns = [
     path('eventos/', include('eventos.urls')), #new
     path('alumnos/', include('Alumnos.urls')),
     path('formacionIn/', include('FormacionIntegral.urls'))
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

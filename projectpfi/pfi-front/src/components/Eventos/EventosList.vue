@@ -190,7 +190,6 @@
 <script>
 import EventosDataService from "../../services/EventosDataService";
 import FormacionInDataService from "../../services/FormacionInDataService";
-import swal from "sweetalert";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -243,35 +242,6 @@ export default {
           console.log(e);
         });
     },
-
-    deleteEvent(evento) {
-      swal({
-        title: "Estas seguro de querer eliminar el evento?",
-        text: "Esta acción no se puede deshacer",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      }).then((willDelete) => {
-        if (willDelete) {
-          EventosDataService.delete(evento.id)
-            .then((response) => {
-              console.log(response);
-              this.retrieveEventos();
-              this.selected[0].tituloEvento = "";
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-          swal("Eliminaste el evento!", {
-            icon: "success",
-          });
-        } else {
-          swal("Parece que te arrepentiste!");
-        }
-      });
-    },
-
-  
     FiltroCategorias(categoria){
       EventosDataService.filtroCategoria(categoria)
         .then(response => {
