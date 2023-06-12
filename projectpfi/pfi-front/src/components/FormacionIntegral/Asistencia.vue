@@ -46,7 +46,7 @@
       >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title>Alumnos Registrados al evento</v-toolbar-title>
+            <v-toolbar-title>Estudiantes Registrados al evento</v-toolbar-title>
             <v-spacer></v-spacer>
                 <v-text-field
                   v-model="search"
@@ -70,6 +70,18 @@
               mdi-delete
             </v-icon>
           </v-btn>
+        </template>
+        <template v-slot:item.evidencia="{ item }">
+          <v-btn
+            class="ma-2"
+            color=""
+            @click="retrievEvidencia(item), datosValidacion == item"
+            @click.stop="dialog = true"
+          >
+            <v-icon>
+              mdi-account-details
+            </v-icon>
+          </v-btn> 
         </template>
         <template v-slot:item.apAsistencia="{ item }">
          <v-btn v-if="item.asistencia != 1"
@@ -117,8 +129,49 @@
         <template v-slot:no-data>
           No se encuentran alumnos registrados actualmente!
         </template>
+        
       </v-data-table>
     </v-row>
+    <v-dialog
+      v-model="dialog"
+      transition="dialog-top-transition"
+      max-width="600"
+    >
+      <v-card>
+        <v-toolbar
+          color="#a4010b"
+          dark
+        >Evidencia del estudiante: {{datosValidacion.nombre}}</v-toolbar>
+        <v-card-text>
+          <v-container fluid>
+            <v-row justify="space-around" style="padding-top: 10px">
+              <v-img
+                  v-if="evidencia.length == 0"
+                  lazy-src="https://st3.depositphotos.com/2927609/32461/v/600/depositphotos_324611032-stock-illustration-no-image-vector-icon-no.jpg"
+                  max-height="300"
+                  max-width="300"
+                  src="https://st3.depositphotos.com/2927609/32461/v/600/depositphotos_324611032-stock-illustration-no-image-vector-icon-no.jpg"
+              ></v-img>
+              <v-img
+                  v-else
+                  :lazy-src="evidencia[0].img"
+                  max-height="600"
+                  max-width="600"
+                  :src="evidencia[0].img"
+              ></v-img>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions class="justify-end">
+          <v-btn
+            class="ma-2"
+            color="red"
+            dark
+            @click.stop="dialog = false"
+          >Cerrar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -136,11 +189,14 @@ export default {
         headers: [
           { text: 'Nombre', align: 'start', sortable: true, value: 'nombre'},
           { text: 'Matricula', value: 'matricula' },
-          /* { text: 'Asistencia', align: 'center', value: 'asistencia' }, */
+          { text: 'Verificar Evidencia', align: 'center', value: 'evidencia'},
           { text: 'Aplicar Asistencia', align: 'center', value: 'apAsistencia'},
           { text: 'Eliminar', align: 'center', value: 'eliminar'}
         ],
-        evento: []
+        evento: [],
+        dialog: false,
+        evidencia: [],
+        datosValidacion: []
       };
     },
     methods: {
@@ -205,7 +261,19 @@ export default {
           console.log(e);
           swal("Ocurrio un error al eliminar al Alumno","","error")
         });
-      }
+      },
+
+      retrievEvidencia(data){
+            EventosDataService.getEvidencias(this.$route.params.id, data.alumno)
+                .then(response => {
+                    console.log(response.data);
+                    this.evidencia = response.data;
+                    this.datosValidacion = data;
+                })
+                .catch(e => {
+                    console.log(e);
+                })
+        },
     },
     mounted() {
       this.retrieveAlumnos(this.$route.params.id);

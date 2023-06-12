@@ -44,19 +44,19 @@
         >
           <template v-slot:top>
             <v-toolbar flat>
-              <v-toolbar-title>Alumnos</v-toolbar-title>
+              <v-toolbar-title>Estudiantes</v-toolbar-title>
               <v-spacer></v-spacer>
                 <v-text-field
                   v-model="search"
                   append-icon="mdi-magnify"
-                  label="Buscar Alumnos"
+                  label="Buscar Estudiantes"
                   single-line
                   hide-details
                 ></v-text-field>
             </v-toolbar>
           </template>
           <template v-slot:no-data>
-            No se encuentran alumnos registrados actualmente!
+            No se encuentran estudiantes registrados actualmente!
           </template>
         </v-data-table>
       </v-col>
@@ -89,7 +89,7 @@
                   color="#a4010b"
                   class="white--text"
                   @click="validarAlumnos()"
-                >Registrar Alumnos
+                >Registrar Estudiantes
               </v-btn>
               </v-toolbar>
             </template>
@@ -102,11 +102,11 @@
             class="elevation-8 overflow-auto"
             max-height="480px"
             loading
-            loading-text="Seleccionar alumnos para registrar"
+            loading-text="Seleccionar estudiantes para registrar"
             v-else
           >
             <template v-slot:no-data>
-              No se encuentran alumnos registrados actualmente!
+              No se encuentran estudiantes registrados actualmente!
             </template>
           </v-data-table>
         </v-row>

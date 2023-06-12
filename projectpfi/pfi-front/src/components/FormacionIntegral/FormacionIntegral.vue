@@ -10,29 +10,24 @@
           <v-icon active>mdi-home</v-icon>
         </v-btn>
 
-        <v-btn @click="FiltroCategorias('Artísticas y Cultural')">
-          <span>Artísticas y Cultural</span>
+        <v-btn @click="FiltroCategorias('Arte')">
+          <span>Arte</span>
           <v-icon>mdi-bank</v-icon>
         </v-btn>
 
-        <v-btn @click="FiltroCategorias('Deportivas')">
-          <span>Deportivas</span>
-          <v-icon>mdi-run-fast</v-icon>
-        </v-btn>
-
-        <v-btn @click="FiltroCategorias('Intelectuales')">
-          <span>Intelectuales</span>
+        <v-btn @click="FiltroCategorias('Ciencia')">
+          <span>Ciencia</span>
           <v-icon>mdi-head-lightbulb</v-icon>
         </v-btn>
 
-        <v-btn @click="FiltroCategorias('Vinculación')">
-          <span>Vinculación</span>
-          <v-icon>mdi-badge-account-horizontal</v-icon>
+        <v-btn @click="FiltroCategorias('Deporte')">
+          <span>Deporte</span>
+          <v-icon>mdi-run-fast</v-icon>
         </v-btn>
 
-        <v-btn @click="FiltroCategorias('Externos')">
-          <span>Externos</span>
-          <v-icon>mdi-page-layout-sidebar-right</v-icon>
+        <v-btn @click="FiltroCategorias('Civismo')">
+          <span>Civismo</span>
+          <v-icon>mdi-badge-account-horizontal</v-icon>
         </v-btn>
       </v-bottom-navigation>
     </v-row>

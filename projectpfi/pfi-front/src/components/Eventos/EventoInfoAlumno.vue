@@ -61,7 +61,7 @@
         <label>{{ evento.descripcion }}</label>
       </v-row>
     </v-card-text>
-    <v-card-actions v-if="evento.categorias == 'Externos'">
+    <v-card-actions>
       <v-btn
         block
         depressed

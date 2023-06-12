@@ -10,10 +10,11 @@
                 sm="12"
                 md="4">
                     <v-img
-                        :lazy-src="dataAlumno.img"
-                        max-height="150"
-                        max-width="250"
-                        :src="dataAlumno.img"
+                    :lazy-src="dataAlumno.img"
+                    max-height="150px"
+                    max-width="250px"
+                    :src="dataAlumno.img"
+                    object-fit="cover"
                     ></v-img>
                 </v-col>
                 <v-col 

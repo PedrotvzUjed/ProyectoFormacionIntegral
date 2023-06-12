@@ -128,7 +128,7 @@ export default {
     getImage(event) {
       this.data.img = event;
       this.data.evento = this.$route.params.id;
-      this.data.alumno = 2;
+      this.data.alumno = 1;
       if (event != null) {
         this.active = false;
       } else {
@@ -151,7 +151,7 @@ export default {
       EventosDataService.createEvidencia(formData)
         .then((response) => {
           console.log(response);
-          this.retrievEvidencia(this.$route.params.id, 2);
+          this.retrievEvidencia(this.$route.params.id, 1);
         })
         .catch((e) => {
           console.log(e);
@@ -171,7 +171,7 @@ export default {
       EventosDataService.updateEvidencia(formData, this.evidencia[0].id)
         .then((response) => {
           console.log(response.data);
-          this.retrievEvidencia(this.$route.params.id, 2);
+          this.retrievEvidencia(this.$route.params.id, 1);
         })
         .catch((e) => {
           console.log(e);
@@ -179,7 +179,7 @@ export default {
     },
   },
   created() {
-    this.retrievEvidencia(this.$route.params.id, 2);
+    this.retrievEvidencia(this.$route.params.id, 1);
   },
 };
 </script>

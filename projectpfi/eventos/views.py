@@ -62,6 +62,7 @@ class evidencias(APIView):
             raise exceptions.ParseError("No has seleccionado el archivo a subir")
         
         archivos = str(request.FILES)
+        print(request.data)
         serializer = evidenciaSerializerCreate(data=request.data)
 
         if serializer.is_valid():

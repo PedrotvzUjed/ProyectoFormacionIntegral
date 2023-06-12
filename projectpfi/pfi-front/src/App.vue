@@ -9,7 +9,7 @@
     >
       <v-list-item style="background-color: white;" class="px-2">
         <v-list-item-content>
-            <v-btn block color="error" outlined >Iniciar sesión</v-btn>
+            <v-btn block color="error" outlined ></v-btn>
           </v-list-item-content>
       </v-list-item>
 
@@ -73,9 +73,9 @@ export default {
       { title: 'Eventos', icon: 'mdi-calendar-text', route: '/eventos' },
       { title: 'Capturar Eventos', icon: 'mdi-calendar-plus', route: '/add' },
       { title: 'Formación Integral', icon: 'mdi-home-city', route: '/formacionI' },
-      { title: 'Alumnos', icon: 'mdi-account-box-multiple', route: '/fi-alumnos'},
+      { title: 'Estudiantes', icon: 'mdi-account-box-multiple', route: '/fi-alumnos'},
       { title: 'Calendario de Eventos', icon: 'mdi-calendar', route: '/calendario'},
-      { title: 'Vista de Alumnos', icon: 'mdi-account-eye', route: '/alumnos-vista-eventos'}
+      { title: 'Vista de Estudiantes', icon: 'mdi-account-eye', route: '/alumnos-vista-eventos'}
     ],
   }),
 };

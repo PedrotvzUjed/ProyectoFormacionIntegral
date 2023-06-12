@@ -31,12 +31,12 @@
         >
           <template v-slot:top>
             <v-toolbar flat>
-              <v-toolbar-title>Alumnos Registrados al evento</v-toolbar-title>
+              <v-toolbar-title>Estudiantes Registrados al evento</v-toolbar-title>
               <v-spacer></v-spacer>
                   <v-text-field
                     v-model="search"
                     append-icon="mdi-magnify"
-                    label="Buscar Alumnos"
+                    label="Buscar Estudiantes"
                     single-line
                     hide-details
                   ></v-text-field>
@@ -113,7 +113,7 @@
             </v-btn>
           </template>
           <template v-slot:no-data>
-            No se encuentran alumnos registrados actualmente!
+            No se encuentran Estudiantes registrados actualmente!
           </template>
         </v-data-table>
     </v-row>  

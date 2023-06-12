@@ -131,6 +131,41 @@
                 <select v-model="eventos.sede"  class="form-control" 
                 id="sede" required name="sede">
                 <option disabled value="">Seleccione la sede del evento</option>
+                <option>CEDU</option>
+                <option>IMAC</option>
+                <option>ICED</option>
+                <option>FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS</option>
+                <option>FACULTAD DE CIENCIAS EXACTAS</option>
+                <option>ESCUELA DE LENGUAS</option>
+                <option>FACULTAD DE ODONTOLOGÍA</option>
+                <option>FACULTAD DE CIENCIAS QUÍMICAS DGO.</option>
+                <option>FACULTAD DE CIENCIAS, CULTURA FÍSICA</option>
+                <option>ESCUELA SUPERIOR DE MÚSICA</option>
+                <option>ESCUELA DE PINTURA, ESCULTURA Y ARTE</option>
+                <option>FACULTAD DE PSICOLOGÍA Y TERAPIA COM</option>
+                <option>FACULTAD DE CIENCIAS FORESTALES</option>
+                <option>FACULTAD DE ENFERMERÍA Y OBSTETRICIA</option>
+                <option>FACULTAD DE MEDICINA VETERINARIA Y ZOOT</option>
+                <option>FACULTAD DE CIENCIAS DE LA SALUD</option>
+                <option>FACULTAD DE CIENCIAS BIOLÓGICAS</option>
+                <option>FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI</option>
+                <option>FACULTAD DE AGRICULTURA Y ZOOTECNIA</option>
+                <option>FACULTAD DE TRABAJO SOCIAL (*)</option>
+                <option>FACULTAD DE MEDICINA Y NUTRICIÓN</option>
+                <option>MUSEO REGIONAL</option>
+                <option>FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)</option>
+                <option>FACULTAD DE CIENCIAS QUÍMICAS</option>
+                <option>DIRECCIÓN DE DIFUSIÓN CULTURAL</option>
+                <option>FACULTAD DE TRABAJO SOCIAL</option>
+                <option>FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM</option>
+                <option>RADIO UNIVERSIDAD</option>
+                <option>DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA</option>
+                <option>TV UJED</option>
+                <option>DIRECCIÓN DE PLAN Y DESARROLLO ACAD</option>
+                <option>COORDINACION INSTITUCIONAL FI</option>
+                <option>UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO</option>
+                <option>COORDINACIÓN DE VINCULACIÓN EMPRES</option>        
+                <option> </option>        
                 <option>Bellas Artes UJED</option>
                 <option>Bellas Artes UJED Lerdo</option>
                 <option>Biblioteca Central Universitaria</option>
@@ -249,11 +284,10 @@
                 <!-- <select v-model="eventos.categorias"  class="form-control" 
                 id="categorias" :required="!selected" name="categorias"> -->
                 <option disabled value="">Seleccione la categoria del evento</option>
-                <option>Artísticas y Cultural</option>
-                <option>Deportivas</option>
-                <option>Intelectuales</option>
-                <option>Vinculación</option>
-                <option>Externos</option>
+                  <option>Arte</option>
+                  <option>Ciencia</option>
+                  <option>Deporte</option>
+                  <option>Civismo</option>
                 </select>
               </div>
             </v-col>
@@ -264,7 +298,7 @@
         </v-container>
       </div>
       <div v-else>
-        <v-container style="padding-top: 10px">
+        <v-container style="padding: 60px">
           <v-row>
             <button class="btn btn-success" @click="newEvento">Capturar otro evento</button>
           </v-row>

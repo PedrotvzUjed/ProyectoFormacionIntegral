@@ -225,11 +225,10 @@
                   <select v-model="currentEvento.categorias"  class="form-control" 
                   id="categorias" required name="categorias">
                   <option disabled value="">Seleccione la categoria del evento</option>
-                  <option>Artísticas y Cultural</option>
-                  <option>Deportivas</option>
-                  <option>Intelectuales</option>
-                  <option>Vinculación</option>
-                  <option>Externos</option>
+                  <option>Arte</option>
+                  <option>Ciencia</option>
+                  <option>Deporte</option>
+                  <option>Civismo</option>
                   </select>
                 </div>
               </v-col>

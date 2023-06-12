@@ -10,7 +10,7 @@
       >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title>Alumnos</v-toolbar-title>
+            <v-toolbar-title>Estudiantes</v-toolbar-title>
             <v-spacer></v-spacer>
               <v-text-field
                 v-model="search"
