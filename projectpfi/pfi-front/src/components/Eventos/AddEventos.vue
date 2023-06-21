@@ -6,7 +6,258 @@
       </v-card-title>
       <div v-if="!submitted">
         <v-container style="padding: 0px 40px 40px 40px">
-          <v-row>
+          <v-form 
+          ref="form"
+          v-model="valid"
+          lazy-validation>
+            <v-container>
+              <v-row>
+                <v-col
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                  
+                >
+                  <v-text-field
+                    :rules="[v => !!v || 'Campo requerido']"
+                    :counter="100"
+                    label="Titulo de Evento"
+                    id="tituloEvento"
+                    v-model="eventos.tituloEvento"
+                    name="tituloEvento"
+                    required
+                    outlined
+                  ></v-text-field>
+                </v-col>
+
+                <v-col
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                >
+                  <v-combobox
+                    :rules="[v => !!v || 'Campo requerido']"
+                    v-model="eventos.unidadResponsable"
+                    :items="unidades"
+                    id="unidadResponsable" 
+                    name="unidadResponsable"
+                    label="Unidad responsable"
+                    outlined
+                    :counter="100"
+                    required
+                  ></v-combobox>
+                  
+                </v-col>
+
+                <v-col
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                >
+                  <v-textarea
+                    v-model="eventos.descripcionEvento" 
+                    id="descripcionEvento" 
+                    name="descripcionEvento"
+                    label="Descripción del evento"
+                    :counter="200"
+                    rows="2"
+                    required
+                    outlined
+                    :rules="[v => !!v || 'Campo requerido']"
+                  ></v-textarea>
+                </v-col>
+
+                <v-col
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                >
+                  <v-text-field
+                    id="eventoDedicadoA"
+                    required
+                    v-model="eventos.eventoDedicadoA"
+                    name="eventoDedicadoA"
+                    :rules="[v => !!v || 'Campo requerido']"
+                    :counter="100"
+                    label="Evento dedicado a"
+                    outlined
+                    
+                  ></v-text-field>
+                </v-col>
+
+                <v-col
+                  cols="12"
+                  md="4"
+                  sm="12"
+                  lg="4"
+                  xl="4"
+                >
+                  <v-text-field
+                    id="fechaEvento"
+                    v-model="eventos.fechaEvento"
+                    name="fechaEvento"
+                    :rules="[v => !!v || 'Campo requerido']"
+                    label="Fecha del evento"
+                    required
+                    outlined
+                    type="date"
+                  ></v-text-field>
+                </v-col>
+                
+                <v-col
+                  cols="12"
+                  md="4"
+                  sm="6"
+                  lg="4"
+                  xl="4"
+                >
+                  <v-text-field
+                    id="inicioEvento"
+                    required
+                    v-model="eventos.inicioEvento"
+                    name="inicioEvento"
+                    :rules="[v => !!v || 'Campo requerido']"
+                    label="Hora de inicio del evento"
+                    outlined
+                    type="time"
+                  ></v-text-field>
+                </v-col>
+                
+                <v-col
+                  cols="12"
+                  md="4"
+                  sm="6"
+                  lg="4"
+                  xl="4"
+                >
+                  <v-text-field
+                    id="finEvento"
+                    required
+                    v-model="eventos.finEvento"
+                    name="finEvento"
+                    :rules="[v => !!v || 'Campo requerido']"
+                    label="Hora del final del evento"
+                    outlined
+                    type="time"
+                  ></v-text-field>
+                </v-col>
+                
+                <v-col
+                  cols="12"
+                  md="4"
+                  sm="6"
+                  lg="4"
+                  xl="4"
+                >
+                  <v-combobox
+                    v-model="eventos.sede"  
+                    id="sede" 
+                    required 
+                    name="sede"
+                    :rules="[v => !!v || 'Campo requerido']"
+                    :counter="100"
+                    label="Sede del evento"
+                    outlined
+                    :items="unidades"
+                  ></v-combobox>
+                </v-col>
+                
+                <v-col
+                  cols="12"
+                  md="4"
+                  sm="6"
+                  lg="4"
+                  xl="4"
+                >
+                  <v-text-field
+                    id="cupo"
+                    required
+                    v-model="eventos.cupo"
+                    name="cupo"
+                    type="number"  maxlength="4"
+                    min="1" max="1000"
+                    placeholder="maximo mil personas"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    :rules="[v => !!v || 'Campo requerido']"
+                    label="Cupo del evento"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                
+                <v-col
+                  cols="12"
+                  md="4"
+                  sm="12"
+                  lg="4"
+                  xl="4"
+                >
+                  <v-text-field
+                    id="descripcion"
+                    required
+                    v-model="eventos.descripcion"
+                    name="descripcion"
+                    :rules="[v => !!v || 'Campo requerido']"
+                    :counter="150"
+                    label="Descripción del lugar"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                
+                <v-col
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                >
+                  <v-text-field
+                    id="creditos"
+                    required
+                    v-model="eventos.creditos"
+                    name="creditos"
+                    type="number"  maxlength="4"
+                    min="0" max="10"
+                    placeholder="maximo 10 creditos"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    :rules="[v => !!v || 'Campo requerido']"
+                    label="Creditos otorgados en el evento"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+
+                <v-col
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                >
+                  <v-combobox
+                    v-model="eventos.categorias"  
+                    id="categorias" 
+                    name="categorias"
+                    :items="categoriaEvento"
+                    label="Categoria del evento"
+                    required
+                    outlined
+                    :rules="[v => !!v || 'Campo requerido']"
+                  ></v-combobox>
+                </v-col>
+              </v-row>
+            </v-container>
+            <v-row>
+              <button @click.prevent="saveEvento" class="btn btn-success">Crear evento</button>
+            </v-row>
+          </v-form>
+          <!-- <v-row>
             <v-col>
               <div class="form-group">
                 <label for="tituloEvento">Titulo del evento</label>
@@ -239,7 +490,8 @@
                   required
                   v-model="eventos.cupo"
                   name="cupo"
-                  type="number"  maxlength="4"
+                  type="number"  
+                  maxlength="4"
                   min="1" max="1000"
                   placeholder="maximo mil personas"
                   oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -281,8 +533,8 @@
                 <label for="categorias">Categoria del evento</label>
                 <select v-model="eventos.categorias"  class="form-control" 
                 id="categorias" name="categorias">
-                <!-- <select v-model="eventos.categorias"  class="form-control" 
-                id="categorias" :required="!selected" name="categorias"> -->
+                 <select v-model="eventos.categorias"  class="form-control" 
+                id="categorias" :required="!selected" name="categorias">
                 <option disabled value="">Seleccione la categoria del evento</option>
                   <option>Arte</option>
                   <option>Ciencia</option>
@@ -291,10 +543,8 @@
                 </select>
               </div>
             </v-col>
-          </v-row>
-          <v-row>
-            <button @click="saveEvento" class="btn btn-success">Crear evento</button>
-          </v-row>
+          </v-row> -->
+          
         </v-container>
       </div>
       <div v-else>
@@ -332,14 +582,59 @@ export default {
         creditos:"",
         categorias:"",
       },
-      
+      unidades: ['CEDU',
+                'IMAC',
+                'ICED',
+                'FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS',
+                'FACULTAD DE CIENCIAS EXACTAS',
+                'ESCUELA DE LENGUAS',
+                'FACULTAD DE ODONTOLOGÍA',
+                'FACULTAD DE CIENCIAS QUÍMICAS DGO.',
+                'FACULTAD DE CIENCIAS, CULTURA FÍSICA',
+                'ESCUELA SUPERIOR DE MÚSICA',
+                'ESCUELA DE PINTURA, ESCULTURA Y ARTE',
+                'FACULTAD DE PSICOLOGÍA Y TERAPIA COM',
+                'FACULTAD DE CIENCIAS FORESTALES',
+                'FACULTAD DE ENFERMERÍA Y OBSTETRICIA',
+                'FACULTAD DE MEDICINA VETERINARIA Y ZOOT',
+                'FACULTAD DE CIENCIAS DE LA SALUD',
+                'FACULTAD DE CIENCIAS BIOLÓGICAS',
+                'FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI',
+                'FACULTAD DE AGRICULTURA Y ZOOTECNIA',
+                'FACULTAD DE TRABAJO SOCIAL (*)',
+                'FACULTAD DE MEDICINA Y NUTRICIÓN',
+                'MUSEO REGIONAL',
+                'FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)',
+                'FACULTAD DE CIENCIAS QUÍMICAS',
+                'DIRECCIÓN DE DIFUSIÓN CULTURAL',
+                'FACULTAD DE TRABAJO SOCIAL',
+                'FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM',
+                'RADIO UNIVERSIDAD',
+                'DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA',
+                'TV UJED',
+                'DIRECCIÓN DE PLAN Y DESARROLLO ACAD',
+                'COORDINACION INSTITUCIONAL FI',
+                'UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO',
+                'COORDINACIÓN DE VINCULACIÓN EMPRES',      ],
+      categoriaEvento: ['Arte','Ciencia', 'Deporte', 'Civismo', 'Responsabilidad social universitaria', 'Emprendimiento'],
       submitted: false,
+      valid: true,
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
     };
   },
   methods: {
+    validate () {
+      this.valid = this.$refs.form.validate()
+    },
     saveEvento() {
-      this.createEvento();
+      this.validate();
+      if (this.valid == true) {
+        this.createEvento();
+      }
+      else{
+        console.log('Evento no Validado ' + false)
+      }
+      
     },
     
     newEvento() {
