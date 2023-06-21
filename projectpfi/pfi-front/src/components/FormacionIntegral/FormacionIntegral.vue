@@ -29,6 +29,16 @@
           <span>Civismo</span>
           <v-icon>mdi-badge-account-horizontal</v-icon>
         </v-btn>
+
+        <v-btn @click="FiltroCategorias('Responsabilidad social universitaria')">
+          <span>RSU</span>
+          <v-icon>mdi-school</v-icon>
+        </v-btn>
+
+        <v-btn @click="FiltroCategorias('Emprendimiento')">
+          <span>Emprendimiento</span>
+          <v-icon>mdi-account-tie</v-icon>
+        </v-btn>
       </v-bottom-navigation>
     </v-row>
 
