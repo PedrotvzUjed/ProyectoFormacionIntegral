@@ -35,3 +35,40 @@ class eventosSubirevidenciasAlumno(models.Model):
     img = models.ImageField(upload_to='EvidenciasAlumnos/images')
     evento = models.ForeignKey(eventos, on_delete=models.CASCADE)
     alumno = models.ForeignKey(Alumnos, on_delete=CASCADE)
+
+class clasifi_cat(models.Model):
+    text = models.CharField(max_length = 100)
+
+class catalogo_categorias(models.Model):
+    text = models.CharField(max_length = 100)
+    clasificacion = models.ForeignKey(clasifi_cat, on_delete=CASCADE, null= True)
+
+class catalogo_categorias2(models.Model):
+    text = models.CharField(max_length = 100)
+    catalogo = models.ForeignKey(catalogo_categorias, on_delete=CASCADE, null= True)
+
+class catalogo_civismo(models.Model):
+    text = models.CharField(max_length = 100)
+    clasificacion = models.ForeignKey(clasifi_cat, on_delete=CASCADE, null= True)
+
+class catalogo_registro_civismo(models.Model):
+    text = models.CharField(max_length = 100)
+    catalogo = models.ForeignKey(catalogo_civismo, on_delete=CASCADE, null= True)
+
+class catalogo_deporte(models.Model):
+    text = models.CharField(max_length = 100)
+    clasificacion = models.ForeignKey(clasifi_cat, on_delete=CASCADE, null= True)
+
+class categorias_deporte(models.Model):
+    text = models.CharField(max_length = 100)
+    catalogo = models.ForeignKey(catalogo_deporte, on_delete=CASCADE, null= True)
+
+class catalogo_ciencia(models.Model):
+    text = models.CharField(max_length = 100)
+    clasificacion = models.ForeignKey(clasifi_cat, on_delete=CASCADE, null= True)
+
+class categorias_ciencia(models.Model):
+    text = models.CharField(max_length = 100)
+    catalogo = models.ForeignKey(catalogo_ciencia, on_delete=CASCADE, null= True)
+
+

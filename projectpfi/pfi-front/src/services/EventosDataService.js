@@ -67,6 +67,18 @@ class EventosDataService {
   getEvidencias(evento, alumno) {
     return http.get(`/eventos/evidencia?evento=${evento}&alumno=${alumno}`);
   }
+
+  getClasificacion(){
+    return http.get("/eventos/clasificacion_eve");
+  }
+
+  getCategorias1(clasif_id){
+    return http.get(`/eventos/categorias1_eve?clasificacion=${clasif_id}`);
+  }
+
+  getCategorias2(cat_id){
+    return http.get(`/eventos/categorias2_eve?catalogo=${cat_id}`);
+  }
 }
 
 export default new EventosDataService();

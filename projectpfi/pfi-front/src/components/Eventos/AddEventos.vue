@@ -244,307 +244,76 @@
                     v-model="eventos.categorias"  
                     id="categorias" 
                     name="categorias"
-                    :items="categoriaEvento"
+                    :items="clasificacion"
                     label="Categoria del evento"
                     required
                     outlined
+                    @change="getCategorias1($event.id)"
                     :rules="[v => !!v || 'Campo requerido']"
                   ></v-combobox>
                 </v-col>
+
+                <v-col
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                >
+                  <v-combobox
+                    v-model = eventos.categorias_1
+                    :rules="[v => !!v || 'Campo requerido']"
+                    :items="categoria1"
+                    id="categorias_1" 
+                    name="categorias_1"
+                    label="Categoria"
+                    outlined
+                    :counter="100"
+                    required
+                    @change="getCategorias2($event.id)"
+                  ></v-combobox>
+                  
+                </v-col>
+
+                <v-col
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                >
+                  <v-combobox
+                    v-model = eventos.categorias_2
+                    :rules="[v => !!v || 'Campo requerido']"
+                    :items="categoria2"
+                    id="categorias_2" 
+                    name="categorias_2"
+                    label="Categoria"
+                    outlined
+                    :counter="100"
+                    required
+                    @change="imprimirVal($event)"
+                  ></v-combobox>
+                  
+                </v-col>
               </v-row>
+
+              
             </v-container>
+            <v-row style="padding: 20px 0px 20px 0px">
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <!-- <button class="btn btn-outline-danger mr-2" 
+                  @click="deleteEvento"
+                >
+                  Eliminar
+                </button> -->
+                <button @click.prevent="saveEvento" class="btn btn-success">Crear evento</button>
+              </div>
+            </v-row>
             <v-row>
-              <button @click.prevent="saveEvento" class="btn btn-success">Crear evento</button>
+              
             </v-row>
           </v-form>
-          <!-- <v-row>
-            <v-col>
-              <div class="form-group">
-                <label for="tituloEvento">Titulo del evento</label>
-                <input
-                  class="form-control"
-                  id="tituloEvento"
-                  required
-                  v-model="eventos.tituloEvento"
-                  name="tituloEvento"
-                />
-              </div>
-            </v-col>
-            <v-col>
-              <div class="form-group">
-                <label for="unidadResponsable">Unidad responsable del evento</label>
-                <select v-model="eventos.unidadResponsable"  class="form-control" 
-                id="unidadResponsable" required name="unidadResponsable">
-                <option disabled value="">Seleccione la unidad responsable del evento</option>
-                <option>CEDU</option>
-                <option>IMAC</option>
-                <option>ICED</option>
-                <option>FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS</option>
-                <option>FACULTAD DE CIENCIAS EXACTAS</option>
-                <option>ESCUELA DE LENGUAS</option>
-                <option>FACULTAD DE ODONTOLOGÍA</option>
-                <option>FACULTAD DE CIENCIAS QUÍMICAS DGO.</option>
-                <option>FACULTAD DE CIENCIAS, CULTURA FÍSICA</option>
-                <option>ESCUELA SUPERIOR DE MÚSICA</option>
-                <option>ESCUELA DE PINTURA, ESCULTURA Y ARTE</option>
-                <option>FACULTAD DE PSICOLOGÍA Y TERAPIA COM</option>
-                <option>FACULTAD DE CIENCIAS FORESTALES</option>
-                <option>FACULTAD DE ENFERMERÍA Y OBSTETRICIA</option>
-                <option>FACULTAD DE MEDICINA VETERINARIA Y ZOOT</option>
-                <option>FACULTAD DE CIENCIAS DE LA SALUD</option>
-                <option>FACULTAD DE CIENCIAS BIOLÓGICAS</option>
-                <option>FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI</option>
-                <option>FACULTAD DE AGRICULTURA Y ZOOTECNIA</option>
-                <option>FACULTAD DE TRABAJO SOCIAL (*)</option>
-                <option>FACULTAD DE MEDICINA Y NUTRICIÓN</option>
-                <option>MUSEO REGIONAL</option>
-                <option>FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)</option>
-                <option>FACULTAD DE CIENCIAS QUÍMICAS</option>
-                <option>DIRECCIÓN DE DIFUSIÓN CULTURAL</option>
-                <option>FACULTAD DE TRABAJO SOCIAL</option>
-                <option>FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM</option>
-                <option>RADIO UNIVERSIDAD</option>
-                <option>DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA</option>
-                <option>TV UJED</option>
-                <option>DIRECCIÓN DE PLAN Y DESARROLLO ACAD</option>
-                <option>COORDINACION INSTITUCIONAL FI</option>
-                <option>UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO</option>
-                <option>COORDINACIÓN DE VINCULACIÓN EMPRES</option>        
-                </select>
-              </div>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <div class="form-group">
-                <label for="descripcionEvento">Descripción del evento</label>
-              
-                <textarea v-model="eventos.descripcionEvento" class="form-control" id="descripcionEvento" 
-                placeholder="Descripción del evento" required name="descripcionEvento"></textarea>
-              </div>
-            </v-col>
-            <v-col>
-              <div class="form-group">
-                <label for="eventoDedicadoA">Evento dedicado a</label>
-                <input
-                  class="form-control"
-                  id="eventoDedicadoA"
-                  required
-                  v-model="eventos.eventoDedicadoA"
-                  name="eventoDedicadoA"
-                />
-              </div>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <div class="form-group">
-                <label for="fechaEvento">Fecha del evento</label>
-                <input type="date"
-                  class="form-control"
-                  id="fechaEvento"
-                  required
-                  v-model="eventos.fechaEvento"
-                  name="fechaEvento"
-                />
-              </div>
-            </v-col>
-            <v-col>
-              
-              <div class="form-group">
-                <label for="inicioEvento">Hora de inicio del evento</label>
-                <input type="time"
-                  class="form-control"
-                  id="inicioEvento"
-                  required
-                  v-model="eventos.inicioEvento"
-                  name="inicioEvento"
-                />
-              </div>
-            </v-col>
-            <v-col>
-              <div class="form-group">
-                <label for="finEvento">Hora del final del evento</label>
-                <input type="time"
-                  class="form-control"
-                  id="finEvento"
-                  required
-                  v-model="eventos.finEvento"
-                  name="finEvento"
-                />
-              </div>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <div class="form-group">
-                <label for="sede">Sede del evento</label>
-                <select v-model="eventos.sede"  class="form-control" 
-                id="sede" required name="sede">
-                <option disabled value="">Seleccione la sede del evento</option>
-                <option>CEDU</option>
-                <option>IMAC</option>
-                <option>ICED</option>
-                <option>FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS</option>
-                <option>FACULTAD DE CIENCIAS EXACTAS</option>
-                <option>ESCUELA DE LENGUAS</option>
-                <option>FACULTAD DE ODONTOLOGÍA</option>
-                <option>FACULTAD DE CIENCIAS QUÍMICAS DGO.</option>
-                <option>FACULTAD DE CIENCIAS, CULTURA FÍSICA</option>
-                <option>ESCUELA SUPERIOR DE MÚSICA</option>
-                <option>ESCUELA DE PINTURA, ESCULTURA Y ARTE</option>
-                <option>FACULTAD DE PSICOLOGÍA Y TERAPIA COM</option>
-                <option>FACULTAD DE CIENCIAS FORESTALES</option>
-                <option>FACULTAD DE ENFERMERÍA Y OBSTETRICIA</option>
-                <option>FACULTAD DE MEDICINA VETERINARIA Y ZOOT</option>
-                <option>FACULTAD DE CIENCIAS DE LA SALUD</option>
-                <option>FACULTAD DE CIENCIAS BIOLÓGICAS</option>
-                <option>FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI</option>
-                <option>FACULTAD DE AGRICULTURA Y ZOOTECNIA</option>
-                <option>FACULTAD DE TRABAJO SOCIAL (*)</option>
-                <option>FACULTAD DE MEDICINA Y NUTRICIÓN</option>
-                <option>MUSEO REGIONAL</option>
-                <option>FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)</option>
-                <option>FACULTAD DE CIENCIAS QUÍMICAS</option>
-                <option>DIRECCIÓN DE DIFUSIÓN CULTURAL</option>
-                <option>FACULTAD DE TRABAJO SOCIAL</option>
-                <option>FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM</option>
-                <option>RADIO UNIVERSIDAD</option>
-                <option>DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA</option>
-                <option>TV UJED</option>
-                <option>DIRECCIÓN DE PLAN Y DESARROLLO ACAD</option>
-                <option>COORDINACION INSTITUCIONAL FI</option>
-                <option>UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO</option>
-                <option>COORDINACIÓN DE VINCULACIÓN EMPRES</option>        
-                <option> </option>        
-                <option>Bellas Artes UJED</option>
-                <option>Bellas Artes UJED Lerdo</option>
-                <option>Biblioteca Central Universitaria</option>
-                <option>Bicentenario</option>
-                <option>BIOPARQUE, DURANGO</option>
-                <option>Bioparque estrella, Mty., NL.</option>
-                <option>Bolsón de Mapimí</option>
-                <option>Bosque Venustiano Carranza. Torreón, Coah.</option>
-                <option>Calle 5 de Febrero Esquina con Bruno Martínez, Zona Centro</option>
-                <option>Campus Gómez Palacio</option>
-                <option>Cancha de Santa Lucía</option>
-                <option>Cancha de usos múltiples, FCF</option>
-                <option>Cancha Frente a Facultad de Ciencias Químicas</option>
-                <option>Cancha "Robelto Silva", Carretera a Mazatlán km 1.5</option>
-                <option>Cancún, Quintana Roo</option>
-                <option>Carretera Durango Mazatlan y Calle Opalo</option>
-                <option>Casa Cuervo, Guadalajara, Jalisco</option>
-                <option>Casa de Cultura CITIBANAMEX</option>
-                <option>Casa de la Cultura de Cd. Lerdo,Durango</option>
-                <option>Casa de la Cultura de Ciudad Lerdo Durango.  Av. Francisco I. Madero 52 Nte. Col. Centro CP 35150, Lerdo, Durango </option>
-                <option>Casa de la cultura de Gómez Palacio, Campestre GP</option>
-                <option>Casa de la Cultura Durango, Calle Negrete 900 poniente</option>
-                <option>Casa de las Banquetas Altas,Gómez Palacio Dgo.</option>
-                <option>Casa Municipal del Arte y la Cultura, Hacienda de los Laureles112, Fracc. Hacienda de Tapias </option>
-                <option>Casa Nava avenida, Madero esquina con Ocampo., Ciudad Lerdo, Dgo.</option>
-                <option>Casino Murano, Hotel las Rosas, Gómez Palacio, Dgo.</option>
-                <option>Catedral Basílica Menor, Ave. 20 de Noviembre y Constitución</option>
-                <option>CBTA 3</option>
-                <option>CBTIS 110</option>
-                <option>CBTIS 89</option>
-                <option>CCH</option>
-                <option>Cd. de Mexico</option>
-                <option>Cdu (Promocion Deportiva)</option>
-                <option>CENTRAL UJED</option>
-                <option>Centro Cultural BANAMEX , 5 de Febrero Esq. con Francisco I. Madero</option>
-                <option>Centro Cultural y de Convenciones Bicentenario</option>
-                <option>Centro de Convenciones Bicentenario</option>
-                <option>Centro de Convenciones, Gómez Palacio </option>
-                <option>Centro de Convenciones, Posada del Río. Gómez Palacio, Dgo.</option>
-                <option>Centro de Integración Laboral, Fracc. Huizache</option>
-                <option>CENTRO DE INV. Y DE ESTUDIOS AVANZADOS CINVESTAV </option>
-                <option>centro de la ciudad de durango </option>
-                <option>Centro Escolar Revolución, Sección A Gómez Farías entre Luna y Urrea, Barrio de Tierra Blanca</option>
-                <option>Centro Especializado de Reintegración y Tratamiento para menores infractores (CERMI)</option>
-                <option>Centro Monterrey, Nuevo León</option>
-                <option>Centro Recreativo Tapias </option>
-                <option>Centro Regional de Educación para la Conservación (CRECO)</option>
-                <option>Cerro de Los Remedios, Durango,Dgo.</option>
-                <option>CIAC (Aquiles Serdán y Bruno Martínez)</option>
-                <option>CIIDIR IPN,Calle Sigma 119 Fracc. 20 de Noviembre II</option>
-                <option>Cine CITICINEMAS, Real del Mezquital 101 </option>
-                <option>Cinemex</option>
-                <option>Cineteca Municipal Silvestre Revueltas. Juárez 217 Nte., Zona Centro</option>
-                <option>CIUDAD DE MEXICO</option>
-                <option>Ciudad del anciano</option>
-                <option>CIUDAD UNIVERSITARIA, CDMX</option>
-                <option>Club de Leones de Durango </option>
-                <option>COLEGIO DE BACHILLERES DEL ESTADO DE DURANGO</option>
-                <option>Colegio De Ciencias Y Humanidades</option>
-                <option>Colegio de Ginecología </option>
-                <option></option>
-                </select>
-              </div>
-            </v-col>
-            <v-col>
-              <div class="form-group">
-                <label for="cupo">Cupo del evento</label>
-                <input 
-                  class="form-control"
-                  id="cupo"
-                  required
-                  v-model="eventos.cupo"
-                  name="cupo"
-                  type="number"  
-                  maxlength="4"
-                  min="1" max="1000"
-                  placeholder="maximo mil personas"
-                  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                />
-              </div>
-            </v-col>
-            <v-col>
-              <div class="form-group">
-                <label for="descripcion">Descripción:</label>
-                <input
-                  class="form-control"
-                  id="descripcion"
-                  required
-                  v-model="eventos.descripcion"
-                  name="descripcion"
-                />
-              </div>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <div class="form-group">
-                <label for="creditos">Creditos otorgados en el evento</label>
-                <input
-                  class="form-control"
-                  id="creditos"
-                  required
-                  v-model="eventos.creditos"
-                  name="creditos"
-                  type="number"  maxlength="4"
-                  min="0" max="10"
-                  placeholder="maximo 10 creditos"
-                  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                />
-              </div>
-            </v-col>
-            <v-col>
-              <div class="form-group">
-                <label for="categorias">Categoria del evento</label>
-                <select v-model="eventos.categorias"  class="form-control" 
-                id="categorias" name="categorias">
-                 <select v-model="eventos.categorias"  class="form-control" 
-                id="categorias" :required="!selected" name="categorias">
-                <option disabled value="">Seleccione la categoria del evento</option>
-                  <option>Arte</option>
-                  <option>Ciencia</option>
-                  <option>Deporte</option>
-                  <option>Civismo</option>
-                </select>
-              </div>
-            </v-col>
-          </v-row> -->
-          
         </v-container>
       </div>
       <div v-else>
@@ -581,143 +350,61 @@ export default {
         descripcion:"",
         creditos:"",
         categorias:"",
+        categorias_1:"",
+        categorias_2:"",
       },
-      unidades: ['CEDU',
-                  'IMAC',
-                  'ICED',
-                  'FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS',
-                  'FACULTAD DE CIENCIAS EXACTAS',
-                  'ESCUELA DE LENGUAS',
-                  'FACULTAD DE ODONTOLOGÍA',
-                  'FACULTAD DE CIENCIAS QUÍMICAS DGO.',
-                  'FACULTAD DE CIENCIAS, CULTURA FÍSICA',
-                  'ESCUELA SUPERIOR DE MÚSICA',
-                  'ESCUELA DE PINTURA, ESCULTURA Y ARTE',
-                  'FACULTAD DE PSICOLOGÍA Y TERAPIA COM',
-                  'FACULTAD DE CIENCIAS FORESTALES',
-                  'FACULTAD DE ENFERMERÍA Y OBSTETRICIA',
-                  'FACULTAD DE MEDICINA VETERINARIA Y ZOOT',
-                  'FACULTAD DE CIENCIAS DE LA SALUD',
-                  'FACULTAD DE CIENCIAS BIOLÓGICAS',
-                  'FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI',
-                  'FACULTAD DE AGRICULTURA Y ZOOTECNIA',
-                  'FACULTAD DE TRABAJO SOCIAL (*)',
-                  'FACULTAD DE MEDICINA Y NUTRICIÓN',
-                  'MUSEO REGIONAL',
-                  'FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)',
-                  'FACULTAD DE CIENCIAS QUÍMICAS',
-                  'DIRECCIÓN DE DIFUSIÓN CULTURAL',
-                  'FACULTAD DE TRABAJO SOCIAL',
-                  'FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM',
-                  'RADIO UNIVERSIDAD',
-                  'DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA',
-                  'TV UJED',
-                  'DIRECCIÓN DE PLAN Y DESARROLLO ACAD',
-                  'COORDINACION INSTITUCIONAL FI',
-                  'UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO',
-                  'COORDINACIÓN DE VINCULACIÓN EMPRES'],
-      sede: [ 'CEDU',
-              'IMAC',
-              'ICED',
-              'FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS',
-              'FACULTAD DE CIENCIAS EXACTAS',
-              'ESCUELA DE LENGUAS',
-              'FACULTAD DE ODONTOLOGÍA',
-              'FACULTAD DE CIENCIAS QUÍMICAS DGO.',
-              'FACULTAD DE CIENCIAS, CULTURA FÍSICA',
-              'ESCUELA SUPERIOR DE MÚSICA',
-              'ESCUELA DE PINTURA, ESCULTURA Y ARTE',
-              'FACULTAD DE PSICOLOGÍA Y TERAPIA COM',
-              'FACULTAD DE CIENCIAS FORESTALES',
-              'FACULTAD DE ENFERMERÍA Y OBSTETRICIA',
-              'FACULTAD DE MEDICINA VETERINARIA Y ZOOT',
-              'FACULTAD DE CIENCIAS DE LA SALUD',
-              'FACULTAD DE CIENCIAS BIOLÓGICAS',
-              'FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI',
-              'FACULTAD DE AGRICULTURA Y ZOOTECNIA',
-              'FACULTAD DE TRABAJO SOCIAL (*)',
-              'FACULTAD DE MEDICINA Y NUTRICIÓN',
-              'MUSEO REGIONAL',
-              'FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)',
-              'FACULTAD DE CIENCIAS QUÍMICAS',
-              'DIRECCIÓN DE DIFUSIÓN CULTURAL',
-              'FACULTAD DE TRABAJO SOCIAL',
-              'FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM',
-              'RADIO UNIVERSIDAD',
-              'DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA',
-              'TV UJED',
-              'DIRECCIÓN DE PLAN Y DESARROLLO ACAD',
-              'COORDINACION INSTITUCIONAL FI',
-              'UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO',
-              'COORDINACIÓN DE VINCULACIÓN EMPRES',
-              ' ',
-              'Bellas Artes UJED',
-              'Bellas Artes UJED Lerdo',
-              'Biblioteca Central Universitaria',
-              'Bicentenario',
-              'BIOPARQUE, DURANGO',
-              'Bioparque estrella, Mty., NL.',
-              'Bolsón de Mapimí',
-              'Bosque Venustiano Carranza. Torreón, Coah.',
-              'Calle 5 de Febrero Esquina con Bruno Martínez, Zona Centro',
-              'Campus Gómez Palacio',
-              'Cancha de Santa Lucía',
-              'Cancha de usos múltiples, FCF',
-              'Cancha Frente a Facultad de Ciencias Químicas',
-              'Cancha "Robelto Silva", Carretera a Mazatlán km 1.5',
-              'Cancún, Quintana Roo',
-              'Carretera Durango Mazatlan y Calle Opalo',
-              'Casa Cuervo, Guadalajara, Jalisco',
-              'Casa de Cultura CITIBANAMEX',
-              'Casa de la Cultura de Cd. Lerdo,Durango',
-              'Casa de la Cultura de Ciudad Lerdo Durango.  Av. Francisco I. Madero 52 Nte. Col. Centro CP 35150, Lerdo, Durango ',
-              'Casa de la cultura de Gómez Palacio, Campestre GP',
-              'Casa de la Cultura Durango, Calle Negrete 900 poniente',
-              'Casa de las Banquetas Altas,Gómez Palacio Dgo.',
-              'Casa Municipal del Arte y la Cultura, Hacienda de los Laureles112, Fracc. Hacienda de Tapias ',
-              'Casa Nava avenida, Madero esquina con Ocampo., Ciudad Lerdo, Dgo.',
-              'Casino Murano, Hotel las Rosas, Gómez Palacio, Dgo.',
-              'Catedral Basílica Menor, Ave. 20 de Noviembre y Constitución',
-              'CBTA 3',
-              'CBTIS 110',
-              'CBTIS 89',
-              'CCH',
-              'Cd. de Mexico',
-              'Cdu (Promocion Deportiva)',
-              'CENTRAL UJED',
-              'Centro Cultural BANAMEX , 5 de Febrero Esq. con Francisco I. Madero',
-              'Centro Cultural y de Convenciones Bicentenario',
-              'Centro de Convenciones Bicentenario',
-              'Centro de Convenciones, Gómez Palacio ',
-              'Centro de Convenciones, Posada del Río. Gómez Palacio, Dgo.',
-              'Centro de Integración Laboral, Fracc. Huizache',
-              'CENTRO DE INV. Y DE ESTUDIOS AVANZADOS CINVESTAV ',
-              'centro de la ciudad de durango ',
-              'Centro Escolar Revolución, Sección A Gómez Farías entre Luna y Urrea, Barrio de Tierra Blanca',
-              'Centro Especializado de Reintegración y Tratamiento para menores infractores (CERMI)',
-              'Centro Monterrey, Nuevo León',
-              'Centro Recreativo Tapias ',
-              'Centro Regional de Educación para la Conservación (CRECO)',
-              'Cerro de Los Remedios, Durango,Dgo.',
-              'CIAC (Aquiles Serdán y Bruno Martínez)',
-              'CIIDIR IPN,Calle Sigma 119 Fracc. 20 de Noviembre II',
-              'Cine CITICINEMAS, Real del Mezquital 101 ',
-              'Cinemex',
-              'Cineteca Municipal Silvestre Revueltas. Juárez 217 Nte., Zona Centro',
-              'CIUDAD DE MEXICO',
-              'Ciudad del anciano',
-              'CIUDAD UNIVERSITARIA, CDMX',
-              'Club de Leones de Durango ',
-              'COLEGIO DE BACHILLERES DEL ESTADO DE DURANGO',
-              'Colegio De Ciencias Y Humanidades',
-              'Colegio de Ginecología'],
-      categoriaEvento: ['Arte','Ciencia', 'Deporte', 'Civismo', 'Responsabilidad social universitaria', 'Emprendimiento'],
+      unidades: ['CEDU','IMAC','ICED','FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS','FACULTAD DE CIENCIAS EXACTAS','ESCUELA DE LENGUAS','FACULTAD DE ODONTOLOGÍA','FACULTAD DE CIENCIAS QUÍMICAS DGO.','FACULTAD DE CIENCIAS, CULTURA FÍSICA','ESCUELA SUPERIOR DE MÚSICA','ESCUELA DE PINTURA, ESCULTURA Y ARTE','FACULTAD DE PSICOLOGÍA Y TERAPIA COM','FACULTAD DE CIENCIAS FORESTALES','FACULTAD DE ENFERMERÍA Y OBSTETRICIA','FACULTAD DE MEDICINA VETERINARIA Y ZOOT','FACULTAD DE CIENCIAS DE LA SALUD','FACULTAD DE CIENCIAS BIOLÓGICAS','FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI','FACULTAD DE AGRICULTURA Y ZOOTECNIA','FACULTAD DE TRABAJO SOCIAL (*)','FACULTAD DE MEDICINA Y NUTRICIÓN','MUSEO REGIONAL','FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)','FACULTAD DE CIENCIAS QUÍMICAS','DIRECCIÓN DE DIFUSIÓN CULTURAL','FACULTAD DE TRABAJO SOCIAL','FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM','RADIO UNIVERSIDAD','DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA','TV UJED','DIRECCIÓN DE PLAN Y DESARROLLO ACAD','COORDINACION INSTITUCIONAL FI','UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO','COORDINACIÓN DE VINCULACIÓN EMPRES'],
+      sede: [ 'CEDU','IMAC','ICED','FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS','FACULTAD DE CIENCIAS EXACTAS','ESCUELA DE LENGUAS','FACULTAD DE ODONTOLOGÍA','FACULTAD DE CIENCIAS QUÍMICAS DGO.','FACULTAD DE CIENCIAS, CULTURA FÍSICA','ESCUELA SUPERIOR DE MÚSICA','ESCUELA DE PINTURA, ESCULTURA Y ARTE','FACULTAD DE PSICOLOGÍA Y TERAPIA COM','FACULTAD DE CIENCIAS FORESTALES','FACULTAD DE ENFERMERÍA Y OBSTETRICIA','FACULTAD DE MEDICINA VETERINARIA Y ZOOT','FACULTAD DE CIENCIAS DE LA SALUD','FACULTAD DE CIENCIAS BIOLÓGICAS','FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI','FACULTAD DE AGRICULTURA Y ZOOTECNIA','FACULTAD DE TRABAJO SOCIAL (*)','FACULTAD DE MEDICINA Y NUTRICIÓN','MUSEO REGIONAL','FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)','FACULTAD DE CIENCIAS QUÍMICAS','DIRECCIÓN DE DIFUSIÓN CULTURAL','FACULTAD DE TRABAJO SOCIAL','FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM','RADIO UNIVERSIDAD','DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA','TV UJED','DIRECCIÓN DE PLAN Y DESARROLLO ACAD','COORDINACION INSTITUCIONAL FI','UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO','COORDINACIÓN DE VINCULACIÓN EMPRES',' ','Bellas Artes UJED','Bellas Artes UJED Lerdo','Biblioteca Central Universitaria','Bicentenario','BIOPARQUE, DURANGO','Bioparque estrella, Mty., NL.','Bolsón de Mapimí','Bosque Venustiano Carranza. Torreón, Coah.','Calle 5 de Febrero Esquina con Bruno Martínez, Zona Centro','Campus Gómez Palacio','Cancha de Santa Lucía','Cancha de usos múltiples, FCF','Cancha Frente a Facultad de Ciencias Químicas','Cancha "Robelto Silva", Carretera a Mazatlán km 1.5','Cancún, Quintana Roo','Carretera Durango Mazatlan y Calle Opalo','Casa Cuervo, Guadalajara, Jalisco','Casa de Cultura CITIBANAMEX','Casa de la Cultura de Cd. Lerdo,Durango','Casa de la Cultura de Ciudad Lerdo Durango.  Av. Francisco I. Madero 52 Nte. Col. Centro CP 35150, Lerdo, Durango ','Casa de la cultura de Gómez Palacio, Campestre GP','Casa de la Cultura Durango, Calle Negrete 900 poniente','Casa de las Banquetas Altas,Gómez Palacio Dgo.','Casa Municipal del Arte y la Cultura, Hacienda de los Laureles112, Fracc. Hacienda de Tapias ','Casa Nava avenida, Madero esquina con Ocampo., Ciudad Lerdo, Dgo.','Casino Murano, Hotel las Rosas, Gómez Palacio, Dgo.','Catedral Basílica Menor, Ave. 20 de Noviembre y Constitución','CBTA 3','CBTIS 110','CBTIS 89','CCH','Cd. de Mexico','Cdu (Promocion Deportiva)','CENTRAL UJED','Centro Cultural BANAMEX , 5 de Febrero Esq. con Francisco I. Madero','Centro Cultural y de Convenciones Bicentenario','Centro de Convenciones Bicentenario','Centro de Convenciones, Gómez Palacio ','Centro de Convenciones, Posada del Río. Gómez Palacio, Dgo.','Centro de Integración Laboral, Fracc. Huizache','CENTRO DE INV. Y DE ESTUDIOS AVANZADOS CINVESTAV ','centro de la ciudad de durango ','Centro Escolar Revolución, Sección A Gómez Farías entre Luna y Urrea, Barrio de Tierra Blanca','Centro Especializado de Reintegración y Tratamiento para menores infractores (CERMI)','Centro Monterrey, Nuevo León','Centro Recreativo Tapias ','Centro Regional de Educación para la Conservación (CRECO)','Cerro de Los Remedios, Durango,Dgo.','CIAC (Aquiles Serdán y Bruno Martínez)','CIIDIR IPN,Calle Sigma 119 Fracc. 20 de Noviembre II','Cine CITICINEMAS, Real del Mezquital 101 ','Cinemex','Cineteca Municipal Silvestre Revueltas. Juárez 217 Nte., Zona Centro','CIUDAD DE MEXICO','Ciudad del anciano','CIUDAD UNIVERSITARIA, CDMX','Club de Leones de Durango ','COLEGIO DE BACHILLERES DEL ESTADO DE DURANGO','Colegio De Ciencias Y Humanidades','Colegio de Ginecología'],
+      clasificacion: [],
+      categoria1: [],
+      categoria2: [],
       submitted: false,
       valid: true,
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
     };
   },
+  created(){
+      this.getClasificacion();
+  },
+  
   methods: {
+    getClasificacion(){
+      EventosDataService.getClasificacion()
+      .then(response => {
+        this.clasificacion = response.data;
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    },
+    getCategorias1(clasf_id){
+      EventosDataService.getCategorias1(clasf_id)
+      .then(response => {
+        this.eventos.categorias_1 = '';
+        this.eventos.categorias_2 = '';
+        this.categoria1 = response.data;
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    },
+    getCategorias2(cat_1){
+      EventosDataService.getCategorias2(cat_1)
+      .then(response => {
+        this.eventos.categorias_2 = '';
+        this.categoria2 = response.data;
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    },
+    imprimirVal(value){
+      
+      console.log(value);
+    },
     validate () {
       this.valid = this.$refs.form.validate()
     },
@@ -749,7 +436,7 @@ export default {
         cupo:this.eventos.cupo,
         descripcion:this.eventos.descripcion,
         creditos:this.eventos.creditos,
-        categorias:this.eventos.categorias,
+        categorias:this.eventos.categorias.text,
       };
 
       EventosDataService.create(data)
@@ -764,6 +451,28 @@ export default {
             swal("No se pudo registrar el evento. Verifique que lleno correctamente todos los campos.","","error")
         });
     },
+
+    getCatalogoCivismo(){
+      EventosDataService.getCatalogoCivismo()
+        .then(response => {
+          console.log(response.data);
+          this.catalogo = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    getCategoriaCivismo(catalogo_id){
+      EventosDataService.getCategoriaCivismo(catalogo_id)
+        .then(response => {
+          console.log(response.data);
+          this.categoria = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+
     createCalendario(dataEvento){
       var campos = {
         name : dataEvento.tituloEvento,
