@@ -20,6 +20,7 @@ class eventos(models.Model):
     #Creditos
     creditos = models.DecimalField('creditos', max_digits = 3,decimal_places=2)
     categorias = models.CharField('categorias', max_length=100)
+    subCategoria = models.CharField('subCategoria', max_length= 100, null=True)
     
 #modelo para el modulo calendario de eventos
 class eventosCalendario(models.Model):
@@ -47,28 +48,7 @@ class catalogo_categorias2(models.Model):
     text = models.CharField(max_length = 100)
     catalogo = models.ForeignKey(catalogo_categorias, on_delete=CASCADE, null= True)
 
-class catalogo_civismo(models.Model):
+class arte_categorias(models.Model):
     text = models.CharField(max_length = 100)
-    clasificacion = models.ForeignKey(clasifi_cat, on_delete=CASCADE, null= True)
-
-class catalogo_registro_civismo(models.Model):
-    text = models.CharField(max_length = 100)
-    catalogo = models.ForeignKey(catalogo_civismo, on_delete=CASCADE, null= True)
-
-class catalogo_deporte(models.Model):
-    text = models.CharField(max_length = 100)
-    clasificacion = models.ForeignKey(clasifi_cat, on_delete=CASCADE, null= True)
-
-class categorias_deporte(models.Model):
-    text = models.CharField(max_length = 100)
-    catalogo = models.ForeignKey(catalogo_deporte, on_delete=CASCADE, null= True)
-
-class catalogo_ciencia(models.Model):
-    text = models.CharField(max_length = 100)
-    clasificacion = models.ForeignKey(clasifi_cat, on_delete=CASCADE, null= True)
-
-class categorias_ciencia(models.Model):
-    text = models.CharField(max_length = 100)
-    catalogo = models.ForeignKey(catalogo_ciencia, on_delete=CASCADE, null= True)
-
+    categoria = models.ForeignKey(catalogo_categorias2, on_delete=CASCADE, null= True)
 

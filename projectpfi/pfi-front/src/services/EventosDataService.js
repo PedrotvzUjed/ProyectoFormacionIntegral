@@ -79,6 +79,10 @@ class EventosDataService {
   getCategorias2(cat_id){
     return http.get(`/eventos/categorias2_eve?catalogo=${cat_id}`);
   }
+
+  getCategoriasArte(cat_id){
+    return http.get(`/eventos/categoriasArte_eve?categoria=${cat_id}`);
+  }
 }
 
 export default new EventosDataService();

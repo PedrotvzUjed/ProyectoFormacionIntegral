@@ -29,13 +29,5 @@ urlpatterns = [
     path('clasificacion_eve', ClasificacionEventosList.as_view()),
     path('categorias1_eve', Categorias1List.as_view()),
     path('categorias2_eve', Categorias2List.as_view()),
-
-    path('civCatalogo', CatalogoCivismoList.as_view()),
-    path('civCategoria', CategoriaCivismoList.as_view()),
-    
-    path('cienciaCatalogo', CatalogoCienciaList.as_view()),
-    path('cienciaCategoria', CategoriaCienciaList.as_view()),
-    
-    path('depCatalogo', CatalogoDepList.as_view()),
-    path('depCategoria', CategoriaDepList.as_view()),
+    path('categoriasArte_eve', CategoriasArteList.as_view()),
 ]

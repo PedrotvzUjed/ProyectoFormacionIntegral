@@ -21,7 +21,8 @@ class eventosSerializer(serializers.ModelSerializer):
                   'cupo',
                   'descripcion',
                   'creditos',
-                  'categorias')
+                  'categorias',
+                  'subCategoria')
         
         #fields = '__all__'
 
@@ -73,36 +74,7 @@ class Categorias2Serializer(serializers.ModelSerializer):
         model = catalogo_categorias2
         fields = '__all__'
 
-
-class catalogoCivSerializer(serializers.ModelSerializer):
+class CategoriasArteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = catalogo_civismo
-        fields = '__all__'
-
-
-class categoriaCivSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = catalogo_registro_civismo
-        fields = '__all__'
-
-class catalogoCienciaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = catalogo_ciencia
-        fields = '__all__'
-
-
-class categoriaCienciaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = categorias_ciencia
-        fields = '__all__'
-
-class catalogoDepSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = catalogo_deporte
-        fields = '__all__'
-
-
-class categoriaDepSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = categorias_ciencia
+        model = arte_categorias
         fields = '__all__'

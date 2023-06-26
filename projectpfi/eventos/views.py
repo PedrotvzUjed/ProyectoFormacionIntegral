@@ -65,58 +65,22 @@ class Categorias1List(generics.ListAPIView):
     queryset = catalogo_categorias.objects.all()
     serializer_class = Categorias1Serializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ['clasificacion']
+    filter_fields = ['clasificacion', 'text']
 
 class Categorias2List(generics.ListAPIView):
     # API endpoint that allows customer to be viewed.
     queryset = catalogo_categorias2.objects.all()
     serializer_class = Categorias2Serializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ['catalogo']
+    filter_fields = ['catalogo', 'text']
 
-
-class CatalogoCivismoList(generics.ListAPIView):
+class CategoriasArteList(generics.ListAPIView):
     # API endpoint that allows customer to be viewed.
-    queryset = catalogo_civismo.objects.all()
-    serializer_class = catalogoCivSerializer
+    queryset = arte_categorias.objects.all()
+    serializer_class = CategoriasArteSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ['clasificacion']
-
-class CategoriaCivismoList(generics.ListAPIView):
-    # API endpoint that allows customer to be viewed.
-    queryset = catalogo_registro_civismo.objects.all()
-    serializer_class = categoriaCivSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ['catalogo']
-
-class CatalogoDepList(generics.ListAPIView):
-    # API endpoint that allows customer to be viewed.
-    queryset = catalogo_deporte.objects.all()
-    serializer_class = catalogoDepSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ['clasificacion']
-
-class CategoriaDepList(generics.ListAPIView):
-    # API endpoint that allows customer to be viewed.
-    queryset = categorias_deporte.objects.all()
-    serializer_class = categoriaDepSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ['catalogo']
-
-class CatalogoCienciaList(generics.ListAPIView):
-    # API endpoint that allows customer to be viewed.
-    queryset = catalogo_ciencia.objects.all()
-    serializer_class = catalogoCienciaSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ['clasificacion']
-
-class CategoriaCienciaList(generics.ListAPIView):
-    # API endpoint that allows customer to be viewed.
-    queryset = categorias_ciencia.objects.all()
-    serializer_class = categoriaCienciaSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ['catalogo']
-
+    filter_fields = ['categoria', 'text']
+    
 #evidencias de alumnos
 class evidencias(APIView):        
     def post(self, request):
