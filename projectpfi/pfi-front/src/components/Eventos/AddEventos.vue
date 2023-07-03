@@ -190,39 +190,45 @@
                     required
                     @change="getCategorias2($event.id)"
                   ></v-combobox>
+                  
                 </v-col>
 
-                <v-col v-if="eventos.categorias.id != 1 && eventos.categorias_1 != '' && eventos.categorias_1.id != '18'" cols="12" md="6" sm="12" lg="6" xl="6">
-                  <v-combobox
-                    v-model="eventos.categorias_2"
-                    :rules="[(v) => !!v || 'Campo requerido']"
-                    :items="categoria2"
-                    id="categorias_2"
-                    name="categorias_2"
-                    label="Categoria s"
-                    outlined
-                    :counter="100"
-                    required
-                    @change="imprimirVal($event)"
-                  ></v-combobox>
-                </v-col>
+                <p v-if="eventos.categorias_1 != '' && eventos.categorias_1.id >= 23"> Objetivo: {{eventos.categorias_1.objetivo}}</p>
+
+                <template  v-if="eventos.categorias_1 != ''">
+                  <v-col v-if="eventos.categorias.id == 18 || eventos.categorias_1.id >= 23" cols="12" md="6" sm="12" lg="6" xl="6">
+                    <!-- <v-combobox
+                      v-model="eventos.categorias_2"
+                      :rules="[(v) => !!v || 'Campo requerido']"
+                      :items="categoria2"
+                      id="categorias_2"
+                      name="categorias_2"
+                      label="Categoria s"
+                      outlined
+                      :counter="100"
+                      required
+                      @change="imprimirVal($event)"
+                    ></v-combobox> -->
+                  </v-col>
 
 
 
-                <v-col v-else-if="eventos.categorias_1 != '' && eventos.categorias_1.id != '18'" cols="12" md="6" sm="12" lg="6" xl="6">
-                  <v-combobox
-                    v-model="eventos.categorias_2"
-                    :rules="[(v) => !!v || 'Campo requerido']"
-                    :items="categoria2"
-                    id="categorias_2"
-                    name="categorias_2"
-                    label="Categoria"
-                    outlined
-                    :counter="100"
-                    required
-                    @change="getCategoriasArte($event.id)"
-                  ></v-combobox>
-                </v-col>
+                  <v-col v-else-if="eventos.categorias_1 != '' && eventos.categorias_1.id != '18'" cols="12" md="6" sm="12" lg="6" xl="6">
+                    <v-combobox
+                      v-model="eventos.categorias_2"
+                      :rules="[(v) => !!v || 'Campo requerido']"
+                      :items="categoria2"
+                      id="categorias_2"
+                      name="categorias_2"
+                      label="Categoria"
+                      outlined
+                      :counter="100"
+                      required
+                      @change="getCategoriasArte($event.id)"
+                    ></v-combobox>
+                  </v-col>
+                </template>
+                
 
                 <v-col v-if="eventos.categorias_2 != '' && eventos.categorias.id == 1 && eventos.categorias_2.id < 64 " cols="12" md="6" sm="12" lg="6" xl="6">
                   <v-combobox

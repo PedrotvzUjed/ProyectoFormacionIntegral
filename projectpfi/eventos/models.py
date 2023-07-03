@@ -7,6 +7,7 @@ class clasifi_cat(models.Model):
 
 class catalogo_categorias(models.Model):
     text = models.CharField(max_length = 100)
+    objetivo = models.TextField(null=True)
     clasificacion = models.ForeignKey(clasifi_cat, on_delete=CASCADE, null= True)
 
 class catalogo_categorias2(models.Model):

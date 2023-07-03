@@ -29,7 +29,8 @@ class eventosEditSerializer(serializers.ModelSerializer):
         return {
             'id' : obj.subCategoria1.id,
             'text': obj.subCategoria1.text,
-            'clasificacion': obj.subCategoria1.clasificacion_id
+            'clasificacion': obj.subCategoria1.clasificacion_id,
+            'objetivo': obj.subCategoria1.objetivo
         }
     def get_subCategoria2(self, obj):
         try:

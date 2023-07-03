@@ -135,10 +135,136 @@ def seederCategorias(request):
             'text'  : 'Filosofía',
             'clasif_id': 1
         },
-        
+        {
+            'id'    : 19,
+            'text'  : 'Capacitación',
+            'clasif_id': 6
+        },
+        {
+            'id'    : 20,
+            'text'  : 'Innovación',
+            'clasif_id': 6
+        },
+        {
+            'id'    : 21,
+            'text'  : 'Negocios',
+            'clasif_id': 6
+        },
+        {
+            'id'    : 22,
+            'text'  : 'Emprendimiento',
+            'clasif_id': 6
+        },
     ]
     for d in dataCat:
         catalogo_categorias.objects.create(id = d['id'], text = d['text'], clasificacion_id = d['clasif_id'])
+
+    dataObj = [
+        {
+            'id'    : 23,
+            'text'  : 'Fin de la pobreza',
+            'clasif_id': 5,
+            'objetivo': 'Poner fin a la pobreza en todas sus formas en todo el mundo.'
+        },
+        {
+            'id'    : 24,
+            'text'  : 'Hambre cero',
+            'clasif_id': 5,
+            'objetivo': 'Poner fin al hambre, lograr la seguridad alimentaria y la mejora de nutrición y promover la agricultura sostenible.'
+        },
+        {
+            'id'    : 25,
+            'text'  : 'Salud y bienestar',
+            'clasif_id': 5,
+            'objetivo': 'Garantizar una vida sana y promover el bienestar para todos en todas las edades.'
+        },
+        {
+            'id'    : 26,
+            'text'  : 'Educación de calidad',
+            'clasif_id': 5,
+            'objetivo': 'Garantizar una educación inclusiva, equitativa y de calidad y promover oportunidades de aprendizaje durante toda la vida para todos.'
+        },
+        {
+            'id'    : 27,
+            'text'  : ' Igualdad de género',
+            'clasif_id': 5,
+            'objetivo': 'Lograr igualdad de generos y empoderar a todas las mujeres y las niñas.'
+        },
+        {
+            'id'    : 28,
+            'text'  : 'Agua limpia y saneamiento',
+            'clasif_id': 5,
+            'objetivo': 'Garantizar la disponibilidad de agua y su gestión sostenible y el saneamiento para todos.'
+        },
+        {
+            'id'    : 29,
+            'text'  : 'Energía asequible y no contaminante',
+            'clasif_id': 5,
+            'objetivo': 'Garantizar el acceso a una energía asequible, segura, sostenible y moderna para todos.'
+        },
+        {
+            'id'    : 30,
+            'text'  : 'Trabajo decente y crecimiento económico',
+            'clasif_id': 5,
+            'objetivo': 'Promover el crecimiento economico sostenido, inclusivo y sostenible, el empleo pleno y productivo y el trabajo decadente para todos.'
+        },
+        {
+            'id'    : 31,
+            'text'  : 'Industria, innovación e infraestructura',
+            'clasif_id': 5,
+            'objetivo': 'Construir infraestructuras resilientes, promover la industrialización inclusiva y sostenible y fomentar la innovación.'
+        },
+        {
+            'id'    : 32,
+            'text'  : ' Reducción de las desigualdades',
+            'clasif_id': 5,
+            'objetivo': 'Reducir la desigualdad en y entre los países.'
+        },
+        {
+            'id'    : 33,
+            'text'  : 'Ciudades y comunidades sostenibles',
+            'clasif_id': 5,
+            'objetivo': 'Lograr que las ciudades y los asentamientos humanos sean inclusivos, seguros, resilientes y sostenibles.'
+        },
+        {
+            'id'    : 34,
+            'text'  : 'Producción y consumo responsables',
+            'clasif_id': 5,
+            'objetivo': 'Garantizar modalidades de consumo y producción sostenibles.'
+        },
+        {
+            'id'    : 35,
+            'text'  : 'Acción por el clima',
+            'clasif_id': 5,
+            'objetivo': 'Adoptar medidas urgentes para combatir el cambio climático y sus efectos.'
+        },
+        {
+            'id'    : 36,
+            'text'  : 'Vida submarina',
+            'clasif_id': 5,
+            'objetivo': 'Conservar y utilizar en forma sostenible los océanos, los mares y los recursos marinos para el desarrollo sostenible.'
+        },
+        {
+            'id'    : 37,
+            'text'  : 'Vida de ecosistemas terrestres',
+            'clasif_id': 5,
+            'objetivo': 'Gestionar sosteniblemente los bosques, luchar contra la desertificación, detener e invertir la degradación de las tierras y detener la pérdida de biodiversidad'
+        },
+        {
+            'id'    : 38,
+            'text'  : 'Paz, justicia e instituciones sólidas',
+            'clasif_id': 5,
+            'objetivo': 'Promover sociedades justas, pacíficas e inclusivas'
+        },
+        {
+            'id'    : 39,
+            'text'  : 'Alianzas para lograr los objetivos',
+            'clasif_id': 5,
+            'objetivo': 'Revitalizar la Alianza Mundial para el Desarrollo Sostenible'
+        },
+    ]
+    for d in dataObj:
+        catalogo_categorias.objects.create(id = d['id'], text = d['text'], clasificacion_id = d['clasif_id'], objetivo = d['objetivo'])
 
     dataReg = [
         {
@@ -515,6 +641,60 @@ def seederCategorias(request):
             'id'    : 69,
             'text'  : 'Filosofía',
             'catalogo_id': 18
+        },
+
+        {
+            'id'    : 70,
+            'text'  : 'Cumbre Global del Liderazgo',
+            'catalogo_id': 19
+        },
+        {
+            'id'    : 71,
+            'text'  : 'Charlas de Cultura Emprendedora y Empresarial',
+            'catalogo_id': 19
+        },
+        {
+            'id'    : 72,
+            'text'  : 'Experiencias de éxito de las Unidades Académicas y talleres.',
+            'catalogo_id': 19
+        },
+        {
+            'id'    : 73,
+            'text'  : 'Bootcamps',
+            'catalogo_id': 20
+        },
+        {
+            'id'    : 74,
+            'text'  : 'Ferias',
+            'catalogo_id': 20
+        },
+        {
+            'id'    : 75,
+            'text'  : 'Participación en el programa de radio',
+            'catalogo_id': 20
+        },
+
+        {
+            'id'    : 76,
+            'text'  : 'Asesoría para titulación a través del plan de negocios',
+            'catalogo_id': 21
+        },
+        
+        {
+            'id'    : 77,
+            'text'  : 'Asesoría empresarial',
+            'catalogo_id': 21
+        },
+        
+        {
+            'id'    : 78,
+            'text'  : 'Cultura Emprendedora',
+            'catalogo_id': 22
+        },
+        {
+            'id'    : 79,
+            'text'  : 'Desarrollo de habilidades blandas',
+            'catalogo_id': 22
         },
         
     ]
