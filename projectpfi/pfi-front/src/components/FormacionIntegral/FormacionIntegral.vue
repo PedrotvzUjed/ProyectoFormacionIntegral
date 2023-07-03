@@ -10,32 +10,32 @@
           <v-icon active>mdi-home</v-icon>
         </v-btn>
 
-        <v-btn @click="FiltroCategorias('Arte')">
+        <v-btn @click="FiltroCategorias('1')">
           <span>Arte</span>
           <v-icon>mdi-bank</v-icon>
         </v-btn>
 
-        <v-btn @click="FiltroCategorias('Ciencia')">
+        <v-btn @click="FiltroCategorias('2')">
           <span>Ciencia</span>
           <v-icon>mdi-head-lightbulb</v-icon>
         </v-btn>
 
-        <v-btn @click="FiltroCategorias('Deporte')">
+        <v-btn @click="FiltroCategorias('3')">
           <span>Deporte</span>
           <v-icon>mdi-run-fast</v-icon>
         </v-btn>
 
-        <v-btn @click="FiltroCategorias('Civismo')">
+        <v-btn @click="FiltroCategorias('4')">
           <span>Civismo</span>
           <v-icon>mdi-badge-account-horizontal</v-icon>
         </v-btn>
 
-        <v-btn @click="FiltroCategorias('Responsabilidad social universitaria')">
+        <v-btn @click="FiltroCategorias('5')">
           <span>RSU</span>
           <v-icon>mdi-school</v-icon>
         </v-btn>
 
-        <v-btn @click="FiltroCategorias('Emprendimiento')">
+        <v-btn @click="FiltroCategorias('6')">
           <span>Emprendimiento</span>
           <v-icon>mdi-account-tie</v-icon>
         </v-btn>
