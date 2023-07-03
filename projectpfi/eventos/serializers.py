@@ -32,18 +32,24 @@ class eventosEditSerializer(serializers.ModelSerializer):
             'clasificacion': obj.subCategoria1.clasificacion_id
         }
     def get_subCategoria2(self, obj):
-        return {
-            'id' : obj.subCategoria2.id,
-            'text': obj.subCategoria2.text,
-            'catalogo': obj.subCategoria2.catalogo_id
-        }
+        try:
+            return {
+                'id' : obj.subCategoria2.id,
+                'text': obj.subCategoria2.text,
+                'catalogo': obj.subCategoria2.catalogo_id
+            }
+        except:
+            return ''
     
     def get_subCategoriaArte(self, obj):
-        return {
+        try: 
+            return {
             'id' : obj.subCategoriaArte.id,
             'text': obj.subCategoriaArte.text,
             'categoria': obj.subCategoriaArte.categoria_id
-        }
+            }
+        except:
+            return ''
              
 class calendarioSerializer(serializers.ModelSerializer):
 

@@ -567,11 +567,45 @@ export default {
       console.log(value);
     },
     updateEvento() {
+      var data = {
+        tituloEvento: this.currentEvento.tituloEvento,
+        unidadResponsable: this.currentEvento.unidadResponsable,
+        descripcionEvento: this.currentEvento.descripcionEvento,
+        eventoDedicadoA: this.currentEvento.eventoDedicadoA,
+        fechaEvento: this.currentEvento.fechaEvento,
+        inicioEvento: this.currentEvento.inicioEvento,
+        finEvento: this.currentEvento.finEvento,
+        sede: this.currentEvento.sede,
+        cupo: this.currentEvento.cupo,
+        descripcion: this.currentEvento.descripcion,
+        creditos: this.currentEvento.creditos,
+        categorias: this.currentEvento.categorias.id,
+      };
+      
+      if (this.currentEvento.subCategoria1 != ""){
+        data.subCategoria1 = this.currentEvento.subCategoria1.id;
+      }
+      else {
+        data.subCategoria1 = '';
+      }
+      if (this.currentEvento.subCategoria2 != ""){
+        data.subCategoria2 = this.currentEvento.subCategoria2.id;
+      }
+      else {
+        data.subCategoria2 = '';
+      }
+      if (this.currentEvento.subCategoriaArte != ""){
+        data.subCategoriaArte = this.currentEvento.subCategoriaArte.id;
+      }
+      else {
+        data.subCategoriaArte = '';
+      }
+
+
       if (this.valid == true) {
-        EventosDataService.update(this.currentEvento.id, this.currentEvento)
+        EventosDataService.update(this.currentEvento.id, data)
           .then((response) => {
             console.log(response.data);
-            /*this.message = 'El evento se actualizo correctamente!';*/
             swal("El evento se actualizo correctamente!", "", "success");
           })
           .catch((e) => {

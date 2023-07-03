@@ -151,10 +151,6 @@ export default {
             console.log(e);
           })
       },
-/*       sendEvent(evento) {
-        console.log(evento)
-        this.$router.push("/fi-registro/"+evento.id);
-      } */
     },
     mounted() {
       
