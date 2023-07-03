@@ -29,7 +29,7 @@ class eventosList(generics.ListAPIView):
 class eventosDetail(generics.RetrieveAPIView):
     # API endpoint that returns a single customer by pk.
     queryset = eventos.objects.all()
-    serializer_class = eventosSerializer
+    serializer_class = eventosEditSerializer
 
     ...
 class eventosUpdate(generics.RetrieveUpdateAPIView):

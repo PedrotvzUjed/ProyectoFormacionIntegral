@@ -521,17 +521,16 @@ export default {
         cupo: this.eventos.cupo,
         descripcion: this.eventos.descripcion,
         creditos: this.eventos.creditos,
-        categorias: this.eventos.categorias.text,
+        categorias: this.eventos.categorias.id,
       };
-      if(this.eventos.categorias.id == 1){
-        if(this.eventos.categorias_1.id == 18){
-          data.subCategoria = 'Filosofía';
-        }
-        if(this.eventos.categorias_2.id >= 64 && this.eventos.categorias_2.id <= 68){
-          data.subCategoria = this.eventos.categorias_2.text;
-        }
-      } else{
-        data.subCategoria = this.eventos.categorias_2.text;
+      if (this.eventos.categorias_1 != ''){
+        data.subCategoria1 = this.eventos.categorias_1.id;
+      }
+      if (this.eventos.categorias_2 != ''){
+        data.subCategoria2 = this.eventos.categorias_2.id;
+      }
+      if (this.eventos.categorias_arte != ''){
+        data.subCategoriaArte = this.eventos.categorias_arte.id;
       }
 
       EventosDataService.create(data)

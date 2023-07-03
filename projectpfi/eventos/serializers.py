@@ -7,25 +7,44 @@ class eventosSerializer(serializers.ModelSerializer):
  
     class Meta:
         model = eventos
-        fields = ('id',
-                  'unidadResponsable',  
-                  'tituloEvento',
-                  'descripcionEvento',
-                  'eventoDedicadoA',
-                  #'imagen',
-                  
-                  'fechaEvento',
-                  'inicioEvento',
-                  'finEvento',
-                  'sede',
-                  'cupo',
-                  'descripcion',
-                  'creditos',
-                  'categorias',
-                  'subCategoria')
+        fields = '__all__'
         
-        #fields = '__all__'
-
+class eventosEditSerializer(serializers.ModelSerializer):
+    categorias = serializers.SerializerMethodField()
+    subCategoria1 = serializers.SerializerMethodField()
+    subCategoria2 = serializers.SerializerMethodField()
+    subCategoriaArte = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = eventos
+        fields = '__all__'
+    
+    def get_categorias(self, obj):
+        return {
+            'id' : obj.categorias.id,
+            'text': obj.categorias.text
+        }
+    
+    def get_subCategoria1(self, obj):
+        return {
+            'id' : obj.subCategoria1.id,
+            'text': obj.subCategoria1.text,
+            'clasificacion': obj.subCategoria1.clasificacion_id
+        }
+    def get_subCategoria2(self, obj):
+        return {
+            'id' : obj.subCategoria2.id,
+            'text': obj.subCategoria2.text,
+            'catalogo': obj.subCategoria2.catalogo_id
+        }
+    
+    def get_subCategoriaArte(self, obj):
+        return {
+            'id' : obj.subCategoriaArte.id,
+            'text': obj.subCategoriaArte.text,
+            'categoria': obj.subCategoriaArte.categoria_id
+        }
+             
 class calendarioSerializer(serializers.ModelSerializer):
 
     class Meta:

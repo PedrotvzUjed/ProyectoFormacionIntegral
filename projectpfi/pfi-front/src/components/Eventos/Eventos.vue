@@ -244,13 +244,76 @@
                     v-model="currentEvento.categorias"  
                     id="categorias" 
                     name="categorias"
-                    :items="categoriaEvento"
+                    :items="clasificacion"
                     label="Categoria del evento"
                     required
                     outlined
                     :rules="[v => !!v || 'Campo requerido']"
+                    @change="getCategorias1($event.id, true)"
                   ></v-combobox>
                 </v-col>
+
+                <v-col v-if="currentEvento.categorias != ''" cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-combobox
+                    v-model="currentEvento.subCategoria1"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    :items="categoria1"
+                    id="categorias_1"
+                    name="categorias_1"
+                    label="Categoria"
+                    outlined
+                    :counter="100"
+                    required
+                    @change="getCategorias2($event.id, true)"
+                  ></v-combobox>
+                </v-col>
+
+
+                <v-col v-if="currentEvento.categorias.id != 1 && currentEvento.subCategoria1 != '' && currentEvento.subCategoria1.id != '18'" cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-combobox
+                    v-model="currentEvento.subCategoria2"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    :items="categoria2"
+                    id="categorias_2"
+                    name="categorias_2"
+                    label="Categoria s"
+                    outlined
+                    :counter="100"
+                    required
+                    @change="imprimirVal($event)"
+                  ></v-combobox>
+                </v-col>
+
+                <v-col v-else-if="currentEvento.subCategoria1 != '' && currentEvento.subCategoria1.id != '18'" cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-combobox
+                    v-model="currentEvento.subCategoria2"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    :items="categoria2"
+                    id="categorias_2"
+                    name="categorias_2"
+                    label="Categoria"
+                    outlined
+                    :counter="100"
+                    required
+                    @change="getCategoriasArte($event.id, true)"
+                  ></v-combobox>
+                </v-col>
+
+                <v-col v-if="currentEvento.subCategoria2 != '' && currentEvento.categorias.id == 1 && currentEvento.subCategoria2.id < 64 " cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-combobox
+                    v-model="currentEvento.subCategoriaArte"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    :items="categoriaArte"
+                    id="categorias_arte"
+                    name="categorias_arte"
+                    label="Categoria Arte"
+                    outlined
+                    :counter="100"
+                    required
+                    @change="imprimirVal($event)"
+                  ></v-combobox>
+                </v-col>
+
               </v-row>
             </v-container>
           
@@ -286,71 +349,263 @@
 
 <script>
 import EventosDataService from "../../services/EventosDataService";
-import swal from 'sweetalert'
+import swal from "sweetalert";
 export default {
   name: "evento",
   data() {
     return {
       currentEvento: null,
       valid: true,
-      message: '',
-      categoriaEvento: ['Arte','Ciencia', 'Deporte', 'Civismo', 'Responsabilidad social universitaria', 'Emprendimiento'],
-      unidades: [ 'CEDU','IMAC','ICED','FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS','FACULTAD DE CIENCIAS EXACTAS','ESCUELA DE LENGUAS','FACULTAD DE ODONTOLOGÍA','FACULTAD DE CIENCIAS QUÍMICAS DGO.','FACULTAD DE CIENCIAS, CULTURA FÍSICA','ESCUELA SUPERIOR DE MÚSICA','ESCUELA DE PINTURA, ESCULTURA Y ARTE','FACULTAD DE PSICOLOGÍA Y TERAPIA COM','FACULTAD DE CIENCIAS FORESTALES','FACULTAD DE ENFERMERÍA Y OBSTETRICIA','FACULTAD DE MEDICINA VETERINARIA Y ZOOT','FACULTAD DE CIENCIAS DE LA SALUD','FACULTAD DE CIENCIAS BIOLÓGICAS','FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI','FACULTAD DE AGRICULTURA Y ZOOTECNIA','FACULTAD DE TRABAJO SOCIAL (*)','FACULTAD DE MEDICINA Y NUTRICIÓN','MUSEO REGIONAL','FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)','FACULTAD DE CIENCIAS QUÍMICAS','DIRECCIÓN DE DIFUSIÓN CULTURAL','FACULTAD DE TRABAJO SOCIAL','FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM','RADIO UNIVERSIDAD','DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA','TV UJED','DIRECCIÓN DE PLAN Y DESARROLLO ACAD','COORDINACION INSTITUCIONAL FI','UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO','COORDINACIÓN DE VINCULACIÓN EMPRES'],
-      sede: [ 'CEDU','IMAC','ICED','FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS','FACULTAD DE CIENCIAS EXACTAS','ESCUELA DE LENGUAS','FACULTAD DE ODONTOLOGÍA','FACULTAD DE CIENCIAS QUÍMICAS DGO.','FACULTAD DE CIENCIAS, CULTURA FÍSICA','ESCUELA SUPERIOR DE MÚSICA','ESCUELA DE PINTURA, ESCULTURA Y ARTE','FACULTAD DE PSICOLOGÍA Y TERAPIA COM','FACULTAD DE CIENCIAS FORESTALES','FACULTAD DE ENFERMERÍA Y OBSTETRICIA','FACULTAD DE MEDICINA VETERINARIA Y ZOOT','FACULTAD DE CIENCIAS DE LA SALUD','FACULTAD DE CIENCIAS BIOLÓGICAS','FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI','FACULTAD DE AGRICULTURA Y ZOOTECNIA','FACULTAD DE TRABAJO SOCIAL (*)','FACULTAD DE MEDICINA Y NUTRICIÓN','MUSEO REGIONAL','FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)','FACULTAD DE CIENCIAS QUÍMICAS','DIRECCIÓN DE DIFUSIÓN CULTURAL','FACULTAD DE TRABAJO SOCIAL','FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM','RADIO UNIVERSIDAD','DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA','TV UJED','DIRECCIÓN DE PLAN Y DESARROLLO ACAD','COORDINACION INSTITUCIONAL FI','UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO','COORDINACIÓN DE VINCULACIÓN EMPRES',' ','Bellas Artes UJED','Bellas Artes UJED Lerdo','Biblioteca Central Universitaria','Bicentenario','BIOPARQUE, DURANGO','Bioparque estrella, Mty., NL.','Bolsón de Mapimí','Bosque Venustiano Carranza. Torreón, Coah.','Calle 5 de Febrero Esquina con Bruno Martínez, Zona Centro','Campus Gómez Palacio','Cancha de Santa Lucía','Cancha de usos múltiples, FCF','Cancha Frente a Facultad de Ciencias Químicas','Cancha "Robelto Silva", Carretera a Mazatlán km 1.5','Cancún, Quintana Roo','Carretera Durango Mazatlan y Calle Opalo','Casa Cuervo, Guadalajara, Jalisco','Casa de Cultura CITIBANAMEX','Casa de la Cultura de Cd. Lerdo,Durango','Casa de la Cultura de Ciudad Lerdo Durango.  Av. Francisco I. Madero 52 Nte. Col. Centro CP 35150, Lerdo, Durango ','Casa de la cultura de Gómez Palacio, Campestre GP','Casa de la Cultura Durango, Calle Negrete 900 poniente','Casa de las Banquetas Altas,Gómez Palacio Dgo.','Casa Municipal del Arte y la Cultura, Hacienda de los Laureles112, Fracc. Hacienda de Tapias ','Casa Nava avenida, Madero esquina con Ocampo., Ciudad Lerdo, Dgo.','Casino Murano, Hotel las Rosas, Gómez Palacio, Dgo.','Catedral Basílica Menor, Ave. 20 de Noviembre y Constitución','CBTA 3','CBTIS 110','CBTIS 89','CCH','Cd. de Mexico','Cdu (Promocion Deportiva)','CENTRAL UJED','Centro Cultural BANAMEX , 5 de Febrero Esq. con Francisco I. Madero','Centro Cultural y de Convenciones Bicentenario','Centro de Convenciones Bicentenario','Centro de Convenciones, Gómez Palacio ','Centro de Convenciones, Posada del Río. Gómez Palacio, Dgo.','Centro de Integración Laboral, Fracc. Huizache','CENTRO DE INV. Y DE ESTUDIOS AVANZADOS CINVESTAV ','centro de la ciudad de durango ','Centro Escolar Revolución, Sección A Gómez Farías entre Luna y Urrea, Barrio de Tierra Blanca','Centro Especializado de Reintegración y Tratamiento para menores infractores (CERMI)','Centro Monterrey, Nuevo León','Centro Recreativo Tapias ','Centro Regional de Educación para la Conservación (CRECO)','Cerro de Los Remedios, Durango,Dgo.','CIAC (Aquiles Serdán y Bruno Martínez)','CIIDIR IPN,Calle Sigma 119 Fracc. 20 de Noviembre II','Cine CITICINEMAS, Real del Mezquital 101 ','Cinemex','Cineteca Municipal Silvestre Revueltas. Juárez 217 Nte., Zona Centro','CIUDAD DE MEXICO','Ciudad del anciano','CIUDAD UNIVERSITARIA, CDMX','Club de Leones de Durango ','COLEGIO DE BACHILLERES DEL ESTADO DE DURANGO','Colegio De Ciencias Y Humanidades','Colegio de Ginecología'],
+      message: "",
+      clasificacion: [],
+      categoria1: [],
+      categoria2: [],
+      categoriaArte: [],
+      unidades: [
+        "CEDU",
+        "IMAC",
+        "ICED",
+        "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
+        "FACULTAD DE CIENCIAS EXACTAS",
+        "ESCUELA DE LENGUAS",
+        "FACULTAD DE ODONTOLOGÍA",
+        "FACULTAD DE CIENCIAS QUÍMICAS DGO.",
+        "FACULTAD DE CIENCIAS, CULTURA FÍSICA",
+        "ESCUELA SUPERIOR DE MÚSICA",
+        "ESCUELA DE PINTURA, ESCULTURA Y ARTE",
+        "FACULTAD DE PSICOLOGÍA Y TERAPIA COM",
+        "FACULTAD DE CIENCIAS FORESTALES",
+        "FACULTAD DE ENFERMERÍA Y OBSTETRICIA",
+        "FACULTAD DE MEDICINA VETERINARIA Y ZOOT",
+        "FACULTAD DE CIENCIAS DE LA SALUD",
+        "FACULTAD DE CIENCIAS BIOLÓGICAS",
+        "FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI",
+        "FACULTAD DE AGRICULTURA Y ZOOTECNIA",
+        "FACULTAD DE TRABAJO SOCIAL (*)",
+        "FACULTAD DE MEDICINA Y NUTRICIÓN",
+        "MUSEO REGIONAL",
+        "FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)",
+        "FACULTAD DE CIENCIAS QUÍMICAS",
+        "DIRECCIÓN DE DIFUSIÓN CULTURAL",
+        "FACULTAD DE TRABAJO SOCIAL",
+        "FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM",
+        "RADIO UNIVERSIDAD",
+        "DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA",
+        "TV UJED",
+        "DIRECCIÓN DE PLAN Y DESARROLLO ACAD",
+        "COORDINACION INSTITUCIONAL FI",
+        "UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO",
+        "COORDINACIÓN DE VINCULACIÓN EMPRES",
+      ],
+      sede: [
+        "CEDU",
+        "IMAC",
+        "ICED",
+        "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
+        "FACULTAD DE CIENCIAS EXACTAS",
+        "ESCUELA DE LENGUAS",
+        "FACULTAD DE ODONTOLOGÍA",
+        "FACULTAD DE CIENCIAS QUÍMICAS DGO.",
+        "FACULTAD DE CIENCIAS, CULTURA FÍSICA",
+        "ESCUELA SUPERIOR DE MÚSICA",
+        "ESCUELA DE PINTURA, ESCULTURA Y ARTE",
+        "FACULTAD DE PSICOLOGÍA Y TERAPIA COM",
+        "FACULTAD DE CIENCIAS FORESTALES",
+        "FACULTAD DE ENFERMERÍA Y OBSTETRICIA",
+        "FACULTAD DE MEDICINA VETERINARIA Y ZOOT",
+        "FACULTAD DE CIENCIAS DE LA SALUD",
+        "FACULTAD DE CIENCIAS BIOLÓGICAS",
+        "FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI",
+        "FACULTAD DE AGRICULTURA Y ZOOTECNIA",
+        "FACULTAD DE TRABAJO SOCIAL (*)",
+        "FACULTAD DE MEDICINA Y NUTRICIÓN",
+        "MUSEO REGIONAL",
+        "FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)",
+        "FACULTAD DE CIENCIAS QUÍMICAS",
+        "DIRECCIÓN DE DIFUSIÓN CULTURAL",
+        "FACULTAD DE TRABAJO SOCIAL",
+        "FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM",
+        "RADIO UNIVERSIDAD",
+        "DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA",
+        "TV UJED",
+        "DIRECCIÓN DE PLAN Y DESARROLLO ACAD",
+        "COORDINACION INSTITUCIONAL FI",
+        "UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO",
+        "COORDINACIÓN DE VINCULACIÓN EMPRES",
+        " ",
+        "Bellas Artes UJED",
+        "Bellas Artes UJED Lerdo",
+        "Biblioteca Central Universitaria",
+        "Bicentenario",
+        "BIOPARQUE, DURANGO",
+        "Bioparque estrella, Mty., NL.",
+        "Bolsón de Mapimí",
+        "Bosque Venustiano Carranza. Torreón, Coah.",
+        "Calle 5 de Febrero Esquina con Bruno Martínez, Zona Centro",
+        "Campus Gómez Palacio",
+        "Cancha de Santa Lucía",
+        "Cancha de usos múltiples, FCF",
+        "Cancha Frente a Facultad de Ciencias Químicas",
+        'Cancha "Robelto Silva", Carretera a Mazatlán km 1.5',
+        "Cancún, Quintana Roo",
+        "Carretera Durango Mazatlan y Calle Opalo",
+        "Casa Cuervo, Guadalajara, Jalisco",
+        "Casa de Cultura CITIBANAMEX",
+        "Casa de la Cultura de Cd. Lerdo,Durango",
+        "Casa de la Cultura de Ciudad Lerdo Durango.  Av. Francisco I. Madero 52 Nte. Col. Centro CP 35150, Lerdo, Durango ",
+        "Casa de la cultura de Gómez Palacio, Campestre GP",
+        "Casa de la Cultura Durango, Calle Negrete 900 poniente",
+        "Casa de las Banquetas Altas,Gómez Palacio Dgo.",
+        "Casa Municipal del Arte y la Cultura, Hacienda de los Laureles112, Fracc. Hacienda de Tapias ",
+        "Casa Nava avenida, Madero esquina con Ocampo., Ciudad Lerdo, Dgo.",
+        "Casino Murano, Hotel las Rosas, Gómez Palacio, Dgo.",
+        "Catedral Basílica Menor, Ave. 20 de Noviembre y Constitución",
+        "CBTA 3",
+        "CBTIS 110",
+        "CBTIS 89",
+        "CCH",
+        "Cd. de Mexico",
+        "Cdu (Promocion Deportiva)",
+        "CENTRAL UJED",
+        "Centro Cultural BANAMEX , 5 de Febrero Esq. con Francisco I. Madero",
+        "Centro Cultural y de Convenciones Bicentenario",
+        "Centro de Convenciones Bicentenario",
+        "Centro de Convenciones, Gómez Palacio ",
+        "Centro de Convenciones, Posada del Río. Gómez Palacio, Dgo.",
+        "Centro de Integración Laboral, Fracc. Huizache",
+        "CENTRO DE INV. Y DE ESTUDIOS AVANZADOS CINVESTAV ",
+        "centro de la ciudad de durango ",
+        "Centro Escolar Revolución, Sección A Gómez Farías entre Luna y Urrea, Barrio de Tierra Blanca",
+        "Centro Especializado de Reintegración y Tratamiento para menores infractores (CERMI)",
+        "Centro Monterrey, Nuevo León",
+        "Centro Recreativo Tapias ",
+        "Centro Regional de Educación para la Conservación (CRECO)",
+        "Cerro de Los Remedios, Durango,Dgo.",
+        "CIAC (Aquiles Serdán y Bruno Martínez)",
+        "CIIDIR IPN,Calle Sigma 119 Fracc. 20 de Noviembre II",
+        "Cine CITICINEMAS, Real del Mezquital 101 ",
+        "Cinemex",
+        "Cineteca Municipal Silvestre Revueltas. Juárez 217 Nte., Zona Centro",
+        "CIUDAD DE MEXICO",
+        "Ciudad del anciano",
+        "CIUDAD UNIVERSITARIA, CDMX",
+        "Club de Leones de Durango ",
+        "COLEGIO DE BACHILLERES DEL ESTADO DE DURANGO",
+        "Colegio De Ciencias Y Humanidades",
+        "Colegio de Ginecología",
+      ],
     };
   },
   methods: {
     getEvento(id) {
       EventosDataService.get(id)
-        .then(response => {
+        .then((response) => {
           this.currentEvento = response.data;
+          this.getCategorias1(this.currentEvento.categorias.id);
+          this.getCategorias2(this.currentEvento.subCategoria1.id);
+          if(this.currentEvento.subCategoriaArte){
+            this.getCategoriasArte(this.currentEvento.subCategoria2.id);
+          }
           console.log(response.data);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
-    validate () {
-      this.valid = this.$refs.form.validate()
+    validate() {
+      this.valid = this.$refs.form.validate();
     },
-
+    getClasificacion() {
+      EventosDataService.getClasificacion()
+        .then((response) => {
+          this.clasificacion = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getCategorias1(clasf_id, limpiar) {
+      if (limpiar == true){
+        this.currentEvento.subCategoria1 = ''; 
+        this.currentEvento.subCategoria2 = ''; 
+        this.currentEvento.subCategoriaArte = ''; 
+      }
+      EventosDataService.getCategorias1(clasf_id)
+        .then((response) => {
+          this.categoria1 = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getCategorias2(cat_1, limpiar) {
+      if (limpiar == true){
+        this.currentEvento.subCategoria2 = ''; 
+        this.currentEvento.subCategoriaArte = ''; 
+      }
+      EventosDataService.getCategorias2(cat_1)
+        .then((response) => {
+          this.categoria2 = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    getCategoriasArte(cat, limpiar) {
+      if (limpiar == true){
+        this.currentEvento.subCategoriaArte = ''; 
+      }
+      EventosDataService.getCategoriasArte(cat)
+        .then((response) => {
+          this.categoriaArte = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    imprimirVal(value) {
+      console.log(value);
+    },
     updateEvento() {
       if (this.valid == true) {
         EventosDataService.update(this.currentEvento.id, this.currentEvento)
-          .then(response => {
+          .then((response) => {
             console.log(response.data);
             /*this.message = 'El evento se actualizo correctamente!';*/
-              swal("El evento se actualizo correctamente!","","success")
+            swal("El evento se actualizo correctamente!", "", "success");
           })
-          .catch(e => {
+          .catch((e) => {
             console.log(e);
-            swal("No se pudo actualizar el evento correctamente (asegurese de llenar los campos correctamente)","","error")
+            swal(
+              "No se pudo actualizar el evento correctamente (asegurese de llenar los campos correctamente)",
+              "",
+              "error"
+            );
           });
+      } else {
+        console.log("Evento no Validado " + false);
       }
-      else{
-        console.log('Evento no Validado ' + false)
-      }
-      
     },
 
     deleteEvento() {
       EventosDataService.delete(this.currentEvento.id)
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
-          swal("El evento se elimino correctamente!","","success")
+          swal("El evento se elimino correctamente!", "", "success");
           this.$router.push({ name: "eventos" });
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
-          swal("Ocurrio un error al eliminar el evento","","error")
+          swal("Ocurrio un error al eliminar el evento", "", "error");
         });
-    }
+    },
   },
   mounted() {
-    this.message = '';
+    this.message = "";
     this.getEvento(this.$route.params.id);
-    console.log(this.$route.params.id)
-  }
+    this.getClasificacion();
+    console.log(this.$route.params.id);
+  },
 };
 </script>
 
