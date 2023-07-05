@@ -211,8 +211,6 @@
                     ></v-combobox> -->
                   </v-col>
 
-
-
                   <v-col v-else-if="eventos.categorias_1 != '' && eventos.categorias_1.id != '18'" cols="12" md="6" sm="12" lg="6" xl="6">
                     <v-combobox
                       v-model="eventos.categorias_2"
@@ -229,7 +227,6 @@
                   </v-col>
                 </template>
                 
-
                 <v-col v-if="eventos.categorias_2 != '' && eventos.categorias.id == 1 && eventos.categorias_2.id < 64 " cols="12" md="6" sm="12" lg="6" xl="6">
                   <v-combobox
                     v-model="eventos.categorias_arte"
