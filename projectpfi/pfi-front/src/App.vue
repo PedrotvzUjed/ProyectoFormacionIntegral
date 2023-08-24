@@ -9,7 +9,11 @@
     >
       <v-list-item style="background-color: white;" class="px-2">
         <v-list-item-content>
-            <v-btn block color="error" outlined ></v-btn>
+             <g-signin-button
+                :params="googleParams"
+                @on-success="onGoogleSignInSuccess"
+                @on-error="onGoogleSignInError"
+              >adasd</g-signin-button>
           </v-list-item-content>
       </v-list-item>
 
@@ -35,6 +39,11 @@
       <v-toolbar-title style="width: 400px" class="ml-0 pl-4">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <span class="hidden-sm-and-down" id="pageName">Formación Integral</span>
+        <g-signin-button
+                :params="googleParams"
+                @on-success="onGoogleSignInSuccess"
+                @on-error="onGoogleSignInError"
+              ></g-signin-button>
       </v-toolbar-title>
       <div class="flex-grow-1"></div>
 
@@ -56,14 +65,14 @@
     </v-footer>
   </v-app>
 </template>
+<script src="https://apis.google.com/js/api:client.js"></script>
 
 <script>
-
 export default {
   name: 'app',
 
   components: {
-
+  
   },
 
   data: () => ({
@@ -77,7 +86,20 @@ export default {
       { title: 'Calendario de Eventos', icon: 'mdi-calendar', route: '/calendario'},
       { title: 'Vista de Estudiantes', icon: 'mdi-account-eye', route: '/alumnos-vista-eventos'}
     ],
+    googleParams: {
+      client_id: '118475991498-2068tnudn86fmvhf6dc7uupli7vk9hf2.apps.googleusercontent.com',
+    },
   }),
+  methods: {
+    onGoogleSignInSuccess(googleUser) {
+      // Aquí puedes acceder a la información del usuario
+      console.log(googleUser)
+    },
+    onGoogleSignInError(error) {
+      // Manejo de errores
+      console.error(error)
+    },
+  },
 };
 </script>
 
